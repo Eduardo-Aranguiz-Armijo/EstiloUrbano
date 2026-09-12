@@ -1,0 +1,2992 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estilo Urbano | Official Streetwear Store</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='25' fill='%23121216' stroke='%23f59e0b' stroke-width='6'/><text x='50' y='68' font-family='Montserrat,sans-serif' font-size='50' font-weight='900' text-anchor='middle' fill='%23ffffff'>E<tspan fill='%23f59e0b'>U</tspan></text></svg>">
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,600;0,700;0,800;0,900;1,700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0b0b0d;
+            color: #ffffff;
+        }
+        .font-brand {
+            font-family: 'Montserrat', sans-serif;
+        }
+        .btn-yellow {
+            background-color: #f59e0b;
+            color: #000000;
+            transition: all 0.2s ease;
+        }
+        .btn-yellow:hover {
+            background-color: #d97706;
+            transform: translateY(-1px);
+        }
+        .hero-bg {
+            background: linear-gradient(to right, rgba(11, 11, 13, 0.95) 0%, rgba(11, 11, 13, 0.6) 50%, rgba(11, 11, 13, 0.92) 100%),
+                        url('https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?q=80&w=1920&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center 25%;
+        }
+        .glass-card {
+            background: rgba(18, 18, 22, 0.85);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.07);
+        }
+        .step-done {
+            background-color: #f59e0b;
+            border-color: #f59e0b;
+            color: #000000;
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0b0b0d;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #26262b;
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #d97706;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col antialiased selection:bg-amber-500 selection:text-black">
+
+    <!-- ==================================================================== -->
+    <!-- BARRA SUPERIOR ANUNCIO COMERCIAL                                     -->
+    <!-- ==================================================================== -->
+    <div class="bg-gradient-to-r from-amber-600 via-amber-500 to-amber-600 text-black text-[11px] font-bold uppercase tracking-widest text-center py-1.5 px-4 shadow-sm flex items-center justify-center gap-3">
+        <span><i class="fa-solid fa-truck-fast mr-1"></i> Envíos express a todo Chile por Starken y Chilexpress</span>
+        <span class="hidden md:inline text-black/50">•</span>
+        <span class="hidden md:inline">🔥 Colección Streetwear Invierno 2026</span>
+    </div>
+
+    <!-- ==================================================================== -->
+    <!-- NAVBAR PRINCIPAL                                                     -->
+    <!-- ==================================================================== -->
+    <header class="bg-[#101014] border-b border-neutral-800/80 sticky top-0 z-40 backdrop-blur-md bg-opacity-95">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div class="h-20 flex items-center justify-between gap-4 sm:gap-8">
+                
+                <!-- Logo Oficial ESTILO URBANO -->
+                <a href="javascript:void(0)" onclick="navegarAPanel('tienda')" class="flex items-center gap-3 cursor-pointer group">
+                    <div class="w-11 h-11 rounded-xl bg-[#141418] border border-amber-500/40 group-hover:border-amber-400 flex items-center justify-center shadow-lg group-hover:shadow-[0_0_20px_rgba(245,158,11,0.35)] group-hover:scale-105 transition-all duration-300 relative overflow-hidden">
+                        <div class="absolute -right-2 -top-2 w-6 h-6 bg-amber-500/20 rounded-full blur-sm pointer-events-none"></div>
+                        <span class="font-brand font-black text-xl tracking-tighter leading-none select-none">
+                            <span class="text-white">E</span><span class="text-amber-400">U</span>
+                        </span>
+                    </div>
+                    <div>
+                        <span class="font-brand font-black text-xl sm:text-2xl tracking-wider text-white uppercase block leading-none group-hover:text-amber-400/90 transition duration-300">
+                            ESTILO URBANO
+                        </span>
+                    </div>
+                </a>
+
+                <!-- Buscador Central -->
+                <div class="flex-grow max-w-lg hidden md:block">
+                    <div class="relative">
+                        <input type="text" id="input-buscar" onkeyup="buscarPrendas()" placeholder="Buscar por modelo, categoría, color o estilo..." 
+                               class="w-full bg-[#18181c] text-neutral-200 pl-10 pr-4 py-2.5 rounded-full text-xs focus:outline-none focus:ring-1 focus:ring-amber-500 border border-neutral-800 transition">
+                        <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-3 text-neutral-500 text-xs"></i>
+                    </div>
+                </div>
+
+                <!-- Botones y Acceso de Usuario -->
+                <div class="flex items-center gap-4 text-neutral-300">
+                    
+                    <!-- Botón Carrito -->
+                    <button title="Bolsa de Compras" onclick="abrirModalCarrito()" class="hover:text-white relative p-2 text-base transition flex items-center gap-1.5 cursor-pointer">
+                        <i class="fa-solid fa-bag-shopping text-lg"></i>
+                        <span id="badge-cart" class="bg-amber-500 text-black font-black text-[10px] w-5 h-5 rounded-full flex items-center justify-center shadow-md">0</span>
+                    </button>
+
+                    <!-- Zona de Cuenta de Usuario -->
+                    <div id="contenedor-cuenta-header" class="flex items-center gap-3">
+                        <!-- Renderizado dinámicamente por JS según si está logueado o no -->
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- Fila Inferior: Menú de Categorías -->
+            <nav class="flex items-center justify-center gap-6 sm:gap-8 py-2.5 border-t border-neutral-800/60 overflow-x-auto text-[11px] font-extrabold uppercase tracking-wider text-neutral-400">
+                <button onclick="filtrarCategoria('TODOS')" class="nav-cat-btn text-white hover:text-amber-400 transition whitespace-nowrap active" id="cat-btn-TODOS">Todos</button>
+                <button onclick="filtrarCategoria('POLERONES')" class="nav-cat-btn hover:text-amber-400 transition whitespace-nowrap" id="cat-btn-POLERONES">Polerones</button>
+                <button onclick="filtrarCategoria('POLERAS')" class="nav-cat-btn hover:text-amber-400 transition whitespace-nowrap" id="cat-btn-POLERAS">Poleras</button>
+                <button onclick="filtrarCategoria('PANTALONES')" class="nav-cat-btn hover:text-amber-400 transition whitespace-nowrap" id="cat-btn-PANTALONES">Pantalones</button>
+                <button onclick="filtrarCategoria('ZAPATILLAS')" class="nav-cat-btn hover:text-amber-400 transition whitespace-nowrap" id="cat-btn-ZAPATILLAS">Zapatillas</button>
+                <button onclick="filtrarCategoria('ACCESORIOS')" class="nav-cat-btn hover:text-amber-400 transition whitespace-nowrap" id="cat-btn-ACCESORIOS">Accesorios</button>
+            </nav>
+
+        </div>
+    </header>
+
+    <!-- ==================================================================== -->
+    <!-- CONTENIDO PRINCIPAL: 4 PANELES SEPARADOS Y COMPLETOS                 -->
+    <!-- ==================================================================== -->
+    <main class="flex-grow">
+
+        <!-- ================================================================ -->
+        <!-- 1. PANEL PÚBLICO: TIENDA / CATÁLOGO                              -->
+        <!-- ================================================================ -->
+        <div id="panel-tienda" class="space-y-12">
+            
+            <!-- Hero Banner Streetwear -->
+            <section class="relative hero-bg h-[440px] md:h-[520px] flex items-center">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+                    <div class="max-w-2xl space-y-4">
+                        <span class="inline-block bg-amber-500/20 text-amber-400 border border-amber-500/40 text-[11px] font-bold uppercase tracking-widest px-3 py-1 rounded-full">
+                            Streetwear Culture • Chile
+                        </span>
+                        <h1 class="font-brand text-4xl sm:text-6xl md:text-7xl font-black text-white leading-[1.05] tracking-tight uppercase">
+                            LA MODA QUE TE<br>LLEVA A LA CALLE
+                        </h1>
+                        <p class="text-neutral-300 text-sm sm:text-base tracking-wide font-medium">
+                            Diseños oversize, confección premium y calzado urbano con despacho directo a todo el país.
+                        </p>
+                        <div class="pt-3 flex items-center gap-4">
+                            <button onclick="scrollearCatalogo()" class="btn-yellow font-black text-xs sm:text-sm px-8 py-4 rounded-xl uppercase tracking-wider flex items-center gap-3 shadow-2xl">
+                                Explorar Colección <i class="fa-solid fa-arrow-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Sección de Productos -->
+            <section id="seccion-catalogo" class="scroll-mt-28 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-8">
+                
+                <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-neutral-800 pb-4">
+                    <div>
+                        <span class="text-xs font-bold uppercase tracking-widest text-amber-500 font-brand">Catálogo Oficial</span>
+                        <h2 class="text-2xl sm:text-3xl font-black uppercase text-white font-brand mt-1" id="titulo-categoria">
+                            Colección Streetwear
+                        </h2>
+                    </div>
+                    <div class="flex items-center gap-3 text-xs text-neutral-400">
+                        <span id="contador-productos" class="font-mono">10 prendas disponibles</span>
+                        <span>•</span>
+                        <span>Precios en Pesos Chilenos (CLP)</span>
+                    </div>
+                </div>
+
+                <!-- Grid Dinámico de Productos -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6" id="grid-prendas">
+                    <!-- Inyectado por JS -->
+                </div>
+
+            </section>
+
+        </div>
+
+        <!-- ================================================================ -->
+        <!-- 2. PANEL CLIENTE: MI CUENTA / PEDIDOS / RESEÑAS                  -->
+        <!-- ================================================================ -->
+        <div id="panel-cliente" class="hidden max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8">
+            
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-gradient-to-r from-neutral-900 to-[#16161b] p-6 sm:p-8 rounded-2xl border border-neutral-800">
+                <div class="flex items-center gap-5">
+                    <div class="w-16 h-16 rounded-2xl bg-amber-500/20 border-2 border-amber-500 flex items-center justify-center text-amber-400 text-2xl font-black font-brand shadow-lg">
+                        <i class="fa-solid fa-user"></i>
+                    </div>
+                    <div>
+                        <span class="text-xs font-bold uppercase tracking-widest text-amber-400 font-mono">Portal Oficial del Cliente</span>
+                        <h2 class="text-2xl sm:text-3xl font-black text-white font-brand" id="cliente-banner-nombre">Sebastián Castro</h2>
+                        <p class="text-xs text-neutral-400 font-mono mt-0.5" id="cliente-banner-email">scastro@gmail.com</p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-3">
+                    <button onclick="abrirModalEditarPerfilCliente()" class="bg-neutral-800 hover:bg-neutral-700 text-white text-xs px-4 py-2.5 rounded-xl font-bold uppercase tracking-wider transition flex items-center gap-2 cursor-pointer border border-neutral-700">
+                        <i class="fa-solid fa-pen-to-square text-amber-400"></i> Editar Mis Datos
+                    </button>
+                    <button onclick="navegarAPanel('tienda')" class="btn-yellow text-xs px-4 py-2.5 rounded-xl font-bold uppercase tracking-wider transition flex items-center gap-2 cursor-pointer">
+                        <i class="fa-solid fa-bag-shopping"></i> Seguir Comprando
+                    </button>
+                </div>
+            </div>
+
+            <!-- Datos de Contacto y Envío -->
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                <div class="glass-card p-5 rounded-xl border border-neutral-800">
+                    <span class="text-[10px] uppercase font-bold text-neutral-400 block">RUT Registrado</span>
+                    <p class="text-sm font-bold text-white font-mono mt-1" id="cliente-card-rut">19.876.543-2</p>
+                </div>
+                <div class="glass-card p-5 rounded-xl border border-neutral-800">
+                    <span class="text-[10px] uppercase font-bold text-neutral-400 block">Teléfono de Contacto</span>
+                    <p class="text-sm font-bold text-white font-mono mt-1" id="cliente-card-tel">+56 9 7777 8888</p>
+                </div>
+                <div class="glass-card p-5 rounded-xl border border-neutral-800 md:col-span-2">
+                    <span class="text-[10px] uppercase font-bold text-neutral-400 block">Dirección Principal de Entrega</span>
+                    <p class="text-sm font-bold text-white mt-1" id="cliente-card-dir">Av. Providencia 1420, Depto 502, Providencia, Santiago</p>
+                </div>
+            </div>
+
+            <!-- Historial de Pedidos -->
+            <div class="space-y-4">
+                <div class="flex items-center justify-between border-b border-neutral-800 pb-3">
+                    <h3 class="text-lg font-black text-white uppercase font-brand flex items-center gap-2">
+                        <i class="fa-solid fa-clock-rotate-left text-amber-500"></i> Mis Órdenes de Compra y Despachos en Vivo
+                    </h3>
+                    <span class="text-xs text-neutral-400 font-mono" id="cliente-total-pedidos">3 compras</span>
+                </div>
+
+                <div class="space-y-4" id="cliente-lista-pedidos">
+                    <!-- Renderizado por JS -->
+                </div>
+            </div>
+
+            <!-- Mis Preguntas Realizadas -->
+            <div class="space-y-4 pt-6 border-t border-neutral-800">
+                <div class="flex items-center justify-between">
+                    <h3 class="text-lg font-black text-white uppercase font-brand flex items-center gap-2">
+                        <i class="fa-regular fa-circle-question text-amber-500"></i> Mis Consultas sobre Prendas
+                    </h3>
+                </div>
+                <div class="space-y-3" id="cliente-lista-preguntas">
+                    <!-- Renderizado por JS -->
+                </div>
+            </div>
+
+        </div>
+
+        <!-- ================================================================ -->
+        <!-- 3. PANEL TRABAJADOR: FULFILLMENT / ATENCIÓN DUDAS / RESEÑAS      -->
+        <!-- ================================================================ -->
+        <div id="panel-trabajador" class="hidden max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8">
+            
+            <!-- Header Trabajador -->
+            <div class="bg-gradient-to-r from-blue-950/40 via-neutral-900 to-neutral-900 p-6 sm:p-8 rounded-2xl border border-blue-900/40 flex flex-col md:flex-row md:items-center justify-between gap-4">
+                <div class="flex items-center gap-4">
+                    <div class="w-14 h-14 rounded-2xl bg-blue-500/20 border border-blue-500/40 flex items-center justify-center text-blue-400 text-2xl shadow-lg">
+                        <i class="fa-solid fa-dolly"></i>
+                    </div>
+                    <div>
+                        <div class="flex items-center gap-2">
+                            <span class="text-[11px] font-bold uppercase tracking-wider text-blue-400 font-mono">Módulo Operativo & Fulfillment</span>
+                            <span class="bg-blue-500/20 text-blue-300 text-[10px] font-bold px-2 py-0.5 rounded">Personal de Bodega</span>
+                        </div>
+                        <h2 class="text-2xl font-black text-white font-brand" id="trabajador-banner-nombre">Ignacio López</h2>
+                        <p class="text-xs text-neutral-400">Control de despacho de órdenes, atención al cliente y soporte de catálogo</p>
+                    </div>
+                </div>
+
+                <!-- Sub-pestañas internas del trabajador -->
+                <div class="flex bg-neutral-950 p-1.5 rounded-xl border border-neutral-800 text-xs font-bold uppercase tracking-wider">
+                    <button onclick="cambiarSubTabTrabajador('pedidos')" id="subtab-trab-pedidos" class="px-4 py-2 rounded-lg text-white bg-blue-600 transition">
+                        <i class="fa-solid fa-boxes-packing mr-1.5"></i> Gestión Pedidos
+                    </button>
+                    <button onclick="cambiarSubTabTrabajador('dudas')" id="subtab-trab-dudas" class="px-4 py-2 rounded-lg text-neutral-400 hover:text-white transition">
+                        <i class="fa-solid fa-comments mr-1.5"></i> Dudas de Clientes (<span id="badge-dudas-pendientes">0</span>)
+                    </button>
+                    <button onclick="cambiarSubTabTrabajador('resenas')" id="subtab-trab-resenas" class="px-4 py-2 rounded-lg text-neutral-400 hover:text-white transition">
+                        <i class="fa-solid fa-star mr-1.5"></i> Reseñas
+                    </button>
+                </div>
+            </div>
+
+            <!-- SUB-VISTA 1: PEDIDOS Y FULFILLMENT -->
+            <div id="trab-vista-pedidos" class="space-y-6">
+                <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-3">
+                    <h3 class="text-xl font-black uppercase font-brand text-white">Mesa de Despacho y Empaque</h3>
+                    <div class="flex items-center gap-2 text-xs">
+                        <span class="text-neutral-400">Filtro rápido:</span>
+                        <select onchange="filtrarPedidosTrabajador(this.value)" class="bg-neutral-900 border border-neutral-700 text-white rounded-lg px-3 py-1.5 text-xs focus:outline-none">
+                            <option value="TODOS">Todos los Estados</option>
+                            <option value="PAGADO">1. Pagado (Por empaquetar)</option>
+                            <option value="EN_EMPAQUETAMIENTO">2. En Empaquetamiento</option>
+                            <option value="EN_CAMINO">3. En Camino (Courier)</option>
+                            <option value="ENTREGADO">4. Entregado</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="glass-card rounded-2xl border border-neutral-800 overflow-hidden shadow-2xl">
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-xs">
+                            <thead class="bg-neutral-900/90 text-neutral-400 uppercase tracking-wider text-[11px] font-bold border-b border-neutral-800">
+                                <tr>
+                                    <th class="px-6 py-4">N° Seguimiento</th>
+                                    <th class="px-6 py-4">Cliente & Destino</th>
+                                    <th class="px-6 py-4">Prendas y Tallas</th>
+                                    <th class="px-6 py-4">Monto CLP</th>
+                                    <th class="px-6 py-4">Estado Actual</th>
+                                    <th class="px-6 py-4 text-right">Acción Fulfillment</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-neutral-800" id="tabla-pedidos-trabajador">
+                                <!-- Filas dinámicas -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SUB-VISTA 2: DUDAS Y PREGUNTAS DE CLIENTES -->
+            <div id="trab-vista-dudas" class="hidden space-y-6">
+                <div class="flex justify-between items-center">
+                    <div>
+                        <h3 class="text-xl font-black uppercase font-brand text-white">Mesa de Ayuda: Preguntas de Clientes</h3>
+                        <p class="text-xs text-neutral-400">Responde consultas sobre calce, materiales y despachos para publicarlas en la ficha del producto.</p>
+                    </div>
+                </div>
+
+                <div class="space-y-4" id="contenedor-dudas-trabajador">
+                    <!-- Preguntas dinámicas -->
+                </div>
+            </div>
+
+            <!-- SUB-VISTA 3: RESEÑAS DE PRODUCTOS -->
+            <div id="trab-vista-resenas" class="hidden space-y-6">
+                <div class="flex justify-between items-center">
+                    <div>
+                        <h3 class="text-xl font-black uppercase font-brand text-white">Moderación y Valoraciones de Clientes</h3>
+                        <p class="text-xs text-neutral-400">Opiniones y calificaciones recibidas de compradores verificados en la tienda online.</p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="contenedor-resenas-trabajador">
+                    <!-- Reseñas dinámicas -->
+                </div>
+            </div>
+
+        </div>
+
+        <!-- ================================================================ -->
+        <!-- 4. PANEL ADMINISTRADOR: GESTIÓN CATÁLOGO / PROVEEDORES / MÉTRICAS -->
+        <!-- ================================================================ -->
+        <div id="panel-admin" class="hidden max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8">
+            
+            <!-- Header Admin Studio -->
+            <div class="bg-gradient-to-r from-red-950/40 via-neutral-900 to-neutral-900 p-6 sm:p-8 rounded-2xl border border-red-900/40 flex flex-col md:flex-row md:items-center justify-between gap-4">
+                <div class="flex items-center gap-4">
+                    <div class="w-14 h-14 rounded-2xl bg-red-500/20 border border-red-500/40 flex items-center justify-center text-red-400 text-2xl shadow-lg">
+                        <i class="fa-solid fa-crown"></i>
+                    </div>
+                    <div>
+                        <div class="flex items-center gap-2">
+                            <span class="text-[11px] font-bold uppercase tracking-wider text-red-400 font-mono">Master Administrator Studio</span>
+                            <span class="bg-red-500/20 text-red-300 text-[10px] font-bold px-2 py-0.5 rounded">Acceso Total</span>
+                        </div>
+                        <h2 class="text-2xl font-black text-white font-brand" id="admin-banner-nombre">Carlos Gómez</h2>
+                        <p class="text-xs text-neutral-400">Control maestro de catálogo comercial, proveedores oficiales y métricas de inventario</p>
+                    </div>
+                </div>
+
+                <!-- Sub-pestañas internas del administrador -->
+                <div class="flex bg-neutral-950 p-1.5 rounded-xl border border-neutral-800 text-xs font-bold uppercase tracking-wider">
+                    <button onclick="cambiarSubTabAdmin('productos')" id="subtab-adm-productos" class="px-4 py-2 rounded-lg text-black bg-amber-500 transition font-black">
+                        <i class="fa-solid fa-shirt mr-1.5"></i> Catálogo Prendas
+                    </button>
+                    <button onclick="cambiarSubTabAdmin('proveedores')" id="subtab-adm-proveedores" class="px-4 py-2 rounded-lg text-neutral-400 hover:text-white transition">
+                        <i class="fa-solid fa-handshake mr-1.5"></i> Proveedores Oficiales
+                    </button>
+                    <button onclick="cambiarSubTabAdmin('metricas')" id="subtab-adm-metricas" class="px-4 py-2 rounded-lg text-neutral-400 hover:text-white transition">
+                        <i class="fa-solid fa-chart-line mr-1.5"></i> Métricas & Auditoría
+                    </button>
+                </div>
+            </div>
+
+            <!-- SUB-VISTA 1: CATÁLOGO Y PRODUCTOS DEL ADMIN -->
+            <div id="adm-vista-productos" class="space-y-6">
+                
+                <!-- Tarjetas KPI Inventario -->
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                    <div class="glass-card p-5 rounded-2xl border border-neutral-800 flex items-center justify-between">
+                        <div>
+                            <span class="text-neutral-400 text-xs font-bold uppercase">Prendas en Catálogo</span>
+                            <p class="text-3xl font-black text-white font-mono mt-1" id="kpi-total-productos">0</p>
+                        </div>
+                        <div class="w-12 h-12 rounded-xl bg-amber-500/10 text-amber-500 flex items-center justify-center text-xl">
+                            <i class="fa-solid fa-boxes-stacked"></i>
+                        </div>
+                    </div>
+                    <div class="glass-card p-5 rounded-2xl border border-neutral-800 flex items-center justify-between">
+                        <div>
+                            <span class="text-neutral-400 text-xs font-bold uppercase">Valorización de Stock</span>
+                            <p class="text-3xl font-black text-emerald-400 font-mono mt-1" id="kpi-valor-inventario">$0 CLP</p>
+                        </div>
+                        <div class="w-12 h-12 rounded-xl bg-emerald-500/10 text-emerald-500 flex items-center justify-center text-xl">
+                            <i class="fa-solid fa-sack-dollar"></i>
+                        </div>
+                    </div>
+                    <div class="glass-card p-5 rounded-2xl border border-neutral-800 flex items-center justify-between">
+                        <div>
+                            <span class="text-neutral-400 text-xs font-bold uppercase">Alertas Quiebre de Stock</span>
+                            <p class="text-3xl font-black text-red-400 font-mono mt-1" id="kpi-quiebres-stock">0</p>
+                        </div>
+                        <div class="w-12 h-12 rounded-xl bg-red-500/10 text-red-500 flex items-center justify-center text-xl">
+                            <i class="fa-solid fa-triangle-exclamation"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Barra de Acciones: Botón Agregar Producto -->
+                <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-4">
+                    <div>
+                        <h3 class="text-xl font-black uppercase font-brand text-white">Inventario Activo en Oracle Database</h3>
+                        <p class="text-xs text-neutral-400">Alta de nuevas prendas, edición de precios CLP, descripciones e imágenes de catálogo.</p>
+                    </div>
+                    <button onclick="abrirModalNuevoProducto()" class="btn-yellow px-5 py-3 rounded-xl font-black text-xs uppercase tracking-wider flex items-center gap-2 cursor-pointer shadow-xl">
+                        <i class="fa-solid fa-plus text-sm"></i> Agregar Nueva Prenda
+                    </button>
+                </div>
+
+                <!-- Tabla de Productos del Admin -->
+                <div class="glass-card rounded-2xl border border-neutral-800 overflow-hidden shadow-2xl">
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-xs">
+                            <thead class="bg-neutral-900/90 text-neutral-400 uppercase tracking-wider text-[11px] font-bold border-b border-neutral-800">
+                                <tr>
+                                    <th class="px-6 py-4">Prenda / Foto</th>
+                                    <th class="px-6 py-4">SKU / Categoría</th>
+                                    <th class="px-6 py-4">Tallas</th>
+                                    <th class="px-6 py-4">Precio CLP</th>
+                                    <th class="px-6 py-4">Stock</th>
+                                    <th class="px-6 py-4">Proveedor Asignado</th>
+                                    <th class="px-6 py-4 text-right">Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-neutral-800" id="tabla-admin-productos">
+                                <!-- Inyectado por JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- SUB-VISTA 2: GESTIÓN DE PROVEEDORES -->
+            <div id="adm-vista-proveedores" class="hidden space-y-6">
+                
+                <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-4">
+                    <div>
+                        <h3 class="text-xl font-black uppercase font-brand text-white">Proveedores y Confeccionistas Homologados</h3>
+                        <p class="text-xs text-neutral-400">Directorio de importadores y talleres textiles vinculados a la cadena de suministro.</p>
+                    </div>
+                    <button onclick="abrirModalNuevoProveedor()" class="btn-yellow px-5 py-3 rounded-xl font-black text-xs uppercase tracking-wider flex items-center gap-2 cursor-pointer shadow-xl">
+                        <i class="fa-solid fa-user-plus text-sm"></i> Registrar Proveedor
+                    </button>
+                </div>
+
+                <div class="glass-card rounded-2xl border border-neutral-800 overflow-hidden shadow-2xl">
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-xs">
+                            <thead class="bg-neutral-900/90 text-neutral-400 uppercase tracking-wider text-[11px] font-bold border-b border-neutral-800">
+                                <tr>
+                                    <th class="px-6 py-4">Razón Social</th>
+                                    <th class="px-6 py-4">RUT</th>
+                                    <th class="px-6 py-4">Contacto Directo</th>
+                                    <th class="px-6 py-4">Teléfono & Email</th>
+                                    <th class="px-6 py-4">Rubro Suministrado</th>
+                                    <th class="px-6 py-4 text-right">Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-neutral-800" id="tabla-admin-proveedores">
+                                <!-- Inyectado por JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- SUB-VISTA 3: AUDITORÍA PL/SQL Y RENDIMIENTO -->
+            <div id="adm-vista-metricas" class="hidden space-y-6">
+                <div>
+                    <h3 class="text-xl font-black uppercase font-brand text-white">Auditoría del Sistema Oracle & Resumen Mensual</h3>
+                    <p class="text-xs text-neutral-400">Datos consolidados del motor de base de datos y procesamiento en batch.</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="glass-card p-6 rounded-2xl border border-neutral-800 space-y-4">
+                        <h4 class="font-bold text-white uppercase text-xs tracking-wider flex items-center gap-2">
+                            <i class="fa-solid fa-server text-amber-500"></i> Parámetros de Conexión Oracle Cloud
+                        </h4>
+                        <div class="space-y-2 text-xs font-mono">
+                            <div class="flex justify-between py-1.5 border-b border-neutral-800">
+                                <span class="text-neutral-400">Instancia:</span>
+                                <span class="text-amber-400 font-bold">ESTILOURBANO (Oracle 23ai)</span>
+                            </div>
+                            <div class="flex justify-between py-1.5 border-b border-neutral-800">
+                                <span class="text-neutral-400">Esquema:</span>
+                                <span class="text-white">ADMIN</span>
+                            </div>
+                            <div class="flex justify-between py-1.5 border-b border-neutral-800">
+                                <span class="text-neutral-400">Región Cloud:</span>
+                                <span class="text-white">sa-santiago-1 (Chile)</span>
+                            </div>
+                            <div class="flex justify-between py-1.5">
+                                <span class="text-neutral-400">Estado Conexión:</span>
+                                <span class="text-emerald-400 font-bold">ACTIVO Y SINCRONIZADO</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="glass-card p-6 rounded-2xl border border-neutral-800 space-y-4">
+                        <h4 class="font-bold text-white uppercase text-xs tracking-wider flex items-center gap-2">
+                            <i class="fa-solid fa-shield-halved text-emerald-500"></i> Tabla Auditoría: LOG_ERRORES_SISTEMA
+                        </h4>
+                        <p class="text-xs text-neutral-400">Registro de excepciones PL/SQL capturadas (ZERO_DIVIDE y ORA-20001) para resiliencia operativa.</p>
+                        <div class="bg-neutral-950 p-3 rounded-xl border border-neutral-800 font-mono text-[11px] text-emerald-400">
+                            ✓ No se registran fallos críticos pendientes. Motor PL/SQL procesando liquidaciones y bonos sin interrupción.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- ==================================================================== -->
+    <!-- FOOTER PROFESIONAL DE TIENDA E-COMMERCE                              -->
+    <!-- ==================================================================== -->
+    <footer class="bg-[#0e0e11] border-t border-neutral-800/80 pt-12 pb-8 mt-16 text-xs text-neutral-400">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
+            
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <!-- Marca -->
+                <div class="space-y-3">
+                    <div class="flex items-center gap-3">
+                        <div class="w-9 h-9 rounded-lg bg-[#141418] border border-amber-500/30 flex items-center justify-center shadow-md">
+                            <span class="font-brand font-black text-base tracking-tighter leading-none select-none">
+                                <span class="text-white">E</span><span class="text-amber-400">U</span>
+                            </span>
+                        </div>
+                        <span class="font-brand font-black text-lg tracking-wider text-white uppercase">
+                            ESTILO URBANO
+                        </span>
+                    </div>
+                    <p class="text-neutral-400 leading-relaxed text-[11px]">
+                        La moda que te lleva a la calle. Plataforma oficial de streetwear, calzado exclusivo y accesorios de vanguardia en Chile.
+                    </p>
+                </div>
+
+                <!-- Enlaces Tienda -->
+                <div class="space-y-2">
+                    <h4 class="text-white font-black uppercase tracking-wider text-xs font-brand">Colecciones</h4>
+                    <ul class="space-y-1.5 text-[11px]">
+                        <li><a href="javascript:void(0)" onclick="filtrarCategoria('POLERONES')" class="hover:text-amber-400 transition">Hoodies y Polerones Oversize</a></li>
+                        <li><a href="javascript:void(0)" onclick="filtrarCategoria('POLERAS')" class="hover:text-amber-400 transition">Poleras Boxy Fit & Heavy Cotton</a></li>
+                        <li><a href="javascript:void(0)" onclick="filtrarCategoria('PANTALONES')" class="hover:text-amber-400 transition">Pantalones Cargo y Joggers</a></li>
+                        <li><a href="javascript:void(0)" onclick="filtrarCategoria('ZAPATILLAS')" class="hover:text-amber-400 transition">Sneakers Urban Low & Skate</a></li>
+                    </ul>
+                </div>
+
+                <!-- Seguridad y Medios de Pago -->
+                <div class="space-y-2">
+                    <h4 class="text-white font-black uppercase tracking-wider text-xs font-brand">Compra Segura</h4>
+                    <p class="text-[11px] text-neutral-400">Procesamos pagos encriptados mediante pasarelas autorizadas:</p>
+                    <div class="flex items-center gap-3 text-lg text-neutral-300 pt-1">
+                        <i class="fa-brands fa-cc-visa text-blue-400" title="Visa"></i>
+                        <i class="fa-brands fa-cc-mastercard text-red-400" title="Mastercard"></i>
+                        <i class="fa-solid fa-credit-card text-amber-400" title="Webpay Plus"></i>
+                        <i class="fa-solid fa-shield-check text-emerald-400" title="SSL 256-bit"></i>
+                    </div>
+                </div>
+
+                <!-- Contacto -->
+                <div class="space-y-2">
+                    <h4 class="text-white font-black uppercase tracking-wider text-xs font-brand">Atención al Cliente</h4>
+                    <p class="text-[11px]">Lunes a Viernes de 09:00 a 19:00 hrs</p>
+                    <p class="text-[11px] font-mono text-neutral-300">soporte@estilourbano.cl</p>
+                    <p class="text-[11px] font-mono text-neutral-300">+56 9 8899 0011</p>
+                </div>
+            </div>
+
+            <!-- Copyright -->
+            <div class="border-t border-neutral-800/80 pt-6 flex flex-col sm:flex-row justify-between items-center gap-4 text-neutral-500 text-[11px]">
+                <p>© 2026 Estilo Urbano SpA. Todos los derechos reservados. Santiago de Chile.</p>
+                <div class="flex gap-4">
+                    <a href="javascript:void(0)" class="hover:text-neutral-300 transition">Términos de Servicio</a>
+                    <a href="javascript:void(0)" class="hover:text-neutral-300 transition">Políticas de Privacidad</a>
+                    <a href="javascript:void(0)" class="hover:text-neutral-300 transition">Garantía Legal</a>
+                </div>
+            </div>
+
+        </div>
+    </footer>
+
+    <!-- ==================================================================== -->
+    <!-- MODAL 1: INICIAR SESIÓN MANUAL REAL                                  -->
+    <!-- ==================================================================== -->
+    <div id="modal-login" onclick="if(event.target === this) cerrarModalLogin()" style="display: none;" class="fixed inset-0 bg-black/85 backdrop-blur-md z-50 flex items-center justify-center p-4">
+        <div class="glass-card max-w-md w-full rounded-3xl p-6 sm:p-8 space-y-6 border border-neutral-700 shadow-2xl relative">
+            <button onclick="cerrarModalLogin()" class="absolute top-5 right-5 text-neutral-400 hover:text-white transition p-1">
+                <i class="fa-solid fa-xmark text-xl"></i>
+            </button>
+
+            <div class="text-center space-y-1">
+                <div class="w-12 h-12 rounded-2xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400 mx-auto text-xl">
+                    <i class="fa-solid fa-user-lock"></i>
+                </div>
+                <h3 class="text-2xl font-black text-white uppercase font-brand mt-2">Iniciar Sesión</h3>
+                <p class="text-xs text-neutral-400">Ingresa tus credenciales para acceder a tu cuenta oficial</p>
+            </div>
+
+            <!-- Formulario de Login Estricto y Manual -->
+            <form onsubmit="ejecutarLoginManual(event)" class="space-y-4 text-xs">
+                <div>
+                    <label class="block text-neutral-300 font-bold mb-1.5">Correo Electrónico:</label>
+                    <div class="relative">
+                        <input type="email" id="login-email" required placeholder="tuemail@ejemplo.com"
+                               class="w-full bg-[#18181c] border border-neutral-700 rounded-xl pl-10 pr-4 py-3 text-white focus:outline-none focus:border-amber-500 transition">
+                        <i class="fa-regular fa-envelope absolute left-3.5 top-3.5 text-neutral-500"></i>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-neutral-300 font-bold mb-1.5">Contraseña:</label>
+                    <div class="relative">
+                        <input type="password" id="login-password" required placeholder="••••••••"
+                               class="w-full bg-[#18181c] border border-neutral-700 rounded-xl pl-10 pr-4 py-3 text-white focus:outline-none focus:border-amber-500 font-mono transition">
+                        <i class="fa-solid fa-lock absolute left-3.5 top-3.5 text-neutral-500"></i>
+                    </div>
+                </div>
+
+                <div class="flex items-center justify-between text-[11px] text-neutral-400">
+                    <label class="flex items-center gap-2 cursor-pointer">
+                        <input type="checkbox" checked class="rounded bg-neutral-900 border-neutral-700 text-amber-500 focus:ring-0"> Recordar sesión
+                    </label>
+                    <a href="javascript:void(0)" onclick="alert('Ingresa con tu correo registrado o solicita el restablecimiento a soporte@estilourbano.cl')" class="text-amber-400 hover:underline">¿Olvidaste tu clave?</a>
+                </div>
+
+                <button type="submit" class="w-full btn-yellow font-black uppercase tracking-wider py-3.5 rounded-xl text-xs shadow-xl cursor-pointer">
+                    Entrar al Sistema
+                </button>
+            </form>
+
+            <div class="border-t border-neutral-800 pt-4 text-center">
+                <p class="text-[11px] text-neutral-400">
+                    ¿No tienes una cuenta aún? 
+                    <a href="javascript:void(0)" onclick="abrirModalRegistro()" class="text-amber-400 font-bold hover:underline ml-1">Regístrate como Cliente</a>
+                </p>
+                <p class="text-[10px] text-neutral-500 mt-3">
+                    Credenciales del personal:<br>
+                    <span class="text-neutral-400 font-mono">admin@estilourbano.cl (admin123) • ilopez@estilourbano.cl (trabajador123) • scastro@gmail.com (cliente123)</span>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================================================================== -->
+    <!-- MODAL 2: REGISTRO DE NUEVO CLIENTE                                   -->
+    <!-- ==================================================================== -->
+    <div id="modal-registro" onclick="if(event.target === this) cerrarModalRegistro()" style="display: none;" class="fixed inset-0 bg-black/85 backdrop-blur-md z-50 flex items-center justify-center p-4">
+        <div class="glass-card max-w-md w-full rounded-3xl p-6 sm:p-8 space-y-5 border border-neutral-700 shadow-2xl relative">
+            <button onclick="cerrarModalRegistro()" class="absolute top-5 right-5 text-neutral-400 hover:text-white transition p-1">
+                <i class="fa-solid fa-xmark text-xl"></i>
+            </button>
+
+            <div class="text-center space-y-1">
+                <h3 class="text-2xl font-black text-white uppercase font-brand">Crear Cuenta Cliente</h3>
+                <p class="text-xs text-neutral-400">Únete a Estilo Urbano y recibe seguimiento de pedidos en vivo</p>
+            </div>
+
+            <form onsubmit="ejecutarRegistroCliente(event)" class="space-y-3 text-xs">
+                <div>
+                    <label class="block text-neutral-300 font-bold mb-1">Nombre Completo:</label>
+                    <input type="text" id="reg-nombre" required placeholder="Ej: Camila Valenzuela" class="w-full bg-[#18181c] border border-neutral-700 rounded-xl px-3.5 py-2.5 text-white focus:outline-none focus:border-amber-500">
+                </div>
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-neutral-300 font-bold mb-1">RUT:</label>
+                        <input type="text" id="reg-rut" required placeholder="18.123.456-7" class="w-full bg-[#18181c] border border-neutral-700 rounded-xl px-3.5 py-2.5 text-white font-mono focus:outline-none focus:border-amber-500">
+                    </div>
+                    <div>
+                        <label class="block text-neutral-300 font-bold mb-1">Teléfono Móvil:</label>
+                        <input type="text" id="reg-tel" required placeholder="+56 9 9123 4567" class="w-full bg-[#18181c] border border-neutral-700 rounded-xl px-3.5 py-2.5 text-white focus:outline-none focus:border-amber-500">
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-neutral-300 font-bold mb-1">Correo Electrónico:</label>
+                    <input type="email" id="reg-email" required placeholder="tunombre@correo.cl" class="w-full bg-[#18181c] border border-neutral-700 rounded-xl px-3.5 py-2.5 text-white focus:outline-none focus:border-amber-500">
+                </div>
+                <div>
+                    <label class="block text-neutral-300 font-bold mb-1">Dirección de Despacho:</label>
+                    <input type="text" id="reg-dir" required placeholder="Calle, Número, Comuna, Ciudad" class="w-full bg-[#18181c] border border-neutral-700 rounded-xl px-3.5 py-2.5 text-white focus:outline-none focus:border-amber-500">
+                </div>
+                <div>
+                    <label class="block text-neutral-300 font-bold mb-1">Contraseña:</label>
+                    <input type="password" id="reg-pass" required placeholder="Mínimo 6 caracteres" class="w-full bg-[#18181c] border border-neutral-700 rounded-xl px-3.5 py-2.5 text-white font-mono focus:outline-none focus:border-amber-500">
+                </div>
+
+                <button type="submit" class="w-full btn-yellow font-black uppercase tracking-wider py-3.5 rounded-xl text-xs mt-2 shadow-xl cursor-pointer">
+                    Registrarme e Iniciar Sesión
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- ==================================================================== -->
+    <!-- MODAL 3: FICHA DETALLADA DE PRENDA (PREGUNTAS Y RESEÑAS)             -->
+    <!-- ==================================================================== -->
+    <div id="modal-detalle-prenda" onclick="if(event.target === this) cerrarModalDetallePrenda()" style="display: none;" class="fixed inset-0 bg-black/85 backdrop-blur-md z-50 flex items-center justify-center p-4">
+        <div class="glass-card max-w-3xl w-full rounded-3xl p-6 sm:p-8 space-y-6 border border-neutral-700 shadow-2xl relative max-h-[90vh] overflow-y-auto">
+            <button onclick="cerrarModalDetallePrenda()" class="absolute top-5 right-5 text-neutral-400 hover:text-white transition p-1">
+                <i class="fa-solid fa-xmark text-xl"></i>
+            </button>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Imagen -->
+                <div class="rounded-2xl overflow-hidden bg-neutral-900 border border-neutral-800 aspect-[4/5] flex items-center justify-center">
+                    <img id="det-img" src="" alt="" class="w-full h-full object-cover">
+                </div>
+
+                <!-- Info -->
+                <div class="space-y-4 flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center gap-2">
+                            <span id="det-cat" class="text-xs font-bold text-amber-500 uppercase tracking-widest font-brand"></span>
+                            <span class="text-[10px] bg-emerald-950/80 text-emerald-400 border border-emerald-500/30 font-bold px-2 py-0.5 rounded uppercase tracking-wider">Colección Oficial 2026</span>
+                        </div>
+                        <h2 id="det-nombre" class="text-2xl font-black text-white uppercase font-brand mt-1 leading-snug"></h2>
+                        <p id="det-precio" class="text-2xl font-black text-amber-400 font-mono mt-2"></p>
+                        
+                        <div class="pt-3 border-t border-neutral-800 mt-3 space-y-2">
+                            <span class="text-[11px] font-bold uppercase text-neutral-400 block">Descripción y Materiales:</span>
+                            <p id="det-desc" class="text-xs text-neutral-300 leading-relaxed"></p>
+                        </div>
+
+                        <div class="pt-3 border-t border-neutral-800 mt-3 space-y-2">
+                            <div class="flex justify-between items-center text-xs">
+                                <span class="font-bold text-neutral-400 uppercase">Selecciona tu Talla:</span>
+                                <span id="det-stock-badge" class="font-mono text-emerald-400 text-[11px]"></span>
+                            </div>
+                            <select id="det-sel-talla" class="w-full bg-[#18181c] border border-neutral-700 text-white rounded-xl px-3 py-2 text-xs focus:outline-none">
+                                <!-- Opciones -->
+                            </select>
+                        </div>
+                    </div>
+
+                    <button id="det-btn-agregar" onclick="" class="w-full btn-yellow font-black uppercase tracking-wider py-3.5 rounded-xl text-xs flex items-center justify-center gap-2 cursor-pointer shadow-xl">
+                        <i class="fa-solid fa-bag-shopping"></i> Agregar a la Bolsa de Compras
+                    </button>
+                </div>
+            </div>
+
+            <!-- Zona de Preguntas y Respuestas sobre la prenda -->
+            <div class="border-t border-neutral-800 pt-6 space-y-4">
+                <div class="flex justify-between items-center">
+                    <h4 class="font-bold text-white uppercase text-xs tracking-wider flex items-center gap-2">
+                        <i class="fa-solid fa-comments text-amber-500"></i> Preguntas de Compradores sobre esta Prenda
+                    </h4>
+                </div>
+
+                <!-- Lista de preguntas -->
+                <div id="det-lista-preguntas" class="space-y-3 text-xs">
+                    <!-- Dinámico -->
+                </div>
+
+                <!-- Formulario para hacer una pregunta -->
+                <div class="bg-neutral-900 p-4 rounded-2xl border border-neutral-800 space-y-2">
+                    <label class="text-xs font-bold text-neutral-300 block">¿Tienes alguna duda sobre talla o despacho de este producto?</label>
+                    <div class="flex gap-2">
+                        <input type="text" id="input-pregunta-detalle" placeholder="Escribe tu consulta aquí..." class="flex-grow bg-[#18181c] border border-neutral-700 rounded-xl px-3.5 py-2 text-xs text-white focus:outline-none focus:border-amber-500">
+                        <button onclick="enviarPreguntaDetalle()" class="bg-neutral-800 hover:bg-amber-500 hover:text-black text-white font-bold text-xs px-4 py-2 rounded-xl transition cursor-pointer">
+                            Preguntar
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- ==================================================================== -->
+    <!-- MODAL 4: BOLSA DE COMPRAS / CHECKOUT WEBPAY EN CLP                   -->
+    <!-- ==================================================================== -->
+    <div id="modal-carrito" onclick="if(event.target === this) cerrarModalCarrito()" style="display: none;" class="fixed inset-0 bg-black/85 backdrop-blur-md z-50 flex items-center justify-center p-4">
+        <div class="glass-card max-w-lg w-full rounded-3xl p-6 sm:p-8 space-y-6 border border-neutral-700 shadow-2xl relative">
+            <button onclick="cerrarModalCarrito()" class="absolute top-5 right-5 text-neutral-400 hover:text-white transition p-1">
+                <i class="fa-solid fa-xmark text-xl"></i>
+            </button>
+
+            <div class="border-b border-neutral-800 pb-3">
+                <span class="text-xs font-bold text-amber-500 uppercase tracking-widest font-brand">Checkout Seguro</span>
+                <h3 class="text-2xl font-black text-white uppercase font-brand">Bolsa de Compras</h3>
+            </div>
+
+            <!-- Lista de Prendas en la Bolsa -->
+            <div id="lista-carrito" class="max-h-60 overflow-y-auto divide-y divide-neutral-800 pr-1 space-y-2 text-xs">
+                <p class="text-center text-neutral-500 py-6">Tu bolsa de compras está vacía.</p>
+            </div>
+
+            <!-- Desglose CLP -->
+            <div class="border-t border-neutral-800 pt-4 space-y-2 text-xs">
+                <div class="flex justify-between text-neutral-400">
+                    <span>Subtotal Neto:</span>
+                    <span id="txt-neto" class="font-mono text-white">$0 CLP</span>
+                </div>
+                <div class="flex justify-between text-neutral-400">
+                    <span>IVA Transferible (19%):</span>
+                    <span id="txt-iva" class="font-mono text-white">$0 CLP</span>
+                </div>
+                <div class="flex justify-between text-base font-black text-white pt-2 border-t border-neutral-800">
+                    <span>Total a Pagar:</span>
+                    <span id="txt-total" class="text-amber-400 font-mono font-bold">$0 CLP</span>
+                </div>
+            </div>
+
+            <!-- Botón Continuar al Pago Seguro -->
+            <div class="space-y-2 pt-2">
+                <button onclick="abrirPasarelaPago()" class="w-full btn-yellow font-black uppercase tracking-wider py-4 rounded-xl text-xs shadow-2xl cursor-pointer flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-lock text-sm"></i>
+                    <span>Continuar al Pago Seguro con Webpay Plus</span>
+                </button>
+                <p class="text-[10px] text-center text-neutral-500 flex items-center justify-center gap-1.5">
+                    <i class="fa-solid fa-shield-check text-emerald-400"></i>
+                    Transacciones protegidas con Webpay Plus y cifrado bancario SSL 256-bit
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================================================================== -->
+    <!-- MODAL 4B: PASARELA DE PAGO INTERACTIVA (WEBPAY PLUS / TRANSBANK)      -->
+    <!-- ==================================================================== -->
+    <div id="modal-pasarela-pago" onclick="if(event.target === this) cerrarPasarelaPago()" style="display: none;" class="fixed inset-0 bg-black/90 backdrop-blur-md z-50 flex items-center justify-center p-4 overflow-y-auto">
+        <div class="glass-card max-w-xl w-full rounded-3xl p-6 sm:p-8 space-y-6 border border-neutral-700 shadow-2xl relative my-6">
+            <button onclick="cerrarPasarelaPago()" class="absolute top-5 right-5 text-neutral-400 hover:text-white transition p-1">
+                <i class="fa-solid fa-xmark text-xl"></i>
+            </button>
+
+            <!-- Encabezado Pasarela -->
+            <div class="flex items-center justify-between border-b border-neutral-800 pb-4">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-500 text-lg">
+                        <i class="fa-solid fa-credit-card"></i>
+                    </div>
+                    <div>
+                        <div class="flex items-center gap-2">
+                            <span class="font-brand font-black text-sm tracking-wider text-white uppercase">WEBPAY PLUS</span>
+                            <span class="text-[9px] bg-emerald-950 text-emerald-400 border border-emerald-500/30 font-bold px-2 py-0.5 rounded uppercase font-mono">SSL 256-BIT</span>
+                        </div>
+                        <p class="text-[11px] text-neutral-400">Pasarela Oficial Transbank • Estilo Urbano SpA</p>
+                    </div>
+                </div>
+                <div class="text-right">
+                    <span class="text-[10px] text-neutral-400 uppercase tracking-wider block">Total a Pagar</span>
+                    <span id="pasarela-monto-total" class="font-mono text-lg font-black text-amber-400">$0 CLP</span>
+                </div>
+            </div>
+
+            <!-- VISTA NORMAL: FORMULARIO Y TARJETA -->
+            <div id="pasarela-contenedor-formulario" class="space-y-6">
+                <!-- Selector de Medio de Pago -->
+                <div class="space-y-2 text-xs">
+                    <label class="font-bold uppercase text-neutral-300 block text-[11px]">Selecciona Medio de Pago:</label>
+                    <div class="grid grid-cols-3 gap-2">
+                        <button type="button" onclick="seleccionarMetodoPasarela('tarjeta')" id="btn-metodo-tarjeta" class="p-3 rounded-xl border border-amber-500/80 bg-amber-500/10 text-amber-300 font-bold flex flex-col items-center gap-1.5 transition text-center cursor-pointer">
+                            <i class="fa-solid fa-credit-card text-base"></i> Tarjeta Débito/Crédito
+                        </button>
+                        <button type="button" onclick="seleccionarMetodoPasarela('mercadopago')" id="btn-metodo-mercadopago" class="p-3 rounded-xl border border-neutral-700 bg-neutral-900/60 text-neutral-400 hover:text-white font-bold flex flex-col items-center gap-1.5 transition text-center cursor-pointer">
+                            <i class="fa-solid fa-wallet text-base"></i> Mercado Pago
+                        </button>
+                        <button type="button" onclick="seleccionarMetodoPasarela('transferencia')" id="btn-metodo-transferencia" class="p-3 rounded-xl border border-neutral-700 bg-neutral-900/60 text-neutral-400 hover:text-white font-bold flex flex-col items-center gap-1.5 transition text-center cursor-pointer">
+                            <i class="fa-solid fa-building-columns text-base"></i> Transferencia
+                        </button>
+                    </div>
+                </div>
+
+                <!-- SECCIÓN TARJETA INTERACTIVA -->
+                <div id="seccion-metodo-tarjeta" class="space-y-5">
+                    
+                    <!-- Tarjeta Visual Fintech (Preview en Tiempo Real) -->
+                    <div class="w-full max-w-sm mx-auto aspect-[1.586/1] rounded-2xl p-5 shadow-2xl relative overflow-hidden bg-gradient-to-tr from-neutral-950 via-[#18181f] to-neutral-900 border border-neutral-700 flex flex-col justify-between">
+                        <!-- Efectos de brillo decorativos -->
+                        <div class="absolute -right-8 -top-8 w-28 h-28 bg-amber-500/15 rounded-full blur-xl pointer-events-none"></div>
+                        <div class="absolute -left-8 -bottom-8 w-28 h-28 bg-emerald-500/10 rounded-full blur-xl pointer-events-none"></div>
+
+                        <div class="flex items-center justify-between relative z-10">
+                            <!-- Chip EMV Dorado -->
+                            <div class="w-10 h-7 rounded bg-gradient-to-r from-amber-300 via-amber-400 to-amber-200 border border-amber-600/40 flex items-center justify-center shadow-inner">
+                                <i class="fa-solid fa-microchip text-neutral-800 text-xs"></i>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <i class="fa-solid fa-wifi rotate-90 text-neutral-500 text-sm"></i>
+                                <span id="card-preview-brand" class="font-black italic text-base tracking-wider text-white">WEBPAY</span>
+                            </div>
+                        </div>
+
+                        <div class="relative z-10 py-1">
+                            <span class="text-[9px] uppercase tracking-widest text-neutral-500 block mb-0.5">Número de Tarjeta</span>
+                            <div id="card-preview-number" class="font-mono text-base sm:text-lg tracking-widest text-neutral-100 font-bold">
+                                •••• •••• •••• ••••
+                            </div>
+                        </div>
+
+                        <div class="flex items-end justify-between relative z-10 text-xs">
+                            <div class="max-w-[65%]">
+                                <span class="text-[8px] uppercase tracking-wider text-neutral-500 block">Titular</span>
+                                <span id="card-preview-name" class="font-mono text-[11px] uppercase font-bold text-white tracking-wider truncate block">
+                                    NOMBRE DEL TITULAR
+                                </span>
+                            </div>
+                            <div>
+                                <span class="text-[8px] uppercase tracking-wider text-neutral-500 block">Expira</span>
+                                <span id="card-preview-exp" class="font-mono text-[11px] font-bold text-white">MM/AA</span>
+                            </div>
+                            <div>
+                                <span class="text-[8px] uppercase tracking-wider text-neutral-500 block">CVC</span>
+                                <span id="card-preview-cvc" class="font-mono text-[11px] font-bold text-amber-400">•••</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Formulario de Tarjeta -->
+                    <div class="space-y-3.5 text-xs">
+                        <div>
+                            <label class="block text-neutral-300 font-bold mb-1">Número de Tarjeta (16 dígitos):</label>
+                            <div class="relative">
+                                <input type="text" id="pay-card-number" oninput="formatearNumeroTarjeta(this)" placeholder="4532 8820 1923 8812" maxlength="19" class="w-full bg-[#18181c] border border-neutral-700 rounded-xl pl-4 pr-12 py-2.5 text-white font-mono focus:border-amber-500 focus:outline-none tracking-wider">
+                                <div class="absolute right-3.5 top-2.5 text-neutral-400 text-sm" id="icon-card-brand">
+                                    <i class="fa-solid fa-credit-card"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-neutral-300 font-bold mb-1">Nombre Completo del Titular:</label>
+                            <input type="text" id="pay-card-name" oninput="actualizarNombreTarjeta(this)" placeholder="Como aparece en el plástico (Ej: SEBASTIÁN CASTRO)" class="w-full bg-[#18181c] border border-neutral-700 rounded-xl px-4 py-2.5 text-white uppercase focus:border-amber-500 focus:outline-none">
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-3">
+                            <div>
+                                <label class="block text-neutral-300 font-bold mb-1">Vencimiento (MM/AA):</label>
+                                <input type="text" id="pay-card-exp" oninput="formatearExpTarjeta(this)" placeholder="12/28" maxlength="5" class="w-full bg-[#18181c] border border-neutral-700 rounded-xl px-4 py-2.5 text-white font-mono text-center focus:border-amber-500 focus:outline-none">
+                            </div>
+                            <div>
+                                <div class="flex justify-between items-center mb-1">
+                                    <label class="text-neutral-300 font-bold">Código CVC / CVV:</label>
+                                    <span class="text-[10px] text-neutral-500" title="3 dígitos al reverso del plástico"><i class="fa-solid fa-circle-question"></i> Reverso</span>
+                                </div>
+                                <div class="relative">
+                                    <input type="password" id="pay-card-cvc" oninput="actualizarCvcTarjeta(this)" placeholder="849" maxlength="4" class="w-full bg-[#18181c] border border-neutral-700 rounded-xl pl-4 pr-10 py-2.5 text-white font-mono text-center focus:border-amber-500 focus:outline-none tracking-widest">
+                                    <i class="fa-solid fa-lock absolute right-3.5 top-3 text-neutral-500 text-xs"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <div>
+                                <label class="block text-neutral-300 font-bold mb-1">Cuotas Webpay:</label>
+                                <select id="pay-card-cuotas" class="w-full bg-[#18181c] border border-neutral-700 rounded-xl px-3 py-2.5 text-white text-xs focus:border-amber-500 focus:outline-none">
+                                    <option value="1">1 Cuota (Sin interés)</option>
+                                    <option value="3">3 Cuotas (Sin interés)</option>
+                                    <option value="6">6 Cuotas (Sin interés)</option>
+                                    <option value="12">12 Cuotas (Precio contado)</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-neutral-300 font-bold mb-1">RUT del Titular:</label>
+                                <input type="text" id="pay-card-rut" placeholder="19.876.543-2" class="w-full bg-[#18181c] border border-neutral-700 rounded-xl px-4 py-2.5 text-white font-mono focus:border-amber-500 focus:outline-none">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-neutral-300 font-bold mb-1">Dirección de Despacho:</label>
+                            <input type="text" id="pay-card-dir" placeholder="Ej: Av. Providencia 1420, Depto 502, Providencia, Santiago" class="w-full bg-[#18181c] border border-neutral-700 rounded-xl px-4 py-2.5 text-white focus:border-amber-500 focus:outline-none text-xs">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SECCIÓN MERCADO PAGO -->
+                <div id="seccion-metodo-mercadopago" style="display: none;" class="space-y-4 p-5 rounded-2xl bg-neutral-900 border border-neutral-800 text-center text-xs">
+                    <i class="fa-solid fa-wallet text-3xl text-sky-400"></i>
+                    <h4 class="font-bold text-white text-sm">Pagar con tu cuenta Mercado Pago</h4>
+                    <p class="text-neutral-400 leading-relaxed">Conexión con el checkout oficial de Mercado Pago para abonar con dinero en cuenta o tarjetas guardadas.</p>
+                    <div class="p-3 bg-neutral-950 rounded-xl border border-neutral-800 text-[11px] text-neutral-300">
+                        Comercio Destino: <strong class="text-white">Estilo Urbano SpA</strong> (pagos@estilourbano.cl)
+                    </div>
+                </div>
+
+                <!-- SECCIÓN TRANSFERENCIA BANCARIA -->
+                <div id="seccion-metodo-transferencia" style="display: none;" class="space-y-4 p-5 rounded-2xl bg-neutral-900 border border-neutral-800 text-xs">
+                    <div class="flex items-center gap-3">
+                        <i class="fa-solid fa-building-columns text-2xl text-amber-400"></i>
+                        <div>
+                            <h4 class="font-bold text-white">Datos para Transferencia Electrónica</h4>
+                            <p class="text-[11px] text-neutral-400">Acreditación automática vinculada a tu RUT</p>
+                        </div>
+                    </div>
+                    <div class="bg-neutral-950 p-4 rounded-xl space-y-1.5 font-mono text-[11px] border border-neutral-800">
+                        <p><span class="text-neutral-500">Banco:</span> Banco Santander Chile</p>
+                        <p><span class="text-neutral-500">Tipo:</span> Cuenta Corriente</p>
+                        <p><span class="text-neutral-500">N° Cuenta:</span> 84-99120-4</p>
+                        <p><span class="text-neutral-500">RUT:</span> 77.892.441-K</p>
+                        <p><span class="text-neutral-500">Titular:</span> Estilo Urbano SpA</p>
+                        <p><span class="text-neutral-500">Email:</span> finanzas@estilourbano.cl</p>
+                    </div>
+                </div>
+
+                <!-- Botón de Pago Principal -->
+                <div class="space-y-2 pt-2">
+                    <button type="button" onclick="ejecutarTransaccionSegura()" id="btn-ejecutar-pago" class="w-full btn-yellow font-black uppercase tracking-wider py-4 rounded-xl text-xs shadow-2xl flex items-center justify-center gap-2 cursor-pointer">
+                        <i class="fa-solid fa-shield-halved"></i>
+                        <span id="btn-pago-label">Pagar con Webpay Plus</span>
+                    </button>
+                    <p class="text-[10px] text-center text-neutral-500 flex items-center justify-center gap-1.5">
+                        <i class="fa-solid fa-shield-check text-emerald-400"></i>
+                        Transacción protegida por Transbank Webpay Plus • Certificación PCI-DSS v4.0
+                    </p>
+                </div>
+            </div>
+
+            <!-- VISTA PROCESANDO (ANIMACIÓN BANCARIA EN TIEMPO REAL) -->
+            <div id="pasarela-contenedor-procesando" style="display: none;" class="py-14 text-center space-y-6">
+                <div class="relative w-20 h-20 mx-auto flex items-center justify-center">
+                    <div class="w-20 h-20 rounded-full border-4 border-neutral-800 border-t-amber-400 animate-spin"></div>
+                    <i class="fa-solid fa-lock text-xl text-amber-400 absolute"></i>
+                </div>
+                <div class="space-y-2">
+                    <h4 class="text-lg font-black text-white uppercase font-brand" id="pasarela-txt-etapa">Conectando con Transbank...</h4>
+                    <p class="text-xs text-neutral-400 max-w-xs mx-auto" id="pasarela-txt-subetapa">Por favor no cierres esta ventana mientras autorizamos los fondos con tu banco.</p>
+                </div>
+                <!-- Barra de progreso simulada -->
+                <div class="w-full max-w-xs mx-auto bg-neutral-900 rounded-full h-1.5 overflow-hidden">
+                    <div id="pasarela-barra-progreso" class="bg-amber-400 h-full w-1/4 transition-all duration-500"></div>
+                </div>
+                <div class="flex items-center justify-center gap-2 text-[10px] text-neutral-500 font-mono">
+                    <span>Token: WPY-9921-TK48</span>
+                    <span>•</span>
+                    <span>Transbank PCI-DSS Certified</span>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- ==================================================================== -->
+    <!-- MODAL 4C: VOUCHER OFICIAL / COMPRA EXITOSA TRANSBANK                  -->
+    <!-- ==================================================================== -->
+    <div id="modal-pago-exitoso" onclick="if(event.target === this) cerrarVoucherYContinuar()" style="display: none;" class="fixed inset-0 bg-black/90 backdrop-blur-md z-50 flex items-center justify-center p-4 overflow-y-auto">
+        <div class="glass-card max-w-lg w-full rounded-3xl p-6 sm:p-8 space-y-6 border border-emerald-500/40 shadow-2xl relative my-6">
+            
+            <button onclick="cerrarVoucherYContinuar()" class="absolute top-5 right-5 text-neutral-400 hover:text-white transition p-1">
+                <i class="fa-solid fa-xmark text-xl"></i>
+            </button>
+
+            <!-- Cabecera de Éxito -->
+            <div class="text-center space-y-3">
+                <div class="w-16 h-16 rounded-full bg-emerald-500/20 border-2 border-emerald-500 flex items-center justify-center text-emerald-400 text-3xl mx-auto shadow-lg shadow-emerald-500/20">
+                    <i class="fa-solid fa-check"></i>
+                </div>
+                <div>
+                    <span class="text-[10px] font-bold uppercase tracking-widest text-emerald-400 font-mono bg-emerald-950/80 px-3 py-1 rounded-full border border-emerald-500/30">
+                        Código de Respuesta: 0 (Aprobado)
+                    </span>
+                    <h3 class="text-2xl font-black text-white uppercase font-brand mt-2">¡PAGO AUTORIZADO!</h3>
+                    <p class="text-xs text-neutral-300">Tu compra ha sido procesada con éxito y registrada en el sistema.</p>
+                </div>
+            </div>
+
+            <!-- Voucher Oficial Webpay Plus / Estilo Urbano -->
+            <div id="comprobante-voucher" class="bg-[#101014] rounded-2xl p-5 border border-neutral-800 space-y-3.5 text-xs font-mono">
+                <div class="flex justify-between items-center border-b border-neutral-800 pb-2.5">
+                    <div class="flex items-center gap-2.5">
+                        <div class="w-7 h-7 rounded-md bg-[#18181f] border border-amber-500/30 flex items-center justify-center">
+                            <span class="font-brand font-black text-xs tracking-tighter leading-none select-none">
+                                <span class="text-white">E</span><span class="text-amber-400">U</span>
+                            </span>
+                        </div>
+                        <div>
+                            <span class="font-brand font-black text-sm text-white uppercase block leading-none">ESTILO URBANO</span>
+                            <span class="text-[9px] text-neutral-500 uppercase mt-0.5 block">Estilo Urbano SpA • RUT 77.892.441-K</span>
+                        </div>
+                    </div>
+                    <span class="text-[10px] bg-amber-500/20 text-amber-400 font-bold px-2 py-0.5 rounded uppercase">Webpay Plus</span>
+                </div>
+
+                <div class="grid grid-cols-2 gap-2.5 text-[11px]">
+                    <div>
+                        <span class="text-neutral-500 block text-[9px] uppercase">N° Folio / Orden:</span>
+                        <span id="vouch-folio" class="text-amber-400 font-bold">TRK-EST-202609-001</span>
+                    </div>
+                    <div>
+                        <span class="text-neutral-500 block text-[9px] uppercase">Cód. Autorización:</span>
+                        <span id="vouch-auth" class="text-emerald-400 font-bold">AUT-789210</span>
+                    </div>
+                    <div>
+                        <span class="text-neutral-500 block text-[9px] uppercase">Fecha y Hora:</span>
+                        <span id="vouch-fecha" class="text-neutral-200">12/09/2026 02:00</span>
+                    </div>
+                    <div>
+                        <span class="text-neutral-500 block text-[9px] uppercase">Tarjeta / Cuenta:</span>
+                        <span id="vouch-tarjeta" class="text-neutral-200">•••• 8812</span>
+                    </div>
+                    <div>
+                        <span class="text-neutral-500 block text-[9px] uppercase">Cuotas:</span>
+                        <span id="vouch-cuotas" class="text-neutral-200">1 Cuota (Sin interés)</span>
+                    </div>
+                    <div>
+                        <span class="text-neutral-500 block text-[9px] uppercase">Código Comercio:</span>
+                        <span class="text-neutral-200">597020000541</span>
+                    </div>
+                </div>
+
+                <div class="border-t border-neutral-800 pt-2.5 space-y-1">
+                    <span class="text-neutral-500 block text-[9px] uppercase">Prendas Adquiridas:</span>
+                    <p id="vouch-prendas" class="text-white text-[11px] leading-relaxed"></p>
+                </div>
+
+                <div class="border-t border-neutral-800 pt-2.5 space-y-1">
+                    <span class="text-neutral-500 block text-[9px] uppercase">Despacho a Domicilio:</span>
+                    <p id="vouch-despacho" class="text-neutral-300 text-[11px]"></p>
+                    <span class="text-[10px] text-emerald-400 font-semibold block"><i class="fa-solid fa-truck-fast mr-1"></i> Despacho Express: Entrega estimada en 24-48 hrs</span>
+                </div>
+
+                <div class="border-t border-dashed border-neutral-700 pt-3 flex justify-between items-center text-sm font-bold">
+                    <span class="text-white">MONTO TOTAL:</span>
+                    <span id="vouch-total" class="text-amber-400 font-black text-base">$0 CLP</span>
+                </div>
+            </div>
+
+            <!-- Botones de Acción Post Compra -->
+            <div class="space-y-2.5">
+                <button onclick="irATrackingDesdeVoucher()" class="w-full btn-yellow font-black uppercase tracking-wider py-4 rounded-xl text-xs flex items-center justify-center gap-2 cursor-pointer shadow-xl">
+                    <i class="fa-solid fa-truck-fast text-sm"></i>
+                    <span>Ver Seguimiento en Tiempo Real de mi Pedido</span>
+                </button>
+                <div class="grid grid-cols-2 gap-2">
+                    <button onclick="imprimirVoucher()" class="bg-neutral-800 hover:bg-neutral-700 text-neutral-200 font-bold py-2.5 rounded-xl text-xs flex items-center justify-center gap-2 cursor-pointer transition">
+                        <i class="fa-solid fa-print"></i> Imprimir Voucher
+                    </button>
+                    <button onclick="cerrarVoucherYContinuar()" class="bg-neutral-800 hover:bg-neutral-700 text-neutral-200 font-bold py-2.5 rounded-xl text-xs flex items-center justify-center gap-2 cursor-pointer transition">
+                        <i class="fa-solid fa-bag-shopping"></i> Seguir Comprando
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- ==================================================================== -->
+    <!-- MODAL 5: AGREGAR / EDITAR PRODUCTO (PANEL ADMIN)                     -->
+    <!-- ==================================================================== -->
+    <div id="modal-producto-admin" onclick="if(event.target === this) cerrarModalProductoAdmin()" style="display: none;" class="fixed inset-0 bg-black/85 backdrop-blur-md z-50 flex items-center justify-center p-4">
+        <div class="glass-card max-w-2xl w-full rounded-3xl p-6 sm:p-8 space-y-5 border border-neutral-700 shadow-2xl relative max-h-[90vh] overflow-y-auto">
+            <button onclick="cerrarModalProductoAdmin()" class="absolute top-5 right-5 text-neutral-400 hover:text-white transition p-1">
+                <i class="fa-solid fa-xmark text-xl"></i>
+            </button>
+
+            <div class="border-b border-neutral-800 pb-3">
+                <span class="text-xs font-bold text-amber-500 uppercase tracking-widest font-brand">Gestión de Catálogo</span>
+                <h3 class="text-2xl font-black text-white uppercase font-brand" id="modal-producto-titulo">Agregar Nueva Prenda</h3>
+            </div>
+
+            <form onsubmit="guardarProductoAdmin(event)" class="space-y-4 text-xs">
+                <input type="hidden" id="prod-edit-id" value="">
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-neutral-300 font-bold mb-1">Nombre de la Prenda:</label>
+                        <input type="text" id="prod-nombre" required placeholder="Ej: Hoodie Acid Wash Black" class="w-full bg-[#18181c] border border-neutral-700 rounded-xl px-3.5 py-2.5 text-white focus:outline-none focus:border-amber-500">
+                    </div>
+                    <div>
+                        <label class="block text-neutral-300 font-bold mb-1">Código SKU Oracle:</label>
+                        <input type="text" id="prod-sku" required placeholder="Ej: HOOD-OVR-L" class="w-full bg-[#18181c] border border-neutral-700 rounded-xl px-3.5 py-2.5 text-white font-mono focus:outline-none focus:border-amber-500">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                    <div>
+                        <label class="block text-neutral-300 font-bold mb-1">Categoría:</label>
+                        <select id="prod-cat" class="w-full bg-[#18181c] border border-neutral-700 rounded-xl px-3.5 py-2.5 text-white focus:outline-none">
+                            <option value="POLERONES">POLERONES</option>
+                            <option value="POLERAS">POLERAS</option>
+                            <option value="PANTALONES">PANTALONES</option>
+                            <option value="ZAPATILLAS">ZAPATILLAS</option>
+                            <option value="ACCESORIOS">ACCESORIOS</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-neutral-300 font-bold mb-1">Precio Venta (CLP):</label>
+                        <input type="number" id="prod-precio" required min="1000" step="100" placeholder="39990" class="w-full bg-[#18181c] border border-neutral-700 rounded-xl px-3.5 py-2.5 text-white font-mono focus:outline-none focus:border-amber-500">
+                    </div>
+                    <div>
+                        <label class="block text-neutral-300 font-bold mb-1">Stock Inicial (un.):</label>
+                        <input type="number" id="prod-stock" required min="0" placeholder="30" class="w-full bg-[#18181c] border border-neutral-700 rounded-xl px-3.5 py-2.5 text-white font-mono focus:outline-none focus:border-amber-500">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-neutral-300 font-bold mb-1">Stock Mínimo (Alerta Quiebre):</label>
+                        <input type="number" id="prod-min" required min="1" placeholder="8" class="w-full bg-[#18181c] border border-neutral-700 rounded-xl px-3.5 py-2.5 text-white font-mono focus:outline-none focus:border-amber-500">
+                    </div>
+                    <div>
+                        <label class="block text-neutral-300 font-bold mb-1">Proveedor Asignado:</label>
+                        <select id="prod-prov" class="w-full bg-[#18181c] border border-neutral-700 rounded-xl px-3.5 py-2.5 text-white focus:outline-none">
+                            <!-- Inyectado por JS -->
+                        </select>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-neutral-300 font-bold mb-1">Tallas Disponibles (Separadas por comas):</label>
+                    <input type="text" id="prod-tallas" required placeholder="S, M, L, XL (o 39, 40, 41 para zapatillas)" class="w-full bg-[#18181c] border border-neutral-700 rounded-xl px-3.5 py-2.5 text-white font-mono focus:outline-none focus:border-amber-500">
+                </div>
+
+                <div>
+                    <label class="block text-neutral-300 font-bold mb-1">URL de la Imagen:</label>
+                    <input type="url" id="prod-img" required placeholder="https://images.unsplash.com/photo-..." class="w-full bg-[#18181c] border border-neutral-700 rounded-xl px-3.5 py-2.5 text-white focus:outline-none focus:border-amber-500">
+                </div>
+
+                <div>
+                    <label class="block text-neutral-300 font-bold mb-1">Descripción Comercial de la Prenda:</label>
+                    <textarea id="prod-desc" required rows="3" placeholder="Detalles de calce, gramaje de tela, diseño y cuidados..." class="w-full bg-[#18181c] border border-neutral-700 rounded-xl p-3 text-white focus:outline-none focus:border-amber-500"></textarea>
+                </div>
+
+                <button type="submit" class="w-full btn-yellow font-black uppercase tracking-wider py-3.5 rounded-xl text-xs mt-2 shadow-xl cursor-pointer">
+                    Guardar Prenda en Catálogo Oracle
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- ==================================================================== -->
+    <!-- MODAL 6: REGISTRAR PROVEEDOR (PANEL ADMIN)                           -->
+    <!-- ==================================================================== -->
+    <div id="modal-proveedor-admin" onclick="if(event.target === this) cerrarModalNuevoProveedor()" style="display: none;" class="fixed inset-0 bg-black/85 backdrop-blur-md z-50 flex items-center justify-center p-4">
+        <div class="glass-card max-w-md w-full rounded-3xl p-6 sm:p-8 space-y-5 border border-neutral-700 shadow-2xl relative">
+            <button onclick="cerrarModalNuevoProveedor()" class="absolute top-5 right-5 text-neutral-400 hover:text-white transition p-1">
+                <i class="fa-solid fa-xmark text-xl"></i>
+            </button>
+
+            <div class="border-b border-neutral-800 pb-3">
+                <span class="text-xs font-bold text-amber-500 uppercase tracking-widest font-brand">Cadena de Suministro</span>
+                <h3 class="text-2xl font-black text-white uppercase font-brand">Registrar Proveedor</h3>
+            </div>
+
+            <form onsubmit="guardarProveedorAdmin(event)" class="space-y-3.5 text-xs">
+                <div>
+                    <label class="block text-neutral-300 font-bold mb-1">Razón Social / Empresa:</label>
+                    <input type="text" id="prov-nombre" required placeholder="Ej: Confecciones Urban Textiles SpA" class="w-full bg-[#18181c] border border-neutral-700 rounded-xl px-3.5 py-2.5 text-white focus:outline-none focus:border-amber-500">
+                </div>
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-neutral-300 font-bold mb-1">RUT Empresa:</label>
+                        <input type="text" id="prov-rut" required placeholder="76.543.210-K" class="w-full bg-[#18181c] border border-neutral-700 rounded-xl px-3.5 py-2.5 text-white font-mono focus:outline-none focus:border-amber-500">
+                    </div>
+                    <div>
+                        <label class="block text-neutral-300 font-bold mb-1">Rubro:</label>
+                        <input type="text" id="prov-rubro" required placeholder="Textil / Calzado" class="w-full bg-[#18181c] border border-neutral-700 rounded-xl px-3.5 py-2.5 text-white focus:outline-none focus:border-amber-500">
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-neutral-300 font-bold mb-1">Persona de Contacto:</label>
+                    <input type="text" id="prov-contacto" required placeholder="Ej: Roberto Valdés" class="w-full bg-[#18181c] border border-neutral-700 rounded-xl px-3.5 py-2.5 text-white focus:outline-none focus:border-amber-500">
+                </div>
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-neutral-300 font-bold mb-1">Teléfono:</label>
+                        <input type="text" id="prov-tel" required placeholder="+56 2 2345 6789" class="w-full bg-[#18181c] border border-neutral-700 rounded-xl px-3.5 py-2.5 text-white focus:outline-none focus:border-amber-500">
+                    </div>
+                    <div>
+                        <label class="block text-neutral-300 font-bold mb-1">Correo Electrónico:</label>
+                        <input type="email" id="prov-email" required placeholder="contacto@empresa.cl" class="w-full bg-[#18181c] border border-neutral-700 rounded-xl px-3.5 py-2.5 text-white focus:outline-none focus:border-amber-500">
+                    </div>
+                </div>
+
+                <button type="submit" class="w-full btn-yellow font-black uppercase tracking-wider py-3.5 rounded-xl text-xs mt-2 shadow-xl cursor-pointer">
+                    Vincular Proveedor en Oracle
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- ==================================================================== -->
+    <!-- MODAL 7: EDITAR PERFIL CLIENTE                                       -->
+    <!-- ==================================================================== -->
+    <div id="modal-edit-cliente" onclick="if(event.target === this) cerrarModalEditarPerfilCliente()" style="display: none;" class="fixed inset-0 bg-black/85 backdrop-blur-md z-50 flex items-center justify-center p-4">
+        <div class="glass-card max-w-md w-full rounded-3xl p-6 sm:p-8 space-y-5 border border-neutral-700 shadow-2xl relative">
+            <button onclick="cerrarModalEditarPerfilCliente()" class="absolute top-5 right-5 text-neutral-400 hover:text-white transition p-1">
+                <i class="fa-solid fa-xmark text-xl"></i>
+            </button>
+
+            <div class="border-b border-neutral-800 pb-3">
+                <span class="text-xs font-bold text-amber-500 uppercase tracking-widest font-brand">Configuración</span>
+                <h3 class="text-2xl font-black text-white uppercase font-brand">Editar Datos de Despacho</h3>
+            </div>
+
+            <form onsubmit="guardarPerfilCliente(event)" class="space-y-3 text-xs">
+                <div>
+                    <label class="block text-neutral-300 font-bold mb-1">Nombre Completo:</label>
+                    <input type="text" id="edit-cli-nombre" required class="w-full bg-[#18181c] border border-neutral-700 rounded-xl px-3.5 py-2.5 text-white focus:outline-none focus:border-amber-500">
+                </div>
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-neutral-300 font-bold mb-1">RUT:</label>
+                        <input type="text" id="edit-cli-rut" required class="w-full bg-[#18181c] border border-neutral-700 rounded-xl px-3.5 py-2.5 text-white font-mono focus:outline-none focus:border-amber-500">
+                    </div>
+                    <div>
+                        <label class="block text-neutral-300 font-bold mb-1">Teléfono:</label>
+                        <input type="text" id="edit-cli-tel" required class="w-full bg-[#18181c] border border-neutral-700 rounded-xl px-3.5 py-2.5 text-white focus:outline-none focus:border-amber-500">
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-neutral-300 font-bold mb-1">Correo Electrónico:</label>
+                    <input type="email" id="edit-cli-email" required class="w-full bg-[#18181c] border border-neutral-700 rounded-xl px-3.5 py-2.5 text-white focus:outline-none focus:border-amber-500">
+                </div>
+                <div>
+                    <label class="block text-neutral-300 font-bold mb-1">Dirección de Despacho:</label>
+                    <input type="text" id="edit-cli-dir" required class="w-full bg-[#18181c] border border-neutral-700 rounded-xl px-3.5 py-2.5 text-white focus:outline-none focus:border-amber-500">
+                </div>
+
+                <button type="submit" class="w-full btn-yellow font-black uppercase tracking-wider py-3.5 rounded-xl text-xs mt-2 shadow-xl cursor-pointer">
+                    Actualizar Ficha
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- ==================================================================== -->
+    <!-- MODAL 8: DEJAR RESEÑA DE PRODUCTO (CLIENTE)                          -->
+    <!-- ==================================================================== -->
+    <div id="modal-dejar-resena" onclick="if(event.target === this) cerrarModalDejarResena()" style="display: none;" class="fixed inset-0 bg-black/85 backdrop-blur-md z-50 flex items-center justify-center p-4">
+        <div class="glass-card max-w-md w-full rounded-3xl p-6 sm:p-8 space-y-5 border border-neutral-700 shadow-2xl relative">
+            <button onclick="cerrarModalDejarResena()" class="absolute top-5 right-5 text-neutral-400 hover:text-white transition p-1">
+                <i class="fa-solid fa-xmark text-xl"></i>
+            </button>
+
+            <div class="border-b border-neutral-800 pb-3">
+                <span class="text-xs font-bold text-amber-500 uppercase tracking-widest font-brand">Comprador Verificado</span>
+                <h3 class="text-2xl font-black text-white uppercase font-brand">Dejar Reseña</h3>
+            </div>
+
+            <form onsubmit="guardarResenaCliente(event)" class="space-y-4 text-xs">
+                <input type="hidden" id="resena-prod-id" value="">
+                
+                <div>
+                    <label class="block text-neutral-400 mb-1">Prenda a calificar:</label>
+                    <p id="resena-prod-nombre" class="text-sm font-bold text-white"></p>
+                </div>
+
+                <div>
+                    <label class="block text-neutral-300 font-bold mb-2">Calificación:</label>
+                    <div class="flex items-center gap-2 text-2xl text-amber-400" id="estrellas-selector">
+                        <i class="fa-solid fa-star cursor-pointer" onclick="seleccionarEstrellas(1)"></i>
+                        <i class="fa-solid fa-star cursor-pointer" onclick="seleccionarEstrellas(2)"></i>
+                        <i class="fa-solid fa-star cursor-pointer" onclick="seleccionarEstrellas(3)"></i>
+                        <i class="fa-solid fa-star cursor-pointer" onclick="seleccionarEstrellas(4)"></i>
+                        <i class="fa-solid fa-star cursor-pointer" onclick="seleccionarEstrellas(5)"></i>
+                    </div>
+                    <input type="hidden" id="resena-rating" value="5">
+                </div>
+
+                <div>
+                    <label class="block text-neutral-300 font-bold mb-1">Tu Comentario:</label>
+                    <textarea id="resena-comentario" required rows="3" placeholder="Cuéntanos sobre el calce de la prenda, calidad de la tela, costuras y despacho..." class="w-full bg-[#18181c] border border-neutral-700 rounded-xl p-3 text-white focus:outline-none focus:border-amber-500"></textarea>
+                </div>
+
+                <button type="submit" class="w-full btn-yellow font-black uppercase tracking-wider py-3.5 rounded-xl text-xs shadow-xl cursor-pointer">
+                    Publicar Valoración
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- ==================================================================== -->
+    <!-- TOAST NOTIFICACIÓN FLOTANTE MODERNA                                  -->
+    <!-- ==================================================================== -->
+    <div id="toast-notificacion" style="display: none;" class="fixed top-6 right-6 z-50 bg-[#141418] border-2 border-amber-500 text-white font-bold px-5 py-4 rounded-2xl shadow-2xl items-center gap-3 text-xs tracking-wide transition duration-300">
+        <i class="fa-solid fa-circle-check text-amber-400 text-xl"></i>
+        <span id="toast-mensaje">Operación ejecutada con éxito</span>
+    </div>
+
+    <!-- ==================================================================== -->
+    <!-- JAVASCRIPT DEL SISTEMA COMPLETO Y REALISTA                           -->
+    <!-- ==================================================================== -->
+    <script>
+        // BASE DE DATOS LOCAL SINCRONIZADA CON ORACLE 'ESTILO URBANO'
+        
+        let proveedores = [
+            { id: 1, rut: '76.543.210-K', nombre: 'Confecciones Urban Textiles SpA', contacto: 'Marcelo Pavez', tel: '+56 2 2555 1234', email: 'ventas@urbantextiles.cl', rubro: 'Confección Poleras y Hoodies' },
+            { id: 2, rut: '77.890.123-4', nombre: 'Streetwear Global Imports Ltda', contacto: 'Ignacia Soto', tel: '+56 2 2888 5678', email: 'importaciones@streetwearglobal.cl', rubro: 'Importación Pantalones y Gorros' },
+            { id: 3, rut: '79.112.233-8', nombre: 'Sneakers y Street Footwear S.A.', contacto: 'Andrés Albornoz', tel: '+56 2 2777 9900', email: 'corporativo@streetfootwear.cl', rubro: 'Zapatillas Urbanas' }
+        ];
+
+        let catalogo = [
+            { 
+                id: 201, 
+                cat: 'POLERONES', 
+                sku: 'HOOD-OVR-L', 
+                nombre: 'Hoodie Oversize Acid Wash Black', 
+                precio: 39990, 
+                tallas: ['S', 'M', 'L', 'XL'], 
+                stock: 45, 
+                min: 10, 
+                provId: 1, 
+                provNombre: 'Confecciones Urban Textiles SpA',
+                descripcion: 'Polerón oversize confeccionado en algodón frizado de 420 gramos con lavado acid wash vintage. Capucha doble forrada, bolsillo canguro y puños reforzados.',
+                img: 'https://images.unsplash.com/photo-1556905055-8f358a7a47b2?q=80&w=600&auto=format&fit=crop' 
+            },
+            { 
+                id: 202, 
+                cat: 'POLERONES', 
+                sku: 'HOOD-GRN-XL', 
+                nombre: 'Hoodie Heavy Cotton Forest Green', 
+                precio: 42990, 
+                tallas: ['M', 'L', 'XL'], 
+                stock: 28, 
+                min: 8, 
+                provId: 1, 
+                provNombre: 'Confecciones Urban Textiles SpA',
+                descripcion: 'Hoodie premium en tonalidad verde bosque profundo. Tejido de alta densidad resistente a encogimiento con terminaciones en rib de 5 cm.',
+                img: 'https://images.unsplash.com/photo-1578587018452-892bacefd3f2?q=80&w=600&auto=format&fit=crop' 
+            },
+            { 
+                id: 203, 
+                cat: 'POLERAS', 
+                sku: 'POL-GRAF-M', 
+                nombre: 'Polera Graphic Anime Tokyo Vibe', 
+                precio: 21990, 
+                tallas: ['S', 'M', 'L'], 
+                stock: 60, 
+                min: 15, 
+                provId: 1, 
+                provNombre: 'Confecciones Urban Textiles SpA',
+                descripcion: 'Polera de corte holgado streetwear con estampado serigráfico de alta definición al agua inspirado en el cyberpunk de Tokio.',
+                img: 'https://images.unsplash.com/photo-1521572267360-ee0c2909d518?q=80&w=600&auto=format&fit=crop' 
+            },
+            { 
+                id: 204, 
+                cat: 'POLERAS', 
+                sku: 'POL-RAW-S', 
+                nombre: 'Polera Boxy Fit Vintage White', 
+                precio: 19990, 
+                tallas: ['XS', 'S', 'M', 'L'], 
+                stock: 12, 
+                min: 10, 
+                provId: 1, 
+                provNombre: 'Confecciones Urban Textiles SpA',
+                descripcion: 'Polera boxy fit con hombros caídos y cuello cerrado grueso de 3 cm. 100% algodón peinado chileno.',
+                img: 'https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?q=80&w=600&auto=format&fit=crop' 
+            },
+            { 
+                id: 205, 
+                cat: 'PANTALONES', 
+                sku: 'CARG-BLK-M', 
+                nombre: 'Pantalón Cargo Táctico Obsidian', 
+                precio: 45990, 
+                tallas: ['S', 'M', 'L', 'XL'], 
+                stock: 25, 
+                min: 8, 
+                provId: 2, 
+                provNombre: 'Streetwear Global Imports Ltda',
+                descripcion: 'Pantalón cargo táctico con 6 bolsillos de fuelle, correas utilitarias ajustables y tejido ripstop de alta resistencia.',
+                img: 'https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?q=80&w=600&auto=format&fit=crop' 
+            },
+            { 
+                id: 206, 
+                cat: 'PANTALONES', 
+                sku: 'JOG-BEI-L', 
+                nombre: 'Jogger Streetwear Sand Beige', 
+                precio: 34990, 
+                tallas: ['S', 'M', 'L'], 
+                stock: 4, 
+                min: 10, 
+                provId: 2, 
+                provNombre: 'Streetwear Global Imports Ltda',
+                descripcion: 'Jogger holgado en tono arena desierto con pretina elástica y cordones reforzados en metal mate.',
+                img: 'https://images.unsplash.com/photo-1552902865-b72c031ac5ea?q=80&w=600&auto=format&fit=crop' 
+            },
+            { 
+                id: 207, 
+                cat: 'ZAPATILLAS', 
+                sku: 'SNK-RET-41', 
+                nombre: 'Zapatilla Urban Low Chunky White', 
+                precio: 69990, 
+                tallas: ['39', '40', '41', '42'], 
+                stock: 18, 
+                min: 5, 
+                provId: 3, 
+                provNombre: 'Sneakers y Street Footwear S.A.',
+                descripcion: 'Sneakers de perfil bajo con suela chunky antideslizante en caucho vulcanizado y capellada en cuero ecológico respirable.',
+                img: 'https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?q=80&w=600&auto=format&fit=crop' 
+            },
+            { 
+                id: 208, 
+                cat: 'ZAPATILLAS', 
+                sku: 'SNK-MID-42', 
+                nombre: 'Zapatilla High Top Skate Raven', 
+                precio: 74990, 
+                tallas: ['40', '41', '42', '43'], 
+                stock: 14, 
+                min: 5, 
+                provId: 3, 
+                provNombre: 'Sneakers y Street Footwear S.A.',
+                descripcion: 'Calzado caña media tipo bota urbana con refuerzos en tobillo y plantilla con amortiguación de impacto.',
+                img: 'https://images.unsplash.com/photo-1549298916-b41d501d3772?q=80&w=600&auto=format&fit=crop' 
+            },
+            { 
+                id: 209, 
+                cat: 'ACCESORIOS', 
+                sku: 'ACC-SNAP-U', 
+                nombre: 'Jockey Snapback Estilo Urbano Flat', 
+                precio: 16990, 
+                tallas: ['ESTANDAR'], 
+                stock: 50, 
+                min: 10, 
+                provId: 2, 
+                provNombre: 'Streetwear Global Imports Ltda',
+                descripcion: 'Gorra snapback de visera plana con bordado frontal en 3D en relieve e interior anti-sudor.',
+                img: 'https://images.unsplash.com/photo-1588850561407-ed78c282e89b?q=80&w=600&auto=format&fit=crop' 
+            },
+            { 
+                id: 210, 
+                cat: 'ACCESORIOS', 
+                sku: 'ACC-BAN-U', 
+                nombre: 'Banano Táctico Crossbody Cordura', 
+                precio: 22990, 
+                tallas: ['ESTANDAR'], 
+                stock: 35, 
+                min: 10, 
+                provId: 2, 
+                provNombre: 'Streetwear Global Imports Ltda',
+                descripcion: 'Banano multifuncional con broches de apertura rápida y tela Cordura impermeable con 3 compartimentos cerrados.',
+                img: 'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?q=80&w=600&auto=format&fit=crop' 
+            }
+        ];
+
+        // PEDIDOS CON TRACKING EN VIVO (Oracle: PEDIDO + DETALLE_PEDIDO)
+        let pedidos = [
+            { 
+                folio: 'TRK-EST-202409-001', 
+                cliente: 'Sebastián Castro', 
+                email: 'scastro@gmail.com',
+                rut: '19.876.543-2',
+                dir: 'Av. Providencia 1420, Depto 502, Providencia, Santiago', 
+                pago: 'Webpay Plus', 
+                total: 84980, 
+                fase: 4, 
+                estado: 'ENTREGADO', 
+                fecha: '10/09/2026',
+                prendas: '1x Hoodie Acid Wash (L), 1x Pantalón Cargo (M)' 
+            },
+            { 
+                folio: 'TRK-EST-202409-002', 
+                cliente: 'Martina Díaz', 
+                email: 'mdiaz@gmail.com',
+                rut: '20.123.456-8',
+                dir: 'Calle Los Plátanos 874, Ñuñoa, Santiago', 
+                pago: 'Mercado Pago', 
+                total: 125990, 
+                fase: 3, 
+                estado: 'EN_CAMINO', 
+                fecha: '11/09/2026',
+                prendas: '1x Zapatilla High Top (42), 1x Jockey Snapback' 
+            },
+            { 
+                folio: 'TRK-EST-202409-003', 
+                cliente: 'Cristóbal Rojas', 
+                email: 'crojas@empresa.cl',
+                rut: '17.654.321-3',
+                dir: 'Av. Libertad 340, Viña del Mar', 
+                pago: 'Webpay Plus', 
+                total: 175980, 
+                fase: 2, 
+                estado: 'EN_EMPAQUETAMIENTO', 
+                fecha: '12/09/2026',
+                prendas: '2x Zapatillas Chunky (41), 1x Polera Anime (M)' 
+            }
+        ];
+
+        // PREGUNTAS Y DUDAS DE CLIENTES
+        let dudasClientes = [
+            {
+                id: 1,
+                productoId: 201,
+                productoNombre: 'Hoodie Oversize Acid Wash Black',
+                clienteNombre: 'Sebastián Castro',
+                clienteEmail: 'scastro@gmail.com',
+                pregunta: 'Hola, ¿el polerón viene muy ancho o es mejor pedir una talla menos si prefiero un calce regular?',
+                respuesta: '¡Hola Sebastián! El diseño es de caída holgada streetwear. Si buscas que te quede más al cuerpo, te recomendamos seleccionar una talla menos a tu habitual.',
+                respondidoPor: 'Ignacio López (Bodega)',
+                estado: 'RESPONDIDO'
+            },
+            {
+                id: 2,
+                productoId: 205,
+                productoNombre: 'Pantalón Cargo Táctico Obsidian',
+                clienteNombre: 'Martina Díaz',
+                clienteEmail: 'mdiaz@gmail.com',
+                pregunta: '¿Tienen stock disponible para despacho inmediato a Ñuñoa hoy mismo?',
+                respuesta: 'Hola Martina, sí, tenemos unidades listas en bodega. Si compras antes de las 14:00 sale a reparto durante la tarde.',
+                respondidoPor: 'Ignacio López (Bodega)',
+                estado: 'RESPONDIDO'
+            },
+            {
+                id: 3,
+                productoId: 207,
+                productoNombre: 'Zapatilla Urban Low Chunky White',
+                clienteNombre: 'Sebastián Castro',
+                clienteEmail: 'scastro@gmail.com',
+                pregunta: '¿La horma de la zapatilla es normal o pequeña para calce 41?',
+                respuesta: '',
+                respondidoPor: '',
+                estado: 'PENDIENTE'
+            }
+        ];
+
+        // RESEÑAS Y VALORACIONES DE CLIENTES
+        let resenas = [
+            {
+                id: 1,
+                productoId: 201,
+                productoNombre: 'Hoodie Oversize Acid Wash Black',
+                clienteNombre: 'Sebastián Castro',
+                rating: 5,
+                comentario: 'La calidad del algodón es increíble, muy pesado y la capucha armada perfecta. Llegó en 24 horas a Providencia.',
+                fecha: '11/09/2026'
+            },
+            {
+                id: 2,
+                productoId: 205,
+                productoNombre: 'Pantalón Cargo Táctico Obsidian',
+                clienteNombre: 'Sebastián Castro',
+                rating: 5,
+                comentario: 'Excelente pantalón táctico, las correas y bolsillos se ven muy resistentes.',
+                fecha: '11/09/2026'
+            }
+        ];
+
+        // CUENTAS Y SESIÓN ACTUAL
+        let usuariosRegistrados = [
+            {
+                tipo: 'admin',
+                nombre: 'Carlos Gómez',
+                email: 'admin@estilourbano.cl',
+                clave: 'admin123',
+                rol: 'Administrador General',
+                panel: 'admin'
+            },
+            {
+                tipo: 'trabajador',
+                nombre: 'Ignacio López',
+                email: 'ilopez@estilourbano.cl',
+                clave: 'trabajador123',
+                rol: 'Encargado de Fulfillment & Soporte',
+                panel: 'trabajador'
+            },
+            {
+                tipo: 'cliente',
+                nombre: 'Sebastián Castro',
+                email: 'scastro@gmail.com',
+                clave: 'cliente123',
+                rol: 'Cliente Verificado',
+                rut: '19.876.543-2',
+                tel: '+56 9 7777 8888',
+                dir: 'Av. Providencia 1420, Depto 502, Providencia, Santiago',
+                panel: 'cliente'
+            }
+        ];
+
+        let usuarioActual = null;
+        let bolsa = [];
+        let categoriaActiva = 'TODOS';
+
+        // INICIALIZACIÓN
+        document.addEventListener('DOMContentLoaded', () => {
+            renderizarHeaderUsuario();
+            renderizarCatalogo(catalogo);
+            actualizarBolsa();
+            renderizarTablaAdminProductos();
+            renderizarTablaAdminProveedores();
+            actualizarMetricasAdmin();
+            renderizarTablaTrabajadorPedidos();
+            renderizarDudasTrabajador();
+            renderizarResenasTrabajador();
+        });
+
+        // ====================================================================
+        // GESTIÓN DE SESIONES Y HEADER
+        // ====================================================================
+        function renderizarHeaderUsuario() {
+            const cont = document.getElementById('contenedor-cuenta-header');
+            if (!usuarioActual) {
+                cont.innerHTML = `
+                    <button onclick="abrirModalLogin()" class="bg-amber-500/10 hover:bg-amber-500/20 text-amber-400 border border-amber-500/30 hover:border-amber-400 text-xs font-bold px-4 py-2 rounded-full transition flex items-center gap-2 cursor-pointer">
+                        <i class="fa-regular fa-user"></i> Iniciar Sesión
+                    </button>
+                `;
+            } else if (usuarioActual.tipo === 'admin') {
+                cont.innerHTML = `
+                    <button onclick="navegarAPanel('admin')" class="bg-red-950/40 border border-red-500/40 text-red-300 hover:text-white px-3.5 py-1.5 rounded-full text-xs font-bold transition flex items-center gap-2 cursor-pointer">
+                        <i class="fa-solid fa-crown text-red-400"></i> Admin Studio
+                    </button>
+                    <button onclick="cerrarSesion()" title="Cerrar Sesión" class="text-neutral-400 hover:text-red-400 text-sm px-2 cursor-pointer">
+                        <i class="fa-solid fa-power-off"></i>
+                    </button>
+                `;
+            } else if (usuarioActual.tipo === 'trabajador') {
+                cont.innerHTML = `
+                    <button onclick="navegarAPanel('trabajador')" class="bg-blue-950/40 border border-blue-500/40 text-blue-300 hover:text-white px-3.5 py-1.5 rounded-full text-xs font-bold transition flex items-center gap-2 cursor-pointer">
+                        <i class="fa-solid fa-dolly text-blue-400"></i> Panel Operativo
+                    </button>
+                    <button onclick="cerrarSesion()" title="Cerrar Sesión" class="text-neutral-400 hover:text-red-400 text-sm px-2 cursor-pointer">
+                        <i class="fa-solid fa-power-off"></i>
+                    </button>
+                `;
+            } else if (usuarioActual.tipo === 'cliente') {
+                cont.innerHTML = `
+                    <button onclick="navegarAPanel('cliente')" class="bg-neutral-900 border border-neutral-700 hover:border-amber-500 text-white px-3.5 py-1.5 rounded-full text-xs font-bold transition flex items-center gap-2 cursor-pointer">
+                        <i class="fa-solid fa-user text-amber-400"></i> Mi Cuenta (${usuarioActual.nombre.split(' ')[0]})
+                    </button>
+                    <button onclick="cerrarSesion()" title="Cerrar Sesión" class="text-neutral-400 hover:text-red-400 text-sm px-2 cursor-pointer">
+                        <i class="fa-solid fa-power-off"></i>
+                    </button>
+                `;
+            }
+        }
+
+        function abrirModalLogin() {
+            const m = document.getElementById('modal-login');
+            m.style.display = 'flex';
+        }
+
+        function cerrarModalLogin() {
+            const m = document.getElementById('modal-login');
+            m.style.display = 'none';
+        }
+
+        function abrirModalRegistro() {
+            cerrarModalLogin();
+            document.getElementById('modal-registro').style.display = 'flex';
+        }
+
+        function cerrarModalRegistro() {
+            document.getElementById('modal-registro').style.display = 'none';
+        }
+
+        function ejecutarLoginManual(e) {
+            e.preventDefault();
+            const email = document.getElementById('login-email').value.trim().toLowerCase();
+            const pass = document.getElementById('login-password').value.trim();
+
+            const usuario = usuariosRegistrados.find(u => u.email.toLowerCase() === email && u.clave === pass);
+
+            if (usuario) {
+                usuarioActual = usuario;
+                cerrarModalLogin();
+                renderizarHeaderUsuario();
+                navegarAPanel(usuario.panel);
+                mostrarToast(`Bienvenido(a), ${usuario.nombre} (${usuario.rol})`);
+            } else {
+                alert('Credenciales incorrectas. Verifica tu correo y contraseña.');
+            }
+        }
+
+        function ejecutarRegistroCliente(e) {
+            e.preventDefault();
+            const nuevo = {
+                tipo: 'cliente',
+                nombre: document.getElementById('reg-nombre').value.trim(),
+                rut: document.getElementById('reg-rut').value.trim(),
+                tel: document.getElementById('reg-tel').value.trim(),
+                email: document.getElementById('reg-email').value.trim().toLowerCase(),
+                dir: document.getElementById('reg-dir').value.trim(),
+                clave: document.getElementById('reg-pass').value.trim(),
+                rol: 'Cliente Verificado',
+                panel: 'cliente'
+            };
+
+            usuariosRegistrados.push(nuevo);
+            usuarioActual = nuevo;
+            cerrarModalRegistro();
+            renderizarHeaderUsuario();
+            navegarAPanel('cliente');
+            mostrarToast(`¡Cuenta creada con éxito! Bienvenido(a) ${nuevo.nombre}`);
+        }
+
+        function cerrarSesion() {
+            usuarioActual = null;
+            renderizarHeaderUsuario();
+            navegarAPanel('tienda');
+            mostrarToast('Has cerrado sesión exitosamente.');
+        }
+
+        // ====================================================================
+        // NAVEGACIÓN ENTRE PANELES
+        // ====================================================================
+        function navegarAPanel(panelId, autoScrollTop = true) {
+            ['tienda', 'cliente', 'trabajador', 'admin'].forEach(p => {
+                const el = document.getElementById(`panel-${p}`);
+                if (el) el.classList.add('hidden');
+            });
+
+            const destino = document.getElementById(`panel-${panelId}`);
+            if (destino) destino.classList.remove('hidden');
+
+            if (panelId === 'cliente' && usuarioActual && usuarioActual.tipo === 'cliente') {
+                actualizarVistaCliente();
+            } else if (panelId === 'trabajador') {
+                renderizarTablaTrabajadorPedidos();
+                renderizarDudasTrabajador();
+                renderizarResenasTrabajador();
+            } else if (panelId === 'admin') {
+                renderizarTablaAdminProductos();
+                renderizarTablaAdminProveedores();
+                actualizarMetricasAdmin();
+            }
+
+            if (autoScrollTop) {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+
+        // ====================================================================
+        // CATÁLOGO DE LA TIENDA PÚBLICA
+        // ====================================================================
+        function renderizarCatalogo(lista) {
+            const grid = document.getElementById('grid-prendas');
+            document.getElementById('contador-productos').innerText = `${lista.length} prendas disponibles`;
+
+            if (lista.length === 0) {
+                grid.innerHTML = `
+                    <div class="col-span-full py-16 text-center text-neutral-500 space-y-2">
+                        <i class="fa-solid fa-shirt text-3xl"></i>
+                        <p class="text-sm">No encontramos prendas en esta categoría.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            grid.innerHTML = lista.map(p => `
+                <div class="bg-[#141418] rounded-2xl overflow-hidden border border-neutral-800/80 hover:border-neutral-700 transition duration-300 flex flex-col justify-between group shadow-xl">
+                    
+                    <div class="relative aspect-[4/5] bg-neutral-900 overflow-hidden cursor-pointer" onclick="abrirModalDetallePrenda(${p.id})">
+                        <img src="${p.img}" alt="${p.nombre}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                        ${p.stock <= p.min ? `
+                            <span class="absolute top-3 right-3 bg-red-600 text-white font-black text-[9px] px-2 py-0.5 rounded uppercase shadow-lg">
+                                Últimas ${p.stock} un.
+                            </span>
+                        ` : ''}
+                    </div>
+
+                    <div class="p-5 space-y-3 flex-grow flex flex-col justify-between">
+                        <div class="space-y-1">
+                            <span class="text-[10px] font-bold text-amber-500 uppercase tracking-widest font-brand">${p.cat}</span>
+                            <h3 class="text-sm font-bold text-white line-clamp-1 hover:text-amber-400 transition cursor-pointer" onclick="abrirModalDetallePrenda(${p.id})">
+                                ${p.nombre}
+                            </h3>
+                            <p class="text-lg font-black text-amber-400 font-mono pt-1">
+                                $${p.precio.toLocaleString('es-CL')} CLP
+                            </p>
+                        </div>
+
+                        <div class="pt-3 border-t border-neutral-800/80 space-y-2.5">
+                            <div class="flex items-center justify-between text-xs">
+                                <span class="text-neutral-400 text-[11px] font-bold">Talla:</span>
+                                <select id="sel-talla-card-${p.id}" class="bg-neutral-900 border border-neutral-700 text-white rounded-lg px-2.5 py-1 text-xs focus:outline-none">
+                                    ${p.tallas.map(t => `<option value="${t}">${t}</option>`).join('')}
+                                </select>
+                            </div>
+                            <div class="grid grid-cols-2 gap-2">
+                                <button onclick="abrirModalDetallePrenda(${p.id})" class="bg-neutral-800 hover:bg-neutral-700 text-neutral-200 text-xs font-bold py-2 rounded-lg transition cursor-pointer text-center">
+                                    Detalles
+                                </button>
+                                <button onclick="agregarPrendaDesdeCard(${p.id})" class="btn-yellow text-xs font-black uppercase py-2 rounded-lg transition cursor-pointer text-center">
+                                    + Agregar
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            `).join('');
+        }
+
+        function filtrarCategoria(cat) {
+            navegarAPanel('tienda', false);
+            categoriaActiva = cat;
+            document.querySelectorAll('.nav-cat-btn').forEach(b => {
+                b.classList.remove('text-white', 'text-amber-400');
+                b.classList.add('text-neutral-400');
+            });
+            const activo = document.getElementById(`cat-btn-${cat}`);
+            if (activo) {
+                activo.classList.remove('text-neutral-400');
+                activo.classList.add('text-amber-400');
+            }
+
+            document.getElementById('titulo-categoria').innerText = cat === 'TODOS' ? 'Colección Streetwear' : `Colección: ${cat}`;
+
+            if (cat === 'TODOS') {
+                renderizarCatalogo(catalogo);
+            } else {
+                renderizarCatalogo(catalogo.filter(p => p.cat === cat));
+            }
+
+            scrollearCatalogo();
+        }
+
+        function buscarPrendas() {
+            navegarAPanel('tienda', false);
+            const q = document.getElementById('input-buscar').value.toLowerCase().trim();
+            const filtrados = catalogo.filter(p => 
+                p.nombre.toLowerCase().includes(q) || 
+                p.cat.toLowerCase().includes(q) || 
+                p.sku.toLowerCase().includes(q)
+            );
+            renderizarCatalogo(filtrados);
+            scrollearCatalogo();
+        }
+
+        function scrollearCatalogo() {
+            setTimeout(() => {
+                const sec = document.getElementById('seccion-catalogo');
+                if (sec) {
+                    sec.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            }, 60);
+        }
+
+        // ====================================================================
+        // FICHA DETALLADA DE PRODUCTO
+        // ====================================================================
+        let prendaDetalleActiva = null;
+
+        function abrirModalDetallePrenda(id) {
+            const p = catalogo.find(item => item.id === id);
+            if (!p) return;
+            prendaDetalleActiva = p;
+
+            document.getElementById('det-img').src = p.img;
+            document.getElementById('det-nombre').innerText = p.nombre;
+            document.getElementById('det-cat').innerText = p.cat;
+            document.getElementById('det-precio').innerText = `$${p.precio.toLocaleString('es-CL')} CLP`;
+            document.getElementById('det-desc').innerText = p.descripcion;
+            document.getElementById('det-stock-badge').innerText = p.stock > 5 ? `✓ ${p.stock} unidades disponibles` : `⚠ Alerta: solo ${p.stock} unidades`;
+
+            const selTalla = document.getElementById('det-sel-talla');
+            selTalla.innerHTML = p.tallas.map(t => `<option value="${t}">${t}</option>`).join('');
+
+            document.getElementById('det-btn-agregar').onclick = () => {
+                const talla = selTalla.value;
+                agregarBolsaConTalla(p, talla);
+                cerrarModalDetallePrenda();
+                abrirModalCarrito();
+            };
+
+            // Cargar preguntas asociadas
+            const preguntasPrenda = dudasClientes.filter(d => d.productoId === p.id);
+            const contPreguntas = document.getElementById('det-lista-preguntas');
+            
+            if (preguntasPrenda.length === 0) {
+                contPreguntas.innerHTML = '<p class="text-neutral-500 italic">No hay preguntas registradas sobre esta prenda. ¡Sé el primero en consultar!</p>';
+            } else {
+                contPreguntas.innerHTML = preguntasPrenda.map(d => `
+                    <div class="bg-[#1a1a1f] p-3.5 rounded-xl border border-neutral-800 space-y-2">
+                        <div class="flex items-center justify-between text-neutral-400 text-[11px]">
+                            <span class="font-bold text-white"><i class="fa-regular fa-user mr-1 text-amber-500"></i> ${d.clienteNombre}</span>
+                            <span class="${d.estado === 'RESPONDIDO' ? 'text-emerald-400 font-bold' : 'text-amber-400'}">${d.estado}</span>
+                        </div>
+                        <p class="text-neutral-300 font-medium">${d.pregunta}</p>
+                        ${d.respuesta ? `
+                            <div class="bg-neutral-900 p-2.5 rounded-lg border border-neutral-800 text-[11px] text-neutral-300 mt-1">
+                                <span class="font-bold text-amber-400 block mb-0.5"><i class="fa-solid fa-reply mr-1"></i> Respuesta oficial (${d.respondidoPor}):</span>
+                                ${d.respuesta}
+                            </div>
+                        ` : ''}
+                    </div>
+                `).join('');
+            }
+
+            document.getElementById('modal-detalle-prenda').style.display = 'flex';
+        }
+
+        function cerrarModalDetallePrenda() {
+            document.getElementById('modal-detalle-prenda').style.display = 'none';
+        }
+
+        function enviarPreguntaDetalle() {
+            const input = document.getElementById('input-pregunta-detalle');
+            const texto = input.value.trim();
+            if (!texto) return alert('Por favor escribe tu consulta antes de enviar.');
+
+            const nombreCliente = usuarioActual ? usuarioActual.nombre : 'Cliente Visitante';
+            const emailCliente = usuarioActual ? usuarioActual.email : 'visitante@correo.cl';
+
+            const nuevaDuda = {
+                id: dudasClientes.length + 1,
+                productoId: prendaDetalleActiva.id,
+                productoNombre: prendaDetalleActiva.nombre,
+                clienteNombre: nombreCliente,
+                clienteEmail: emailCliente,
+                pregunta: texto,
+                respuesta: '',
+                respondidoPor: '',
+                estado: 'PENDIENTE'
+            };
+
+            dudasClientes.unshift(nuevaDuda);
+            input.value = '';
+            abrirModalDetallePrenda(prendaDetalleActiva.id);
+            renderizarDudasTrabajador();
+            mostrarToast('Tu pregunta ha sido enviada al equipo de bodega y atención.');
+        }
+
+        // ====================================================================
+        // BOLSA DE COMPRAS & PAGO
+        // ====================================================================
+        function agregarPrendaDesdeCard(id) {
+            const p = catalogo.find(item => item.id === id);
+            const sel = document.getElementById(`sel-talla-card-${id}`);
+            const talla = sel ? sel.value : p.tallas[0];
+            agregarBolsaConTalla(p, talla);
+            abrirModalCarrito();
+        }
+
+        function agregarBolsaConTalla(producto, talla) {
+            bolsa.push({ ...producto, tallaElegida: talla });
+            actualizarBolsa();
+            mostrarToast(`Agregado a la bolsa: ${producto.nombre} (${talla})`);
+        }
+
+        function actualizarBolsa() {
+            document.getElementById('badge-cart').innerText = bolsa.length;
+            const lista = document.getElementById('lista-carrito');
+
+            if (bolsa.length === 0) {
+                lista.innerHTML = '<p class="text-center text-neutral-500 py-6">Tu bolsa de compras está vacía.</p>';
+                document.getElementById('txt-neto').innerText = '$0 CLP';
+                document.getElementById('txt-iva').innerText = '$0 CLP';
+                document.getElementById('txt-total').innerText = '$0 CLP';
+                return;
+            }
+
+            let total = bolsa.reduce((acc, i) => acc + i.precio, 0);
+            let neto = Math.round(total / 1.19);
+            let iva = total - neto;
+
+            lista.innerHTML = bolsa.map((item, idx) => `
+                <div class="py-3 flex justify-between items-center text-xs">
+                    <div class="flex items-center gap-3">
+                        <img src="${item.img}" class="w-10 h-10 object-cover rounded-lg border border-neutral-800">
+                        <div>
+                            <p class="font-bold text-white">${item.nombre}</p>
+                            <p class="text-neutral-400 text-[11px]">Talla: <span class="text-amber-400 font-bold">${item.tallaElegida}</span></p>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <span class="font-mono text-white font-bold">$${item.precio.toLocaleString('es-CL')}</span>
+                        <button onclick="removerPrendaBolsa(${idx})" class="text-red-400 hover:text-red-300 p-1 cursor-pointer">
+                            <i class="fa-solid fa-trash-can"></i>
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+
+            document.getElementById('txt-neto').innerText = `$${neto.toLocaleString('es-CL')} CLP`;
+            document.getElementById('txt-iva').innerText = `$${iva.toLocaleString('es-CL')} CLP`;
+            document.getElementById('txt-total').innerText = `$${total.toLocaleString('es-CL')} CLP`;
+        }
+
+        function removerPrendaBolsa(idx) {
+            bolsa.splice(idx, 1);
+            actualizarBolsa();
+        }
+
+        function abrirModalCarrito() {
+            document.getElementById('modal-carrito').style.display = 'flex';
+        }
+
+        function cerrarModalCarrito() {
+            document.getElementById('modal-carrito').style.display = 'none';
+        }
+
+        // ====================================================================
+        // PASARELA DE PAGO INTERACTIVA (WEBPAY PLUS / TRANSBANK)
+        // ====================================================================
+        let metodoPagoSeleccionado = 'tarjeta';
+
+        function abrirPasarelaPago() {
+            if (bolsa.length === 0) {
+                alert('Tu bolsa de compras está vacía. Añade al menos una prenda para pagar.');
+                return;
+            }
+
+            const total = bolsa.reduce((acc, i) => acc + i.precio, 0);
+            document.getElementById('pasarela-monto-total').innerText = `$${total.toLocaleString('es-CL')} CLP`;
+            document.getElementById('btn-pago-label').innerText = `Pagar $${total.toLocaleString('es-CL')} CLP con Webpay Plus`;
+
+            // Calcular opciones de cuotas en pesos
+            const selCuotas = document.getElementById('pay-card-cuotas');
+            if (selCuotas) {
+                selCuotas.innerHTML = `
+                    <option value="1">1 Cuota de $${total.toLocaleString('es-CL')} CLP (Sin interés)</option>
+                    <option value="3">3 Cuotas de $${Math.round(total / 3).toLocaleString('es-CL')} CLP (Sin interés)</option>
+                    <option value="6">6 Cuotas de $${Math.round(total / 6).toLocaleString('es-CL')} CLP (Sin interés)</option>
+                    <option value="12">12 Cuotas de $${Math.round(total / 12).toLocaleString('es-CL')} CLP (Precio contado)</option>
+                `;
+            }
+
+            // Precargar datos del usuario si está logueado
+            if (usuarioActual) {
+                const inputName = document.getElementById('pay-card-name');
+                if (inputName && !inputName.value) inputName.value = usuarioActual.nombre.toUpperCase();
+
+                const inputRut = document.getElementById('pay-card-rut');
+                if (inputRut && !inputRut.value) inputRut.value = usuarioActual.rut || '19.876.543-2';
+
+                const inputDir = document.getElementById('pay-card-dir');
+                if (inputDir && !inputDir.value) inputDir.value = usuarioActual.dir || 'Av. Providencia 1420, Depto 502, Providencia, Santiago';
+            }
+
+            // Actualizar vista previa de la tarjeta
+            actualizarTarjetaPreview();
+
+            // Asegurar que el formulario esté visible y la pantalla de carga oculta
+            document.getElementById('pasarela-contenedor-formulario').style.display = 'block';
+            document.getElementById('pasarela-contenedor-procesando').style.display = 'none';
+
+            cerrarModalCarrito();
+            document.getElementById('modal-pasarela-pago').style.display = 'flex';
+        }
+
+        function cerrarPasarelaPago() {
+            document.getElementById('modal-pasarela-pago').style.display = 'none';
+        }
+
+        function seleccionarMetodoPasarela(metodo) {
+            metodoPagoSeleccionado = metodo;
+            const total = bolsa.reduce((acc, i) => acc + i.precio, 0);
+
+            const btnT = document.getElementById('btn-metodo-tarjeta');
+            const btnM = document.getElementById('btn-metodo-mercadopago');
+            const btnTr = document.getElementById('btn-metodo-transferencia');
+
+            const secT = document.getElementById('seccion-metodo-tarjeta');
+            const secM = document.getElementById('seccion-metodo-mercadopago');
+            const secTr = document.getElementById('seccion-metodo-transferencia');
+
+            const lblBtn = document.getElementById('btn-pago-label');
+
+            [btnT, btnM, btnTr].forEach(b => {
+                b.className = 'p-3 rounded-xl border border-neutral-700 bg-neutral-900/60 text-neutral-400 hover:text-white font-bold flex flex-col items-center gap-1.5 transition text-center cursor-pointer';
+            });
+
+            secT.style.display = 'none';
+            secM.style.display = 'none';
+            secTr.style.display = 'none';
+
+            if (metodo === 'tarjeta') {
+                btnT.className = 'p-3 rounded-xl border border-amber-500/80 bg-amber-500/10 text-amber-300 font-bold flex flex-col items-center gap-1.5 transition text-center cursor-pointer';
+                secT.style.display = 'block';
+                lblBtn.innerText = `Pagar $${total.toLocaleString('es-CL')} CLP con Webpay Plus`;
+            } else if (metodo === 'mercadopago') {
+                btnM.className = 'p-3 rounded-xl border border-sky-500/80 bg-sky-500/10 text-sky-300 font-bold flex flex-col items-center gap-1.5 transition text-center cursor-pointer';
+                secM.style.display = 'block';
+                lblBtn.innerText = `Continuar a Mercado Pago ($${total.toLocaleString('es-CL')} CLP)`;
+            } else if (metodo === 'transferencia') {
+                btnTr.className = 'p-3 rounded-xl border border-amber-500/80 bg-amber-500/10 text-amber-300 font-bold flex flex-col items-center gap-1.5 transition text-center cursor-pointer';
+                secTr.style.display = 'block';
+                lblBtn.innerText = `Confirmar Transferencia ($${total.toLocaleString('es-CL')} CLP)`;
+            }
+        }
+
+        function formatearNumeroTarjeta(input) {
+            let val = input.value.replace(/\D/g, '').substring(0, 16);
+            let formatted = '';
+            for (let i = 0; i < val.length; i++) {
+                if (i > 0 && i % 4 === 0) formatted += ' ';
+                formatted += val[i];
+            }
+            input.value = formatted;
+
+            // Detección de franquicia
+            const brandEl = document.getElementById('card-preview-brand');
+            const iconEl = document.getElementById('icon-card-brand');
+            if (val.startsWith('4')) {
+                brandEl.innerText = 'VISA';
+                iconEl.innerHTML = '<i class="fa-brands fa-cc-visa text-blue-400"></i>';
+            } else if (val.startsWith('5')) {
+                brandEl.innerText = 'MASTERCARD';
+                iconEl.innerHTML = '<i class="fa-brands fa-cc-mastercard text-red-400"></i>';
+            } else if (val.startsWith('3')) {
+                brandEl.innerText = 'AMEX';
+                iconEl.innerHTML = '<i class="fa-brands fa-cc-amex text-sky-400"></i>';
+            } else {
+                brandEl.innerText = 'WEBPAY';
+                iconEl.innerHTML = '<i class="fa-solid fa-credit-card text-neutral-400"></i>';
+            }
+
+            actualizarTarjetaPreview();
+        }
+
+        function actualizarNombreTarjeta(input) {
+            input.value = input.value.toUpperCase();
+            actualizarTarjetaPreview();
+        }
+
+        function formatearExpTarjeta(input) {
+            let val = input.value.replace(/\D/g, '').substring(0, 4);
+            if (val.length >= 2) {
+                input.value = val.substring(0, 2) + '/' + val.substring(2);
+            } else {
+                input.value = val;
+            }
+            actualizarTarjetaPreview();
+        }
+
+        function actualizarCvcTarjeta(input) {
+            input.value = input.value.replace(/\D/g, '').substring(0, 4);
+            actualizarTarjetaPreview();
+        }
+
+        function actualizarTarjetaPreview() {
+            const numInput = document.getElementById('pay-card-number');
+            const nameInput = document.getElementById('pay-card-name');
+            const expInput = document.getElementById('pay-card-exp');
+            const cvcInput = document.getElementById('pay-card-cvc');
+
+            const numPreview = document.getElementById('card-preview-number');
+            const namePreview = document.getElementById('card-preview-name');
+            const expPreview = document.getElementById('card-preview-exp');
+            const cvcPreview = document.getElementById('card-preview-cvc');
+
+            if (numInput && numPreview) {
+                let clean = numInput.value.replace(/\s+/g, '');
+                if (clean.length === 0) {
+                    numPreview.innerText = '•••• •••• •••• ••••';
+                } else {
+                    let full = clean.padEnd(16, '•');
+                    numPreview.innerText = `${full.slice(0, 4)} ${full.slice(4, 8)} ${full.slice(8, 12)} ${full.slice(12, 16)}`;
+                }
+            }
+
+            if (nameInput && namePreview) {
+                namePreview.innerText = nameInput.value.trim() || 'NOMBRE DEL TITULAR';
+            }
+
+            if (expInput && expPreview) {
+                expPreview.innerText = expInput.value.trim() || 'MM/AA';
+            }
+
+            if (cvcInput && cvcPreview) {
+                cvcPreview.innerText = cvcInput.value.trim() ? cvcInput.value : '•••';
+            }
+        }
+
+        function ejecutarTransaccionSegura() {
+            if (bolsa.length === 0) return;
+
+            const total = bolsa.reduce((acc, i) => acc + i.precio, 0);
+
+            // Obtener o simular datos ingresados (acepta cualquier número)
+            const numRaw = (document.getElementById('pay-card-number')?.value.replace(/\s+/g, '') || '4532882019238812');
+            const last4 = numRaw.slice(-4) || '8812';
+            const brand = document.getElementById('card-preview-brand')?.innerText || 'Webpay Plus';
+
+            const titular = document.getElementById('pay-card-name')?.value.trim() || 
+                            (usuarioActual ? usuarioActual.nombre : 'Sebastián Castro');
+            const rut = document.getElementById('pay-card-rut')?.value.trim() || 
+                        (usuarioActual?.rut || '19.876.543-2');
+            const dir = document.getElementById('pay-card-dir')?.value.trim() || 
+                        (usuarioActual?.dir || 'Av. Providencia 1420, Depto 502, Providencia, Santiago');
+            
+            const selCuotas = document.getElementById('pay-card-cuotas');
+            const cuotasTexto = selCuotas ? selCuotas.options[selCuotas.selectedIndex].text : '1 Cuota (Sin interés)';
+
+            // Cambiar a la vista de procesamiento bancario en tiempo real
+            document.getElementById('pasarela-contenedor-formulario').style.display = 'none';
+            document.getElementById('pasarela-contenedor-procesando').style.display = 'block';
+
+            const txtEtapa = document.getElementById('pasarela-txt-etapa');
+            const txtSub = document.getElementById('pasarela-txt-subetapa');
+            const barra = document.getElementById('pasarela-barra-progreso');
+
+            txtEtapa.innerText = 'Conectando con Transbank...';
+            txtSub.innerText = 'Estableciendo canal cifrado SSL con los servidores de Webpay Plus.';
+            barra.style.width = '25%';
+
+            setTimeout(() => {
+                txtEtapa.innerText = 'Autorizando con el banco emisor...';
+                txtSub.innerText = 'Verificando saldo disponible y token de seguridad bancario.';
+                barra.style.width = '65%';
+            }, 500);
+
+            setTimeout(() => {
+                txtEtapa.innerText = 'Validando firma criptográfica...';
+                txtSub.innerText = 'Generando folio y número de autorización oficial.';
+                barra.style.width = '90%';
+            }, 1100);
+
+            setTimeout(() => {
+                txtEtapa.innerText = '¡Transacción Aprobada!';
+                txtSub.innerText = 'Emitiendo comprobante fiscal electrónico.';
+                barra.style.width = '100%';
+            }, 1600);
+
+            setTimeout(() => {
+                // Si el usuario no estaba logueado, crear sesión de cliente vinculada para el tracking
+                if (!usuarioActual) {
+                    usuarioActual = {
+                        id: 301,
+                        nombre: titular,
+                        email: 'scastro@gmail.com',
+                        tipo: 'cliente',
+                        rol: 'Cliente Verificado',
+                        rut: rut,
+                        tel: '+56 9 7777 8888',
+                        dir: dir,
+                        panel: 'cliente'
+                    };
+                    renderizarHeaderUsuario();
+                } else {
+                    // Actualizar dirección si el usuario la editó en el checkout
+                    usuarioActual.dir = dir;
+                }
+
+                // Generar Folio y Código de Autorización únicos
+                const folio = `TRK-EST-202609-00${pedidos.length + 1}`;
+                const authCode = `AUT-${Math.floor(100000 + Math.random() * 900000)}`;
+                const fechaHora = new Date().toLocaleString('es-CL');
+                const prendasResumen = bolsa.map(b => `${b.nombre} (${b.tallaElegida})`).join(', ');
+
+                const metodoGlosa = metodoPagoSeleccionado === 'tarjeta' ? 
+                    `${brand} **** ${last4} (${cuotasTexto.split('(')[0].trim()})` : 
+                    (metodoPagoSeleccionado === 'mercadopago' ? 'Mercado Pago (Saldo en Cuenta)' : 'Transferencia Banco Santander');
+
+                // Registrar el nuevo pedido en el estado global
+                const nuevoPedido = {
+                    folio: folio,
+                    auth: authCode,
+                    cliente: usuarioActual.nombre,
+                    email: usuarioActual.email,
+                    rut: rut,
+                    dir: dir,
+                    pago: metodoGlosa,
+                    total: total,
+                    fase: 1,
+                    estado: 'PAGADO',
+                    fecha: new Date().toLocaleDateString('es-CL'),
+                    prendas: prendasResumen
+                };
+
+                pedidos.unshift(nuevoPedido);
+                bolsa = [];
+                actualizarBolsa();
+
+                // Llenar el Comprobante Oficial (Voucher)
+                document.getElementById('vouch-folio').innerText = folio;
+                document.getElementById('vouch-auth').innerText = authCode;
+                document.getElementById('vouch-fecha').innerText = fechaHora;
+                document.getElementById('vouch-tarjeta').innerText = metodoPagoSeleccionado === 'tarjeta' ? `${brand} •••• ${last4}` : metodoGlosa;
+                document.getElementById('vouch-cuotas').innerText = cuotasTexto;
+                document.getElementById('vouch-prendas').innerText = prendasResumen;
+                document.getElementById('vouch-despacho').innerText = `${usuarioActual.nombre} • ${dir}`;
+                document.getElementById('vouch-total').innerText = `$${total.toLocaleString('es-CL')} CLP`;
+
+                // Cerrar pasarela y abrir modal de compra exitosa
+                cerrarPasarelaPago();
+                document.getElementById('modal-pago-exitoso').style.display = 'flex';
+                mostrarToast(`¡Compra autorizada! N° Orden: ${folio}`);
+            }, 1900);
+        }
+
+        function irATrackingDesdeVoucher() {
+            cerrarVoucherYContinuar();
+            navegarAPanel('cliente');
+            mostrarToast('Visualizando seguimiento en vivo de tu orden en tiempo real.');
+        }
+
+        function imprimirVoucher() {
+            window.print();
+        }
+
+        function cerrarVoucherYContinuar() {
+            document.getElementById('modal-pago-exitoso').style.display = 'none';
+            navegarAPanel('tienda');
+        }
+
+        // ====================================================================
+        // PANEL CLIENTE (HISTORIAL DE COMPRAS & RESEÑAS)
+        // ====================================================================
+        function actualizarVistaCliente() {
+            if (!usuarioActual || usuarioActual.tipo !== 'cliente') return;
+
+            document.getElementById('cliente-banner-nombre').innerText = usuarioActual.nombre;
+            document.getElementById('cliente-banner-email').innerText = usuarioActual.email;
+            document.getElementById('cliente-card-rut').innerText = usuarioActual.rut || '19.876.543-2';
+            document.getElementById('cliente-card-tel').innerText = usuarioActual.tel || '+56 9 7777 8888';
+            document.getElementById('cliente-card-dir').innerText = usuarioActual.dir || 'Santiago, Chile';
+
+            // Pedidos del cliente
+            const misPedidos = pedidos.filter(p => p.email.toLowerCase() === usuarioActual.email.toLowerCase());
+            document.getElementById('cliente-total-pedidos').innerText = `${misPedidos.length} órdenes registradas`;
+
+            const contPedidos = document.getElementById('cliente-lista-pedidos');
+            if (misPedidos.length === 0) {
+                contPedidos.innerHTML = '<p class="text-neutral-500 py-6 text-center">Aún no has realizado compras en la tienda.</p>';
+            } else {
+                contPedidos.innerHTML = misPedidos.map(p => `
+                    <div class="glass-card p-6 rounded-2xl border border-neutral-800 space-y-4">
+                        <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-2 border-b border-neutral-800/80 pb-3 text-xs">
+                            <div>
+                                <span class="font-mono font-bold text-amber-400 text-sm">${p.folio}</span>
+                                <p class="text-neutral-400 text-[11px] mt-0.5">Prendas: <span class="text-neutral-200">${p.prendas}</span></p>
+                            </div>
+                            <div class="text-left sm:text-right">
+                                <span class="font-mono text-base font-black text-white">$${p.total.toLocaleString('es-CL')} CLP</span>
+                                <p class="text-[10px] text-emerald-400 font-semibold"><i class="fa-solid fa-check mr-1"></i> ${p.pago} • ${p.fecha}</p>
+                            </div>
+                        </div>
+
+                        <!-- Barra visual de 4 estados -->
+                        <div class="grid grid-cols-4 gap-2 text-center text-xs pt-1">
+                            <div class="flex flex-col items-center space-y-1">
+                                <div class="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold border-2 ${p.fase >= 1 ? 'step-done' : 'border-neutral-700 text-neutral-600 bg-neutral-950'}">
+                                    <i class="fa-solid fa-receipt"></i>
+                                </div>
+                                <span class="text-[10px] ${p.fase >= 1 ? 'text-white font-bold' : 'text-neutral-500'}">1. Pagado</span>
+                            </div>
+
+                            <div class="flex flex-col items-center space-y-1">
+                                <div class="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold border-2 ${p.fase >= 2 ? 'step-done' : 'border-neutral-700 text-neutral-600 bg-neutral-950'}">
+                                    <i class="fa-solid fa-box-open"></i>
+                                </div>
+                                <span class="text-[10px] ${p.fase >= 2 ? 'text-white font-bold' : 'text-neutral-500'}">2. Empacando</span>
+                            </div>
+
+                            <div class="flex flex-col items-center space-y-1">
+                                <div class="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold border-2 ${p.fase >= 3 ? 'step-done' : 'border-neutral-700 text-neutral-600 bg-neutral-950'}">
+                                    <i class="fa-solid fa-truck"></i>
+                                </div>
+                                <span class="text-[10px] ${p.fase >= 3 ? 'text-white font-bold' : 'text-neutral-500'}">3. En Camino</span>
+                            </div>
+
+                            <div class="flex flex-col items-center space-y-1">
+                                <div class="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold border-2 ${p.fase >= 4 ? 'step-done' : 'border-neutral-700 text-neutral-600 bg-neutral-950'}">
+                                    <i class="fa-solid fa-house-circle-check"></i>
+                                </div>
+                                <span class="text-[10px] ${p.fase >= 4 ? 'text-emerald-400 font-bold' : 'text-neutral-500'}">4. Entregado</span>
+                            </div>
+                        </div>
+
+                        ${p.fase === 4 ? `
+                            <div class="pt-2 border-t border-neutral-800/80 flex justify-end">
+                                <button onclick="abrirModalDejarResena(201, 'Hoodie Oversize Acid Wash Black')" class="btn-yellow px-3.5 py-1.5 rounded-lg text-xs font-bold flex items-center gap-1.5 cursor-pointer">
+                                    <i class="fa-solid fa-star"></i> Calificar Compra
+                                </button>
+                            </div>
+                        ` : ''}
+                    </div>
+                `).join('');
+            }
+
+            // Preguntas del cliente
+            const misPreguntas = dudasClientes.filter(d => d.clienteEmail.toLowerCase() === usuarioActual.email.toLowerCase());
+            const contPreguntas = document.getElementById('cliente-lista-preguntas');
+            if (misPreguntas.length === 0) {
+                contPreguntas.innerHTML = '<p class="text-neutral-500 text-xs py-2">No has formulado consultas aún.</p>';
+            } else {
+                contPreguntas.innerHTML = misPreguntas.map(d => `
+                    <div class="bg-neutral-900 p-4 rounded-xl border border-neutral-800 text-xs space-y-2">
+                        <div class="flex justify-between items-center text-neutral-400 text-[11px]">
+                            <span class="font-bold text-amber-400">${d.productoNombre}</span>
+                            <span class="${d.estado === 'RESPONDIDO' ? 'text-emerald-400 font-bold' : 'text-amber-400'}">${d.estado}</span>
+                        </div>
+                        <p class="text-white">"${d.pregunta}"</p>
+                        ${d.respuesta ? `
+                            <div class="bg-[#18181c] p-3 rounded-lg border border-neutral-800 text-neutral-300">
+                                <span class="text-amber-400 font-bold block mb-1">Respuesta oficial (${d.respondidoPor}):</span>
+                                ${d.respuesta}
+                            </div>
+                        ` : '<span class="text-neutral-500 italic text-[11px]">Pendiente de respuesta por el equipo de bodega.</span>'}
+                    </div>
+                `).join('');
+            }
+        }
+
+        function abrirModalEditarPerfilCliente() {
+            if (!usuarioActual) return;
+            document.getElementById('edit-cli-nombre').value = usuarioActual.nombre;
+            document.getElementById('edit-cli-rut').value = usuarioActual.rut || '';
+            document.getElementById('edit-cli-tel').value = usuarioActual.tel || '';
+            document.getElementById('edit-cli-email').value = usuarioActual.email;
+            document.getElementById('edit-cli-dir').value = usuarioActual.dir || '';
+            document.getElementById('modal-edit-cliente').style.display = 'flex';
+        }
+
+        function cerrarModalEditarPerfilCliente() {
+            document.getElementById('modal-edit-cliente').style.display = 'none';
+        }
+
+        function guardarPerfilCliente(e) {
+            e.preventDefault();
+            usuarioActual.nombre = document.getElementById('edit-cli-nombre').value.trim();
+            usuarioActual.rut = document.getElementById('edit-cli-rut').value.trim();
+            usuarioActual.tel = document.getElementById('edit-cli-tel').value.trim();
+            usuarioActual.email = document.getElementById('edit-cli-email').value.trim();
+            usuarioActual.dir = document.getElementById('edit-cli-dir').value.trim();
+
+            cerrarModalEditarPerfilCliente();
+            actualizarVistaCliente();
+            renderizarHeaderUsuario();
+            mostrarToast('Datos de contacto y despacho actualizados en la base de datos.');
+        }
+
+        function abrirModalDejarResena(prodId, prodNombre) {
+            document.getElementById('resena-prod-id').value = prodId;
+            document.getElementById('resena-prod-nombre').innerText = prodNombre;
+            document.getElementById('resena-comentario').value = '';
+            seleccionarEstrellas(5);
+            document.getElementById('modal-dejar-resena').style.display = 'flex';
+        }
+
+        function cerrarModalDejarResena() {
+            document.getElementById('modal-dejar-resena').style.display = 'none';
+        }
+
+        function seleccionarEstrellas(n) {
+            document.getElementById('resena-rating').value = n;
+            const contenedor = document.getElementById('estrellas-selector');
+            const icons = contenedor.querySelectorAll('i');
+            icons.forEach((ic, idx) => {
+                if (idx < n) {
+                    ic.className = 'fa-solid fa-star cursor-pointer text-amber-400';
+                } else {
+                    ic.className = 'fa-regular fa-star cursor-pointer text-neutral-600';
+                }
+            });
+        }
+
+        function guardarResenaCliente(e) {
+            e.preventDefault();
+            const prodId = parseInt(document.getElementById('resena-prod-id').value);
+            const prodNombre = document.getElementById('resena-prod-nombre').innerText;
+            const rating = parseInt(document.getElementById('resena-rating').value);
+            const comentario = document.getElementById('resena-comentario').value.trim();
+
+            resenas.unshift({
+                id: resenas.length + 1,
+                productoId: prodId,
+                productoNombre: prodNombre,
+                clienteNombre: usuarioActual ? usuarioActual.nombre : 'Cliente',
+                rating: rating,
+                comentario: comentario,
+                fecha: new Date().toLocaleDateString('es-CL')
+            });
+
+            cerrarModalDejarResena();
+            renderizarResenasTrabajador();
+            mostrarToast('¡Tu reseña ha sido publicada con éxito!');
+        }
+
+        // ====================================================================
+        // PANEL TRABAJADOR (FULFILLMENT, DUDAS, RESEÑAS)
+        // ====================================================================
+        function cambiarSubTabTrabajador(tab) {
+            ['pedidos', 'dudas', 'resenas'].forEach(t => {
+                document.getElementById(`trab-vista-${t}`).classList.add('hidden');
+                const btn = document.getElementById(`subtab-trab-${t}`);
+                btn.className = 'px-4 py-2 rounded-lg text-neutral-400 hover:text-white transition';
+            });
+
+            document.getElementById(`trab-vista-${tab}`).classList.remove('hidden');
+            document.getElementById(`subtab-trab-${tab}`).className = 'px-4 py-2 rounded-lg text-white bg-blue-600 transition font-bold';
+        }
+
+        function renderizarTablaTrabajadorPedidos(filtro = 'TODOS') {
+            const tbody = document.getElementById('tabla-pedidos-trabajador');
+            let lista = pedidos;
+            if (filtro !== 'TODOS') lista = pedidos.filter(p => p.estado === filtro);
+
+            tbody.innerHTML = lista.map((p, idx) => `
+                <tr class="hover:bg-neutral-800/40 transition">
+                    <td class="px-6 py-4 font-mono font-bold text-amber-400">
+                        ${p.folio}<br>
+                        <span class="text-[10px] text-neutral-500">${p.fecha}</span>
+                    </td>
+                    <td class="px-6 py-4">
+                        <span class="font-bold text-white">${p.cliente}</span><br>
+                        <span class="text-neutral-400 text-[11px]">${p.dir}</span>
+                    </td>
+                    <td class="px-6 py-4 text-neutral-300">${p.prendas}</td>
+                    <td class="px-6 py-4 font-mono font-bold text-white">$${p.total.toLocaleString('es-CL')}</td>
+                    <td class="px-6 py-4">
+                        <span class="px-2.5 py-1 rounded text-[10px] font-bold ${
+                            p.fase === 4 ? 'bg-emerald-500/20 text-emerald-400' :
+                            p.fase === 3 ? 'bg-blue-500/20 text-blue-400' :
+                            p.fase === 2 ? 'bg-amber-500/20 text-amber-400' :
+                            'bg-neutral-800 text-neutral-300'
+                        }">
+                            ${p.estado}
+                        </span>
+                    </td>
+                    <td class="px-6 py-4 text-right">
+                        ${p.fase < 4 ? `
+                            <button onclick="avanzarFasePedidoTrabajador(${idx})" class="btn-yellow px-3 py-1.5 rounded-lg text-xs font-bold uppercase transition cursor-pointer">
+                                Avanzar Fase <i class="fa-solid fa-arrow-right ml-1"></i>
+                            </button>
+                        ` : '<span class="text-emerald-400 font-bold text-xs"><i class="fa-solid fa-circle-check"></i> Finalizado</span>'}
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function filtrarPedidosTrabajador(fase) {
+            renderizarTablaTrabajadorPedidos(fase);
+        }
+
+        function avanzarFasePedidoTrabajador(idx) {
+            const fases = ['PAGADO', 'EN_EMPAQUETAMIENTO', 'EN_CAMINO', 'ENTREGADO'];
+            if (pedidos[idx].fase < 4) {
+                pedidos[idx].fase += 1;
+                pedidos[idx].estado = fases[pedidos[idx].fase - 1];
+                renderizarTablaTrabajadorPedidos();
+                mostrarToast(`Pedido ${pedidos[idx].folio} actualizado a fase: ${pedidos[idx].estado}`);
+            }
+        }
+
+        function renderizarDudasTrabajador() {
+            const cont = document.getElementById('contenedor-dudas-trabajador');
+            const pendientes = dudasClientes.filter(d => d.estado === 'PENDIENTE').length;
+            document.getElementById('badge-dudas-pendientes').innerText = pendientes;
+
+            cont.innerHTML = dudasClientes.map(d => `
+                <div class="glass-card p-5 rounded-2xl border border-neutral-800 space-y-3">
+                    <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-2 text-xs">
+                        <div>
+                            <span class="font-bold text-amber-400">${d.productoNombre}</span>
+                            <p class="text-neutral-400 text-[11px]">Pregunta realizada por: <span class="text-white">${d.clienteNombre} (${d.clienteEmail})</span></p>
+                        </div>
+                        <span class="px-2.5 py-1 rounded text-[10px] font-bold ${d.estado === 'RESPONDIDO' ? 'bg-emerald-500/20 text-emerald-400' : 'bg-amber-500/20 text-amber-400'}">
+                            ${d.estado}
+                        </span>
+                    </div>
+
+                    <div class="bg-neutral-900 p-3 rounded-xl border border-neutral-800 text-xs text-neutral-200">
+                        "${d.pregunta}"
+                    </div>
+
+                    ${d.estado === 'RESPONDIDO' ? `
+                        <div class="bg-blue-950/20 border border-blue-900/40 p-3 rounded-xl text-xs text-neutral-300">
+                            <span class="text-blue-400 font-bold block mb-1">Respuesta enviada (${d.respondidoPor}):</span>
+                            ${d.respuesta}
+                        </div>
+                    ` : `
+                        <div class="space-y-2">
+                            <input type="text" id="resp-duda-${d.id}" placeholder="Escribe la respuesta oficial para el cliente..." class="w-full bg-[#18181c] border border-neutral-700 rounded-xl px-3.5 py-2 text-xs text-white focus:outline-none focus:border-amber-500">
+                            <button onclick="responderDudaTrabajador(${d.id})" class="btn-yellow px-4 py-2 rounded-xl text-xs font-bold uppercase transition cursor-pointer">
+                                Enviar Respuesta Oficial
+                            </button>
+                        </div>
+                    `}
+                </div>
+            `).join('');
+        }
+
+        function responderDudaTrabajador(id) {
+            const input = document.getElementById(`resp-duda-${id}`);
+            const texto = input.value.trim();
+            if (!texto) return alert('Debes ingresar un texto de respuesta.');
+
+            const duda = dudasClientes.find(d => d.id === id);
+            if (duda) {
+                duda.respuesta = texto;
+                duda.respondidoPor = usuarioActual ? `${usuarioActual.nombre} (Bodega)` : 'Equipo de Soporte';
+                duda.estado = 'RESPONDIDO';
+                renderizarDudasTrabajador();
+                mostrarToast('Respuesta enviada y publicada en la ficha del producto.');
+            }
+        }
+
+        function renderizarResenasTrabajador() {
+            const cont = document.getElementById('contenedor-resenas-trabajador');
+            cont.innerHTML = resenas.map(r => `
+                <div class="glass-card p-5 rounded-2xl border border-neutral-800 space-y-2 text-xs">
+                    <div class="flex justify-between items-center">
+                        <span class="font-bold text-white">${r.clienteNombre}</span>
+                        <div class="text-amber-400">
+                            ${'★'.repeat(r.rating)}${'☆'.repeat(5 - r.rating)}
+                        </div>
+                    </div>
+                    <span class="text-neutral-400 text-[11px] block">${r.productoNombre} • ${r.fecha}</span>
+                    <p class="text-neutral-300 leading-relaxed bg-neutral-900/60 p-3 rounded-xl border border-neutral-800">
+                        "${r.comentario}"
+                    </p>
+                </div>
+            `).join('');
+        }
+
+        // ====================================================================
+        // PANEL ADMINISTRADOR (CATÁLOGO, PROVEEDORES, MÉTRICAS)
+        // ====================================================================
+        function cambiarSubTabAdmin(tab) {
+            ['productos', 'proveedores', 'metricas'].forEach(t => {
+                document.getElementById(`adm-vista-${t}`).classList.add('hidden');
+                const btn = document.getElementById(`subtab-adm-${t}`);
+                btn.className = 'px-4 py-2 rounded-lg text-neutral-400 hover:text-white transition';
+            });
+
+            document.getElementById(`adm-vista-${tab}`).classList.remove('hidden');
+            document.getElementById(`subtab-adm-${tab}`).className = 'px-4 py-2 rounded-lg text-black bg-amber-500 transition font-black';
+        }
+
+        function actualizarMetricasAdmin() {
+            document.getElementById('kpi-total-productos').innerText = catalogo.length;
+            const valorTotal = catalogo.reduce((acc, p) => acc + (p.precio * p.stock), 0);
+            document.getElementById('kpi-valor-inventario').innerText = `$${valorTotal.toLocaleString('es-CL')} CLP`;
+            const quiebres = catalogo.filter(p => p.stock <= p.min).length;
+            document.getElementById('kpi-quiebres-stock').innerText = quiebres;
+        }
+
+        function renderizarTablaAdminProductos() {
+            const tbody = document.getElementById('tabla-admin-productos');
+            tbody.innerHTML = catalogo.map(p => `
+                <tr class="hover:bg-neutral-800/40 transition">
+                    <td class="px-6 py-3.5">
+                        <div class="flex items-center gap-3">
+                            <img src="${p.img}" class="w-10 h-10 object-cover rounded-lg border border-neutral-800">
+                            <div>
+                                <span class="font-bold text-white block">${p.nombre}</span>
+                                <span class="text-[11px] text-neutral-400 line-clamp-1">${p.descripcion.substring(0, 45)}...</span>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="px-6 py-3.5">
+                        <span class="font-mono text-amber-400 font-bold">${p.sku}</span><br>
+                        <span class="text-[10px] text-neutral-400 uppercase font-bold">${p.cat}</span>
+                    </td>
+                    <td class="px-6 py-3.5 font-mono text-neutral-300">${p.tallas.join(', ')}</td>
+                    <td class="px-6 py-3.5 font-mono font-bold text-white">$${p.precio.toLocaleString('es-CL')}</td>
+                    <td class="px-6 py-3.5 font-mono">
+                        <span class="${p.stock <= p.min ? 'text-red-400 font-bold' : 'text-neutral-200'}">
+                            ${p.stock} un.
+                        </span>
+                        <span class="text-[10px] text-neutral-500 block">mín: ${p.min}</span>
+                    </td>
+                    <td class="px-6 py-3.5 text-neutral-300 text-[11px]">${p.provNombre}</td>
+                    <td class="px-6 py-3.5 text-right space-x-2">
+                        <button onclick="editarProductoAdmin(${p.id})" class="text-amber-400 hover:text-amber-300 p-1.5 cursor-pointer" title="Editar Prenda">
+                            <i class="fa-solid fa-pen-to-square"></i>
+                        </button>
+                        <button onclick="eliminarProductoAdmin(${p.id})" class="text-red-400 hover:text-red-300 p-1.5 cursor-pointer" title="Eliminar Prenda">
+                            <i class="fa-solid fa-trash-can"></i>
+                        </button>
+                    </td>
+                </tr>
+            `).join('');
+            actualizarMetricasAdmin();
+        }
+
+        function abrirModalNuevoProducto() {
+            document.getElementById('modal-producto-titulo').innerText = 'Agregar Nueva Prenda';
+            document.getElementById('prod-edit-id').value = '';
+            document.getElementById('prod-nombre').value = '';
+            document.getElementById('prod-sku').value = '';
+            document.getElementById('prod-precio').value = '';
+            document.getElementById('prod-stock').value = '';
+            document.getElementById('prod-min').value = '8';
+            document.getElementById('prod-tallas').value = 'S, M, L, XL';
+            document.getElementById('prod-img').value = 'https://images.unsplash.com/photo-1556905055-8f358a7a47b2?q=80&w=600&auto=format&fit=crop';
+            document.getElementById('prod-desc').value = '';
+
+            // Poblar proveedores
+            const selProv = document.getElementById('prod-prov');
+            selProv.innerHTML = proveedores.map(pr => `<option value="${pr.id}">${pr.nombre}</option>`).join('');
+
+            document.getElementById('modal-producto-admin').style.display = 'flex';
+        }
+
+        function editarProductoAdmin(id) {
+            const p = catalogo.find(item => item.id === id);
+            if (!p) return;
+
+            document.getElementById('modal-producto-titulo').innerText = 'Editar Prenda de Catálogo';
+            document.getElementById('prod-edit-id').value = p.id;
+            document.getElementById('prod-nombre').value = p.nombre;
+            document.getElementById('prod-sku').value = p.sku;
+            document.getElementById('prod-cat').value = p.cat;
+            document.getElementById('prod-precio').value = p.precio;
+            document.getElementById('prod-stock').value = p.stock;
+            document.getElementById('prod-min').value = p.min;
+            document.getElementById('prod-tallas').value = p.tallas.join(', ');
+            document.getElementById('prod-img').value = p.img;
+            document.getElementById('prod-desc').value = p.descripcion;
+
+            const selProv = document.getElementById('prod-prov');
+            selProv.innerHTML = proveedores.map(pr => `<option value="${pr.id}" ${pr.id === p.provId ? 'selected' : ''}>${pr.nombre}</option>`).join('');
+
+            document.getElementById('modal-producto-admin').style.display = 'flex';
+        }
+
+        function cerrarModalProductoAdmin() {
+            document.getElementById('modal-producto-admin').style.display = 'none';
+        }
+
+        function guardarProductoAdmin(e) {
+            e.preventDefault();
+            const editId = document.getElementById('prod-edit-id').value;
+            const provId = parseInt(document.getElementById('prod-prov').value);
+            const provEncontrado = proveedores.find(pr => pr.id === provId);
+
+            const tallasArray = document.getElementById('prod-tallas').value
+                .split(',')
+                .map(t => t.trim().toUpperCase())
+                .filter(t => t.length > 0);
+
+            if (editId) {
+                // Editar existente
+                const p = catalogo.find(item => item.id === parseInt(editId));
+                if (p) {
+                    p.nombre = document.getElementById('prod-nombre').value.trim();
+                    p.sku = document.getElementById('prod-sku').value.trim().toUpperCase();
+                    p.cat = document.getElementById('prod-cat').value;
+                    p.precio = parseInt(document.getElementById('prod-precio').value);
+                    p.stock = parseInt(document.getElementById('prod-stock').value);
+                    p.min = parseInt(document.getElementById('prod-min').value);
+                    p.tallas = tallasArray;
+                    p.img = document.getElementById('prod-img').value.trim();
+                    p.descripcion = document.getElementById('prod-desc').value.trim();
+                    p.provId = provId;
+                    p.provNombre = provEncontrado ? provEncontrado.nombre : 'Proveedor Homologado';
+                    mostrarToast(`Prenda '${p.nombre}' actualizada en Oracle Database.`);
+                }
+            } else {
+                // Crear nuevo
+                const nuevo = {
+                    id: Date.now(),
+                    nombre: document.getElementById('prod-nombre').value.trim(),
+                    sku: document.getElementById('prod-sku').value.trim().toUpperCase(),
+                    cat: document.getElementById('prod-cat').value,
+                    precio: parseInt(document.getElementById('prod-precio').value),
+                    stock: parseInt(document.getElementById('prod-stock').value),
+                    min: parseInt(document.getElementById('prod-min').value),
+                    tallas: tallasArray,
+                    img: document.getElementById('prod-img').value.trim(),
+                    descripcion: document.getElementById('prod-desc').value.trim(),
+                    provId: provId,
+                    provNombre: provEncontrado ? provEncontrado.nombre : 'Proveedor Homologado'
+                };
+                catalogo.unshift(nuevo);
+                mostrarToast(`Nueva prenda '${nuevo.nombre}' agregada con éxito al catálogo.`);
+            }
+
+            cerrarModalProductoAdmin();
+            renderizarTablaAdminProductos();
+            renderizarCatalogo(catalogo);
+        }
+
+        function eliminarProductoAdmin(id) {
+            const p = catalogo.find(item => item.id === id);
+            if (!p) return;
+
+            if (confirm(`¿Estás seguro de eliminar '${p.nombre}' del inventario?`)) {
+                catalogo = catalogo.filter(item => item.id !== id);
+                renderizarTablaAdminProductos();
+                renderizarCatalogo(catalogo);
+                mostrarToast(`Prenda '${p.nombre}' dada de baja en base de datos.`);
+            }
+        }
+
+        // ====================================================================
+        // PROVEEDORES DEL ADMIN
+        // ====================================================================
+        function renderizarTablaAdminProveedores() {
+            const tbody = document.getElementById('tabla-admin-proveedores');
+            tbody.innerHTML = proveedores.map(pr => `
+                <tr class="hover:bg-neutral-800/40 transition">
+                    <td class="px-6 py-4 font-bold text-white">${pr.nombre}</td>
+                    <td class="px-6 py-4 font-mono text-amber-400">${pr.rut}</td>
+                    <td class="px-6 py-4 text-neutral-300">${pr.contacto}</td>
+                    <td class="px-6 py-4">
+                        <span class="font-mono text-white">${pr.tel}</span><br>
+                        <span class="text-neutral-400 text-[11px]">${pr.email}</span>
+                    </td>
+                    <td class="px-6 py-4">
+                        <span class="bg-neutral-800 text-neutral-300 px-2.5 py-1 rounded text-[11px] font-bold">
+                            ${pr.rubro}
+                        </span>
+                    </td>
+                    <td class="px-6 py-4 text-right">
+                        <button onclick="eliminarProveedorAdmin(${pr.id})" class="text-red-400 hover:text-red-300 p-1.5 cursor-pointer" title="Desvincular Proveedor">
+                            <i class="fa-solid fa-trash-can"></i>
+                        </button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function abrirModalNuevoProveedor() {
+            document.getElementById('prov-nombre').value = '';
+            document.getElementById('prov-rut').value = '';
+            document.getElementById('prov-rubro').value = '';
+            document.getElementById('prov-contacto').value = '';
+            document.getElementById('prov-tel').value = '';
+            document.getElementById('prov-email').value = '';
+            document.getElementById('modal-proveedor-admin').style.display = 'flex';
+        }
+
+        function cerrarModalNuevoProveedor() {
+            document.getElementById('modal-proveedor-admin').style.display = 'none';
+        }
+
+        function guardarProveedorAdmin(e) {
+            e.preventDefault();
+            const nuevo = {
+                id: Date.now(),
+                nombre: document.getElementById('prov-nombre').value.trim(),
+                rut: document.getElementById('prov-rut').value.trim(),
+                rubro: document.getElementById('prov-rubro').value.trim(),
+                contacto: document.getElementById('prov-contacto').value.trim(),
+                tel: document.getElementById('prov-tel').value.trim(),
+                email: document.getElementById('prov-email').value.trim()
+            };
+
+            proveedores.push(nuevo);
+            cerrarModalNuevoProveedor();
+            renderizarTablaAdminProveedores();
+            mostrarToast(`Proveedor '${nuevo.nombre}' registrado exitosamente.`);
+        }
+
+        function eliminarProveedorAdmin(id) {
+            const pr = proveedores.find(item => item.id === id);
+            if (!pr) return;
+
+            if (confirm(`¿Desvincular al proveedor '${pr.nombre}'?`)) {
+                proveedores = proveedores.filter(item => item.id !== id);
+                renderizarTablaAdminProveedores();
+                mostrarToast(`Proveedor '${pr.nombre}' eliminado.`);
+            }
+        }
+
+        // ====================================================================
+        // UTILIDADES Y TOAST
+        // ====================================================================
+        function mostrarToast(mensaje) {
+            const toast = document.getElementById('toast-notificacion');
+            const txt = document.getElementById('toast-mensaje');
+            if (toast && txt) {
+                txt.innerText = mensaje;
+                toast.style.display = 'flex';
+                setTimeout(() => {
+                    toast.style.display = 'none';
+                }, 4000);
+            }
+        }
+    </script>
+</body>
+</html>
