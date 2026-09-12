@@ -8,7 +8,10 @@
 **Carrera:** Ingeniería en Informática / Analista Programador  
 **Sigla Asignatura:** BDY1103 - Taller de Base de Datos  
 **Ponderación:** 30% Asignatura (Encargo: 40% | Presentación: 60%)  
-**Semestre / Año:** 2024  
+**Docente:** Cristian Medina  
+**Integrantes:** Eduardo Aránguiz, Luciano Zaninovic, Kevin Urbina  
+**Fecha de Entrega:** 16 de septiembre de 2026  
+**Semestre / Año:** Segundo Semestre 2026  
 
 ---
 
@@ -125,7 +128,7 @@ En el bloque anónimo de "Estilo Urbano", se implementó una arquitectura de **L
    ```
 
 **Mecánica de los Bucles Anidados:**
-El bucle exterior (`FOR reg_trab IN cur_trabajadores`) itera por cada trabajador. En cada ciclo, se invoca automáticamente el cursor hijo pasando el `id_usuario` actual (`FOR reg_ped IN cur_pedidos_trabajador(reg_trab.id_usuario, 9, 2024)`). Este bucle interno acumula los montos y cuenta las órdenes efectivas antes de calcular el bono.
+El bucle exterior (`FOR reg_trab IN cur_trabajadores`) itera por cada trabajador. En cada ciclo, se invoca automáticamente el cursor hijo pasando el `id_usuario` actual (`FOR reg_ped IN cur_pedidos_trabajador(reg_trab.id_usuario, 9, 2026)`). Este bucle interno acumula los montos y cuenta las órdenes efectivas antes de calcular el bono.
 
 ### 3.4 Ventajas para Grandes Volúmenes de Información
 * **Optimización del Buffer:** El paso de parámetros al cursor permite al motor de base de datos utilizar índices específicos (sobre `id_trabajador` y `fecha_pedido`), extrayendo solo el segmento de datos necesario en vez de cargar toda la tabla de órdenes en memoria.

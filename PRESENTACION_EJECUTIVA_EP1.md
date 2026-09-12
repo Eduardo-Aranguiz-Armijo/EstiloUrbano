@@ -16,9 +16,9 @@
 ### DIAPOSITIVA 1: PORTADA Y PRESENTACIÓN DEL CASO
 * **Título:** Transformación Digital y Automatización en Base de Datos: Caso "Estilo Urbano".
 * **Subtítulo:** Evaluación Parcial 1 - Taller de Base de Datos (BDY1103).
-* **Integrantes:** [Nombre(s) del/los Estudiante(s)].
-* **Docente:** [Nombre del Docente].
-* **Fecha:** [Mes / Año].
+* **Integrantes:** Eduardo Aránguiz, Luciano Zaninovic, Kevin Urbina.
+* **Docente:** Cristian Medina.
+* **Fecha:** 16 de septiembre de 2026.
 
 > **🗣️ GUION VERBAL (Lo que debes decir):**  
 > *"Buenos días/tardes profesor(a). Hoy presentaremos la primera etapa de nuestro proyecto semestral para la tienda de vestuario juvenil 'Estilo Urbano'. En esta evaluación abordaremos cómo la transición desde un modelo de ventas informal en redes sociales hacia una tienda online centralizada se sustenta técnicamente en el motor Oracle Database utilizando las capacidades avanzadas de programación procedural en PL/SQL."*
@@ -90,7 +90,7 @@
     * Loop interno abre dinámicamente el cursor hijo parametrizado con el ID del empleado en curso, totalizando ventas en tiempo real.
 
 > **🗣️ GUION VERBAL:**  
-> *"El núcleo del procesamiento se diseñó mediante dos cursores explícitos en loops anidados simultáneos. El cursor padre itera por la lista de trabajadores activos. Dentro de ese bucle, llamamos al cursor hijo parametrizado pasándole el ID del trabajador y el periodo de septiembre 2024. Este cursor hijo es complejo porque combina tres tablas con filtros de estados transaccionales. Esta arquitectura con parámetros es óptima para grandes volúmenes de datos, ya que aprovecha los índices relacionales de la base de datos y solo carga en memoria los pedidos específicos de cada operador, evitando lecturas globales de tablas pesadas."*
+> *"El núcleo del procesamiento se diseñó mediante dos cursores explícitos en loops anidados simultáneos. El cursor padre itera por la lista de trabajadores activos. Dentro de ese bucle, llamamos al cursor hijo parametrizado pasándole el ID del trabajador y el periodo de septiembre 2026. Este cursor hijo es complejo porque combina tres tablas con filtros de estados transaccionales. Esta arquitectura con parámetros es óptima para grandes volúmenes de datos, ya que aprovecha los índices relacionales de la base de datos y solo carga en memoria los pedidos específicos de cada operador, evitando lecturas globales de tablas pesadas."*
 
 ---
 

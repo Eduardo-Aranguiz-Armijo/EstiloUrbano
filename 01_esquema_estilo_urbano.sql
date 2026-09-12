@@ -1,7 +1,10 @@
 -- ============================================================================
--- ASIGNATURA: BDY1103 - TALLER DE BASE DE DATOS
--- EVALUACIÓN: EVALUACIÓN PARCIAL N° 1 (CASO SEMESTRAL)
--- PROYECTO   : TIENDA ONLINE "ESTILO URBANO" (E-COMMERCE)
+-- ASIGNATURA : BDY1103 - TALLER DE BASE DE DATOS
+-- EVALUACIÓN : EVALUACIÓN PARCIAL N° 1 (CASO SEMESTRAL)
+-- PROYECTO    : TIENDA ONLINE "ESTILO URBANO" (E-COMMERCE)
+-- INTEGRANTES: Eduardo Aránguiz - Luciano Zaninovic - Kevin Urbina
+-- DOCENTE    : Cristian Medina
+-- FECHA      : 16 de Septiembre de 2026
 -- ARCHIVO    : 01_esquema_estilo_urbano.sql
 -- DESCRIPCIÓN: SCRIPT DDL (TABLAS, RESTRICCIONES) Y DML (DATOS DE PRUEBA)
 -- MOTOR      : ORACLE DATABASE 19c / 21c / LIVESQL / CLOUD
@@ -234,22 +237,22 @@ INSERT INTO PRODUCTO VALUES (210, 'ACC-BAN-U',    'Banano Táctico Crossbody Cor
 
 -- 7. Usuarios: Administrador, Trabajadores y Clientes
 -- Administrador General
-INSERT INTO USUARIO VALUES (1, '15.234.567-8', 'Carlos', 'Gómez', 'admin@estilourbano.cl', 'pass_admin_hash_987', '+56911112222', 1, 0, DATE '2024-01-10', 'A');
+INSERT INTO USUARIO VALUES (1, '15.234.567-8', 'Carlos', 'Gómez', 'admin@estilourbano.cl', 'pass_admin_hash_987', '+56911112222', 1, 0, DATE '2026-01-10', 'A');
 
 -- Trabajadores / Operadores Digitales con metas mensuales (en CLP)
-INSERT INTO USUARIO VALUES (2, '18.456.789-2', 'Ignacio', 'López', 'ilopez@estilourbano.cl', 'pass_usr_hash_1', '+56922223333', 2, 1500000, DATE '2024-02-01', 'A');
-INSERT INTO USUARIO VALUES (3, '19.123.852-K', 'Valentina', 'Pérez', 'vperez@estilourbano.cl', 'pass_usr_hash_2', '+56933334444', 2, 2000000, DATE '2024-02-15', 'A');
-INSERT INTO USUARIO VALUES (4, '17.654.321-4', 'Felipe', 'Morales', 'fmorales@estilourbano.cl', 'pass_usr_hash_3', '+56944445555', 2, 1200000, DATE '2024-03-01', 'A');
+INSERT INTO USUARIO VALUES (2, '18.456.789-2', 'Ignacio', 'López', 'ilopez@estilourbano.cl', 'pass_usr_hash_1', '+56922223333', 2, 1500000, DATE '2026-02-01', 'A');
+INSERT INTO USUARIO VALUES (3, '19.123.852-K', 'Valentina', 'Pérez', 'vperez@estilourbano.cl', 'pass_usr_hash_2', '+56933334444', 2, 2000000, DATE '2026-02-15', 'A');
+INSERT INTO USUARIO VALUES (4, '17.654.321-4', 'Felipe', 'Morales', 'fmorales@estilourbano.cl', 'pass_usr_hash_3', '+56944445555', 2, 1200000, DATE '2026-03-01', 'A');
 -- Trabajador con meta 0 para evidenciar manejo de excepción ZERO_DIVIDE de Oracle
-INSERT INTO USUARIO VALUES (5, '20.987.654-3', 'Lucas', 'Ramírez', 'lramirez@estilourbano.cl', 'pass_usr_hash_4', '+56955556666', 2, 0, DATE '2024-08-01', 'A');
+INSERT INTO USUARIO VALUES (5, '20.987.654-3', 'Lucas', 'Ramírez', 'lramirez@estilourbano.cl', 'pass_usr_hash_4', '+56955556666', 2, 0, DATE '2026-08-01', 'A');
 -- Trabajadora nueva sin ventas en el mes para evidenciar excepción de usuario EX_SIN_PEDIDOS
-INSERT INTO USUARIO VALUES (6, '21.345.678-9', 'Camila', 'Silva', 'csilva@estilourbano.cl', 'pass_usr_hash_5', '+56966667777', 2, 1000000, DATE '2024-08-15', 'A');
+INSERT INTO USUARIO VALUES (6, '21.345.678-9', 'Camila', 'Silva', 'csilva@estilourbano.cl', 'pass_usr_hash_5', '+56966667777', 2, 1000000, DATE '2026-08-15', 'A');
 
 -- Clientes registrados en la plataforma
-INSERT INTO USUARIO VALUES (10, '19.876.543-2', 'Sebastián', 'Castro', 'scastro@gmail.com', 'clie_pass_1', '+56977778888', 3, 0, DATE '2024-05-10', 'A');
-INSERT INTO USUARIO VALUES (11, '20.123.456-7', 'Martina', 'Díaz', 'mdiaz@yahoo.com', 'clie_pass_2', '+56988889999', 3, 0, DATE '2024-06-12', 'A');
-INSERT INTO USUARIO VALUES (12, '18.999.111-3', 'Cristóbal', 'Rojas', 'crojas@hotmail.com', 'clie_pass_3', '+56999990000', 3, 0, DATE '2024-07-01', 'A');
-INSERT INTO USUARIO VALUES (13, '22.444.555-1', 'Javiera', 'Torres', 'jtorres@outlook.com', 'clie_pass_4', '+56912349876', 3, 0, DATE '2024-07-20', 'A');
+INSERT INTO USUARIO VALUES (10, '19.876.543-2', 'Sebastián', 'Castro', 'scastro@gmail.com', 'clie_pass_1', '+56977778888', 3, 0, DATE '2026-05-10', 'A');
+INSERT INTO USUARIO VALUES (11, '20.123.456-7', 'Martina', 'Díaz', 'mdiaz@yahoo.com', 'clie_pass_2', '+56988889999', 3, 0, DATE '2026-06-12', 'A');
+INSERT INTO USUARIO VALUES (12, '18.999.111-3', 'Cristóbal', 'Rojas', 'crojas@hotmail.com', 'clie_pass_3', '+56999990000', 3, 0, DATE '2026-07-01', 'A');
+INSERT INTO USUARIO VALUES (13, '22.444.555-1', 'Javiera', 'Torres', 'jtorres@outlook.com', 'clie_pass_4', '+56912349876', 3, 0, DATE '2026-07-20', 'A');
 
 -- 8. Direcciones de Despacho de Clientes
 INSERT INTO DIRECCION_CLIENTE VALUES (1, 10, 'Av. Providencia 1420', 'Depto 502', 'Providencia', 'Santiago', 'Metropolitana', 'S');
@@ -257,22 +260,22 @@ INSERT INTO DIRECCION_CLIENTE VALUES (2, 11, 'Calle Los Plátanos 874', NULL, '�
 INSERT INTO DIRECCION_CLIENTE VALUES (3, 12, 'Av. Libertad 340', 'Torre B 1104', 'Viña del Mar', 'Valparaíso', 'Valparaíso', 'S');
 INSERT INTO DIRECCION_CLIENTE VALUES (4, 13, 'Pje. Los Copihues 12', NULL, 'San Pedro de la Paz', 'Concepción', 'Biobío', 'S');
 
--- 9. Pedidos Registrados en la Tienda Online (Septiembre 2024)
+-- 9. Pedidos Registrados en la Tienda Online (Septiembre 2026)
 -- Pedidos asignados a Ignacio López (id_trabajador = 2)
-INSERT INTO PEDIDO VALUES (5001, 'TRK-EST-202409-001', 10, 2, 1, 5, DATE '2024-09-02', 71412, 13568, 84980);
-INSERT INTO PEDIDO VALUES (5002, 'TRK-EST-202409-002', 11, 2, 2, 4, DATE '2024-09-04', 105874, 20116, 125990);
-INSERT INTO PEDIDO VALUES (5003, 'TRK-EST-202409-003', 12, 2, 1, 3, DATE '2024-09-07', 147882, 28098, 175980);
+INSERT INTO PEDIDO VALUES (5001, 'TRK-EST-202609-001', 10, 2, 1, 5, DATE '2026-09-02', 71412, 13568, 84980);
+INSERT INTO PEDIDO VALUES (5002, 'TRK-EST-202609-002', 11, 2, 2, 4, DATE '2026-09-04', 105874, 20116, 125990);
+INSERT INTO PEDIDO VALUES (5003, 'TRK-EST-202609-003', 12, 2, 1, 3, DATE '2026-09-07', 147882, 28098, 175980);
 
 -- Pedidos asignados a Valentina Pérez (id_trabajador = 3)
-INSERT INTO PEDIDO VALUES (5004, 'TRK-EST-202409-004', 13, 3, 1, 5, DATE '2024-09-03', 121840, 23150, 144990);
-INSERT INTO PEDIDO VALUES (5005, 'TRK-EST-202409-005', 10, 3, 3, 4, DATE '2024-09-06', 159647, 30333, 189980);
-INSERT INTO PEDIDO VALUES (5006, 'TRK-EST-202409-006', 11, 3, 1, 2, DATE '2024-09-08', 75622, 14368, 89990);
+INSERT INTO PEDIDO VALUES (5004, 'TRK-EST-202609-004', 13, 3, 1, 5, DATE '2026-09-03', 121840, 23150, 144990);
+INSERT INTO PEDIDO VALUES (5005, 'TRK-EST-202609-005', 10, 3, 3, 4, DATE '2026-09-06', 159647, 30333, 189980);
+INSERT INTO PEDIDO VALUES (5006, 'TRK-EST-202609-006', 11, 3, 1, 2, DATE '2026-09-08', 75622, 14368, 89990);
 
 -- Pedidos asignados a Felipe Morales (id_trabajador = 4)
-INSERT INTO PEDIDO VALUES (5007, 'TRK-EST-202409-007', 12, 4, 2, 5, DATE '2024-09-05', 47050, 8940, 55990);
+INSERT INTO PEDIDO VALUES (5007, 'TRK-EST-202609-007', 12, 4, 2, 5, DATE '2026-09-05', 47050, 8940, 55990);
 
 -- Pedidos asignados a Lucas Ramírez (id_trabajador = 5, meta = 0)
-INSERT INTO PEDIDO VALUES (5008, 'TRK-EST-202409-008', 13, 5, 1, 3, DATE '2024-09-08', 33605, 6385, 39990);
+INSERT INTO PEDIDO VALUES (5008, 'TRK-EST-202609-008', 13, 5, 1, 3, DATE '2026-09-08', 33605, 6385, 39990);
 
 -- 10. Detalle de los Pedidos (Precios en CLP y Tallas Variadas)
 INSERT INTO DETALLE_PEDIDO VALUES (1, 5001, 201, 'L',        1, 39990, 39990);
@@ -301,15 +304,15 @@ INSERT INTO DETALLE_PEDIDO VALUES (16, 5007, 203, 'M',       1, 21990, 21990);
 INSERT INTO DETALLE_PEDIDO VALUES (17, 5008, 201, 'L',       1, 39990, 39990);
 
 -- 11. Historial de Tracking para visualización del cliente en la Tienda Online
-INSERT INTO HISTORIAL_TRACKING_PEDIDO VALUES (1, 5001, 1, DATE '2024-09-02', 'Cliente generó el pedido desde la tienda online');
-INSERT INTO HISTORIAL_TRACKING_PEDIDO VALUES (2, 5001, 2, DATE '2024-09-02', 'Pago confirmado mediante Webpay Plus');
-INSERT INTO HISTORIAL_TRACKING_PEDIDO VALUES (3, 5001, 3, DATE '2024-09-02', 'Trabajador Ignacio López inició empaquetamiento en bodega');
-INSERT INTO HISTORIAL_TRACKING_PEDIDO VALUES (4, 5001, 4, DATE '2024-09-03', 'Paquete entregado a empresa de courier con número de seguimiento');
-INSERT INTO HISTORIAL_TRACKING_PEDIDO VALUES (5, 5001, 5, DATE '2024-09-04', 'Entregado en domicilio del cliente en Providencia');
+INSERT INTO HISTORIAL_TRACKING_PEDIDO VALUES (1, 5001, 1, DATE '2026-09-02', 'Cliente generó el pedido desde la tienda online');
+INSERT INTO HISTORIAL_TRACKING_PEDIDO VALUES (2, 5001, 2, DATE '2026-09-02', 'Pago confirmado mediante Webpay Plus');
+INSERT INTO HISTORIAL_TRACKING_PEDIDO VALUES (3, 5001, 3, DATE '2026-09-02', 'Trabajador Ignacio López inició empaquetamiento en bodega');
+INSERT INTO HISTORIAL_TRACKING_PEDIDO VALUES (4, 5001, 4, DATE '2026-09-03', 'Paquete entregado a empresa de courier con número de seguimiento');
+INSERT INTO HISTORIAL_TRACKING_PEDIDO VALUES (5, 5001, 5, DATE '2026-09-04', 'Entregado en domicilio del cliente en Providencia');
 
-INSERT INTO HISTORIAL_TRACKING_PEDIDO VALUES (6, 5002, 2, DATE '2024-09-04', 'Pago confirmado por Mercado Pago');
-INSERT INTO HISTORIAL_TRACKING_PEDIDO VALUES (7, 5002, 3, DATE '2024-09-04', 'En proceso de embalaje y control de calidad');
-INSERT INTO HISTORIAL_TRACKING_PEDIDO VALUES (8, 5002, 4, DATE '2024-09-05', 'En camino a domicilio');
+INSERT INTO HISTORIAL_TRACKING_PEDIDO VALUES (6, 5002, 2, DATE '2026-09-04', 'Pago confirmado por Mercado Pago');
+INSERT INTO HISTORIAL_TRACKING_PEDIDO VALUES (7, 5002, 3, DATE '2026-09-04', 'En proceso de embalaje y control de calidad');
+INSERT INTO HISTORIAL_TRACKING_PEDIDO VALUES (8, 5002, 4, DATE '2026-09-05', 'En camino a domicilio');
 
 COMMIT;
 

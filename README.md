@@ -1,8 +1,13 @@
-﻿# ⚡ ESTILO URBANO — Official E-Commerce & Oracle Database Platform
+# ⚡ ESTILO URBANO — Official E-Commerce & Oracle Database Platform
 
 Plataforma oficial de comercio electrónico y gestión de base de datos para la marca de streetwear **Estilo Urbano**, desarrollada para la asignatura **Taller de Base de Datos (BDY1103)** de **Duoc UC**.
 
 🌐 **Demo en Vivo (GitHub Pages):** [https://eduardo-aranguiz-armijo.github.io/EstiloUrbano/](https://eduardo-aranguiz-armijo.github.io/EstiloUrbano/)
+
+### 👥 Datos del Proyecto y Entrega
+* **Integrantes:** Eduardo Aránguiz — Luciano Zaninovic — Kevin Urbina
+* **Docente:** Cristian Medina
+* **Fecha de Entrega:** 16 de Septiembre de 2026 (Evaluación Parcial N° 1)
 
 ---
 

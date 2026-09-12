@@ -1,7 +1,10 @@
 -- ============================================================================
--- ASIGNATURA: BDY1103 - TALLER DE BASE DE DATOS
--- EVALUACIÓN: EVALUACIÓN PARCIAL N° 1 (CASO SEMESTRAL)
--- PROYECTO   : TIENDA ONLINE "ESTILO URBANO" (E-COMMERCE)
+-- ASIGNATURA : BDY1103 - TALLER DE BASE DE DATOS
+-- EVALUACIÓN : EVALUACIÓN PARCIAL N° 1 (CASO SEMESTRAL)
+-- PROYECTO    : TIENDA ONLINE "ESTILO URBANO" (E-COMMERCE)
+-- INTEGRANTES: Eduardo Aránguiz - Luciano Zaninovic - Kevin Urbina
+-- DOCENTE    : Cristian Medina
+-- FECHA      : 16 de Septiembre de 2026
 -- ARCHIVO    : 02_bloque_anonimo_plsql.sql
 -- DESCRIPCIÓN: BLOQUE ANÓNIMO PL/SQL COMPLETO CON:
 --              1. Tipos de datos compuestos: RECORD y VARRAY
@@ -19,7 +22,7 @@ DECLARE
     -- 1. DECLARACIÓN DE CONSTANTES Y PARÁMETROS DEL PROCESO
     -- ========================================================================
     c_mes_evaluado  CONSTANT NUMBER(2) := 9;    -- Septiembre
-    c_anio_evaluado CONSTANT NUMBER(4) := 2024; -- 2024
+    c_anio_evaluado CONSTANT NUMBER(4) := 2026; -- 2026
 
     -- ========================================================================
     -- 2. TIPOS DE DATOS COMPUESTOS (RECORD Y VARRAY) - EXIGENCIA RÚBRICA
