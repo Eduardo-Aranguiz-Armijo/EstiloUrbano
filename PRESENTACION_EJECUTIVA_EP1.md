@@ -114,13 +114,19 @@
 ### DIAPOSITIVA 7: DEMOSTRACIÓN DE RESULTADOS
 * **Visual:** Capturas de la ejecución en consola SQL Developer (`DBMS_OUTPUT`), la tabla `RESUMEN_DESEMPENO_MENSUAL` y la tabla `LOG_ERRORES_SISTEMA`.
 * **Puntos clave en pantalla:**
-  * Ejecución exitosa de operadores que cumplieron meta (ej. Ignacio López y Valentina Pérez con tramos superiores de bonificación).
-  * Evidencia de captura de `ZERO_DIVIDE` para el trabajador Lucas Ramírez (meta = 0).
-  * Evidencia de excepción de negocio para Camila Silva (sin pedidos en el mes).
-  * Cero registros duplicados o abortos de transacción.
+  * **Demostración integral de todos los tramos del VARRAY:**
+    * *Tramo 1 (< 80%, Bono 0%):* Rodrigo Tapia (29.16% cumplimiento).
+    * *Tramo 2 (80% - 99%, Bono 3%):* Felipe Morales (86.14% cumplimiento, $1.680 bono).
+    * *Tramo 3 (100% - 119%, Bono 7%):* Ignacio López (110.56% cumplimiento, $27.087 bono).
+    * *Tramo 4 (>= 120%, Bono 12%):* Valentina Pérez (121.42% cumplimiento, $50.995 bono).
+  * **Evidencia de excepciones controladas y auditadas:**
+    * *Predefinida Oracle ZERO_DIVIDE:* Lucas Ramírez (meta = 0).
+    * *Excepción de negocio SIN_PEDIDOS:* Camila Silva (0 pedidos en el mes).
+    * *Excepción de negocio META_INVALIDA:* Matías Delgado (meta negativa).
+  * Cero interrupciones del ciclo, cero registros duplicados y persistencia atómica.
 
 > **🗣️ GUION VERBAL:**  
-> *"En pantalla observamos la ejecución real en Oracle SQL Developer. Vemos cómo los trabajadores con desempeño sobresaliente alcanzaron los tramos 3 y 4 del VARRAY, calculando sus bonos de forma exacta. Asimismo, se evidencia cómo la trabajadora nueva sin ventas gatilló nuestra excepción de negocio, y el operador con meta cero fue atrapado por ZERO_DIVIDE, quedando ambos eventos registrados con fecha y código en nuestra tabla de auditoría sin detener el proceso."*
+> *"En pantalla observamos la ejecución real en Oracle SQL Developer. Demostramos el funcionamiento de los 4 tramos del VARRAY: desde Rodrigo en Tramo 1 sin comisión, pasando por Felipe e Ignacio en tramos intermedios, hasta Valentina que superó el 120% alcanzando el bono máximo del 12%. Asimismo, se comprueba la captura exitosa de las tres excepciones —la división por cero de Lucas, la falta de ventas de Camila y la meta negativa de Matías— quedando todas registradas en nuestra tabla de auditoría LOG_ERRORES_SISTEMA sin abortar el proceso de liquidación de la empresa."*
 
 ---
 

@@ -240,14 +240,18 @@ INSERT INTO PRODUCTO VALUES (210, 'ACC-BAN-U',    'Banano Táctico Crossbody Cor
 -- Administrador General
 INSERT INTO USUARIO VALUES (1, '15.234.567-8', 'Carlos', 'Gómez', 'admin@estilourbano.cl', 'pass_admin_hash_987', '+56911112222', 1, 0, DATE '2026-01-10', 'A');
 
--- Trabajadores / Operadores Digitales con metas mensuales (en CLP)
-INSERT INTO USUARIO VALUES (2, '18.456.789-2', 'Ignacio', 'López', 'ilopez@estilourbano.cl', 'pass_usr_hash_1', '+56922223333', 2, 1500000, DATE '2026-02-01', 'A');
-INSERT INTO USUARIO VALUES (3, '19.123.852-K', 'Valentina', 'Pérez', 'vperez@estilourbano.cl', 'pass_usr_hash_2', '+56933334444', 2, 2000000, DATE '2026-02-15', 'A');
-INSERT INTO USUARIO VALUES (4, '17.654.321-4', 'Felipe', 'Morales', 'fmorales@estilourbano.cl', 'pass_usr_hash_3', '+56944445555', 2, 1200000, DATE '2026-03-01', 'A');
--- Trabajador con meta 0 para evidenciar manejo de excepción ZERO_DIVIDE de Oracle
-INSERT INTO USUARIO VALUES (5, '20.987.654-3', 'Lucas', 'Ramírez', 'lramirez@estilourbano.cl', 'pass_usr_hash_4', '+56955556666', 2, 0, DATE '2026-08-01', 'A');
+-- Trabajadores / Operadores Digitales con metas mensuales (en CLP) calibradas para evidenciar todos los tramos del VARRAY
+INSERT INTO USUARIO VALUES (2, '18.456.789-2', 'Ignacio',   'López',   'ilopez@estilourbano.cl',   'pass_usr_hash_1', '+56922223333', 2, 350000,  DATE '2026-02-01', 'A'); -- Ventas $386.950 -> Tramo 3 (110.56%, Bono 7%)
+INSERT INTO USUARIO VALUES (3, '19.123.852-K', 'Valentina', 'Pérez',   'vperez@estilourbano.cl',   'pass_usr_hash_2', '+56933334444', 2, 350000,  DATE '2026-02-15', 'A'); -- Ventas $424.960 -> Tramo 4 (121.42%, Bono 12%)
+INSERT INTO USUARIO VALUES (4, '17.654.321-4', 'Felipe',    'Morales', 'fmorales@estilourbano.cl', 'pass_usr_hash_3', '+56944445555', 2, 65000,   DATE '2026-03-01', 'A'); -- Ventas $55.990  -> Tramo 2 (86.14%, Bono 3%)
+-- Trabajador con meta 0 para evidenciar manejo de excepción predefinida ZERO_DIVIDE de Oracle
+INSERT INTO USUARIO VALUES (5, '20.987.654-3', 'Lucas',     'Ramírez', 'lramirez@estilourbano.cl', 'pass_usr_hash_4', '+56955556666', 2, 0,       DATE '2026-08-01', 'A');
 -- Trabajadora nueva sin ventas en el mes para evidenciar excepción de usuario EX_SIN_PEDIDOS
-INSERT INTO USUARIO VALUES (6, '21.345.678-9', 'Camila', 'Silva', 'csilva@estilourbano.cl', 'pass_usr_hash_5', '+56966667777', 2, 1000000, DATE '2026-08-15', 'A');
+INSERT INTO USUARIO VALUES (6, '21.345.678-9', 'Camila',    'Silva',   'csilva@estilourbano.cl',   'pass_usr_hash_5', '+56966667777', 2, 300000,  DATE '2026-08-15', 'A');
+-- Trabajador con meta negativa para evidenciar excepción de usuario EX_META_INVALIDA
+INSERT INTO USUARIO VALUES (7, '16.789.123-5', 'Matías',    'Delgado', 'mdelgado@estilourbano.cl', 'pass_usr_hash_6', '+56977771111', 2, -150000, DATE '2026-08-20', 'A');
+-- Trabajador con ventas bajo el 80% para evidenciar Tramo 1 (< 80%, Bono 0%)
+INSERT INTO USUARIO VALUES (8, '22.876.543-1', 'Rodrigo',   'Tapia',   'rtapia@estilourbano.cl',   'pass_usr_hash_7', '+56988882222', 2, 120000,  DATE '2026-08-25', 'A');
 
 -- Clientes registrados en la plataforma
 INSERT INTO USUARIO VALUES (10, '19.876.543-2', 'Sebastián', 'Castro', 'scastro@gmail.com', 'clie_pass_1', '+56977778888', 3, 0, DATE '2026-05-10', 'A');
@@ -278,6 +282,9 @@ INSERT INTO PEDIDO VALUES (5007, 'TRK-EST-202609-007', 12, 4, 2, 5, DATE '2026-0
 -- Pedidos asignados a Lucas Ramírez (id_trabajador = 5, meta = 0)
 INSERT INTO PEDIDO VALUES (5008, 'TRK-EST-202609-008', 13, 5, 1, 3, DATE '2026-09-08', 33605, 6385, 39990);
 
+-- Pedidos asignados a Rodrigo Tapia (id_trabajador = 8, meta = 120000, ventas $34.990 para Tramo 1 < 80%)
+INSERT INTO PEDIDO VALUES (5009, 'TRK-EST-202609-009', 10, 8, 1, 5, DATE '2026-09-09', 29403, 5587, 34990);
+
 -- 10. Detalle de los Pedidos (Precios en CLP y Tallas Variadas)
 INSERT INTO DETALLE_PEDIDO VALUES (1, 5001, 201, 'L',        1, 39990, 39990);
 INSERT INTO DETALLE_PEDIDO VALUES (2, 5001, 205, 'M',        1, 45990, 45990);
@@ -303,6 +310,7 @@ INSERT INTO DETALLE_PEDIDO VALUES (15, 5007, 206, 'L',       1, 34990, 34990);
 INSERT INTO DETALLE_PEDIDO VALUES (16, 5007, 203, 'M',       1, 21990, 21990);
 
 INSERT INTO DETALLE_PEDIDO VALUES (17, 5008, 201, 'L',       1, 39990, 39990);
+INSERT INTO DETALLE_PEDIDO VALUES (18, 5009, 206, 'L',       1, 34990, 34990);
 
 -- 11. Historial de Tracking para visualización del cliente en la Tienda Online
 INSERT INTO HISTORIAL_TRACKING_PEDIDO VALUES (1, 5001, 1, DATE '2026-09-02', 'Cliente generó el pedido desde la tienda online');
