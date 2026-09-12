@@ -15,7 +15,7 @@
 
 ### DIAPOSITIVA 1: PORTADA Y PRESENTACIÓN DEL CASO
 * **Título:** Transformación Digital y Automatización en Base de Datos: Caso "Estilo Urbano".
-* **Subtítulo:** Evaluación Parcial 1 - Taller de Base de Datos (BDY1103).
+* **Subtítulo:** Evaluación Parcial 1 - Taller de Base de Datos (BDY1103) - 4° Semestre.
 * **Integrantes:** Eduardo Aránguiz, Luciano Zaninovic, Kevin Urbina.
 * **Docente:** Cristian Medina.
 * **Fecha:** 16 de septiembre de 2026.

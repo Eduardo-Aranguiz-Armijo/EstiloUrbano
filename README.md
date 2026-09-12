@@ -7,6 +7,7 @@ Plataforma oficial de comercio electrónico y gestión de base de datos para la 
 ### 👥 Datos del Proyecto y Entrega
 * **Integrantes:** Eduardo Aránguiz — Luciano Zaninovic — Kevin Urbina
 * **Docente:** Cristian Medina
+* **Nivel / Semestre:** 4° Semestre (2026)
 * **Fecha de Entrega:** 16 de Septiembre de 2026 (Evaluación Parcial N° 1)
 
 ---

@@ -4,6 +4,7 @@
 -- PROYECTO    : TIENDA ONLINE "ESTILO URBANO" (E-COMMERCE)
 -- INTEGRANTES: Eduardo Aránguiz - Luciano Zaninovic - Kevin Urbina
 -- DOCENTE    : Cristian Medina
+-- SEMESTRE   : 4° Semestre (2026)
 -- FECHA      : 16 de Septiembre de 2026
 -- ARCHIVO    : 02_bloque_anonimo_plsql.sql
 -- DESCRIPCIÓN: BLOQUE ANÓNIMO PL/SQL COMPLETO CON:

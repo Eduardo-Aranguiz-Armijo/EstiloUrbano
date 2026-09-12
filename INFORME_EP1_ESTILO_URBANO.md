@@ -11,7 +11,7 @@
 **Docente:** Cristian Medina  
 **Integrantes:** Eduardo Aránguiz, Luciano Zaninovic, Kevin Urbina  
 **Fecha de Entrega:** 16 de septiembre de 2026  
-**Semestre / Año:** Segundo Semestre 2026  
+**Semestre / Nivel:** Cuarto Semestre (2026)  
 
 ---
 
