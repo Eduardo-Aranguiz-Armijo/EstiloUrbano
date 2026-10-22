@@ -568,6 +568,192 @@
 
         </div>
 
+    
+        <!-- ==================================================================== -->
+        <!-- 5. PANEL ORACLE CLOUD: MONITOR EN VIVO Y CONTROL DE TRIGGERS (EP2)    -->
+        <!-- ==================================================================== -->
+        <div id="panel-oracle" class="hidden max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8">
+            
+            <!-- Banner Cabecera Oracle -->
+            <div class="glass-card rounded-2xl p-6 sm:p-8 border border-emerald-500/30 bg-gradient-to-r from-[#0d1f17]/90 via-[#101014]/95 to-[#0b0b0d] flex flex-col md:flex-row items-start md:items-center justify-between gap-6 relative overflow-hidden shadow-[0_0_30px_rgba(16,185,129,0.15)]">
+                <div class="absolute -right-10 -bottom-10 w-48 h-48 bg-emerald-500/10 rounded-full blur-2xl pointer-events-none"></div>
+                <div class="space-y-2 z-10">
+                    <div class="flex items-center gap-3">
+                        <span class="px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold uppercase tracking-widest bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 flex items-center gap-1.5">
+                            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span> REST API ORDS ACTIVA
+                        </span>
+                        <span class="text-xs text-neutral-400 font-mono">Región: sa-santiago-1</span>
+                    </div>
+                    <h1 class="text-2xl sm:text-4xl font-black text-white font-brand tracking-tight">
+                        MONITOR ORACLE CLOUD DATABASE
+                    </h1>
+                    <p class="text-xs sm:text-sm text-neutral-300 max-w-2xl font-medium">
+                        Conexión en vivo con <strong class="text-emerald-400">Oracle Autonomous Database (19c/21c)</strong> para Evaluación Parcial N° 2 (BDY1103). Auditoría transaccional, triggers de fila, de sentencia y package PL/SQL.
+                    </p>
+                </div>
+
+                <div class="flex flex-wrap items-center gap-3 z-10">
+                    <button onclick="sincronizarDatosOracleCompletos()" class="bg-emerald-600 hover:bg-emerald-500 text-black font-extrabold text-xs px-5 py-3 rounded-xl uppercase tracking-wider transition flex items-center gap-2 shadow-lg cursor-pointer">
+                        <i class="fa-solid fa-arrows-rotate text-sm"></i> Sincronizar Ahora
+                    </button>
+                    <button onclick="navegarAPanel('tienda')" class="bg-neutral-800 hover:bg-neutral-700 text-white text-xs px-4 py-3 rounded-xl font-bold uppercase tracking-wider transition flex items-center gap-2 border border-neutral-700 cursor-pointer">
+                        Volver a la Tienda
+                    </button>
+                </div>
+            </div>
+
+            <!-- TABLERO DE SOLVENCIA FINANCIERA (TRIGGER A NIVEL DE SENTENCIA) -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Tarjeta 1: Ventas Totales -->
+                <div class="glass-card rounded-xl p-5 border border-neutral-800 space-y-2">
+                    <div class="flex items-center justify-between text-neutral-400 text-xs font-mono">
+                        <span>VENTAS TOTALES (PEDIDOS)</span>
+                        <i class="fa-solid fa-cart-shopping text-emerald-400"></i>
+                    </div>
+                    <div class="text-2xl sm:text-3xl font-black text-white font-mono" id="oracle-card-ventas">
+                        $8.942.890 CLP
+                    </div>
+                    <p class="text-[11px] text-neutral-400">Suma consolidada de órdenes confirmadas en Oracle</p>
+                </div>
+
+                <!-- Tarjeta 2: Nómina de Sueldos -->
+                <div class="glass-card rounded-xl p-5 border border-neutral-800 space-y-2">
+                    <div class="flex items-center justify-between text-neutral-400 text-xs font-mono">
+                        <span>NÓMINA TOTAL DE SUELDOS</span>
+                        <i class="fa-solid fa-users text-amber-400"></i>
+                    </div>
+                    <div class="text-2xl sm:text-3xl font-black text-amber-400 font-mono" id="oracle-card-sueldos">
+                        $3.000.000 CLP
+                    </div>
+                    <p class="text-[11px] text-neutral-400">Total masa salarial activa (operadores de bodega/ventas)</p>
+                </div>
+
+                <!-- Tarjeta 3: Margen y Trigger de Solvencia -->
+                <div class="glass-card rounded-xl p-5 border border-emerald-500/40 bg-emerald-950/20 space-y-2">
+                    <div class="flex items-center justify-between text-emerald-300 text-xs font-mono">
+                        <span>REGLA FINANCIERA (TRIGGER)</span>
+                        <span class="bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 px-2 py-0.5 rounded text-[10px] font-bold">CUMPLIENDO</span>
+                    </div>
+                    <div class="text-2xl sm:text-3xl font-black text-emerald-400 font-mono" id="oracle-card-margen">
+                        +$5.942.890 CLP
+                    </div>
+                    <p class="text-[11px] text-emerald-300/80">Trigger trg_valida_solvencia_sueldos garantiza Ventas > Sueldos</p>
+                </div>
+            </div>
+
+            <!-- SECCIONES EN 2 COLUMNAS: PEDIDOS EN VIVO Y AUDITORÍA DE SUELDOS -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                
+                <!-- Columna Izquierda: Pedidos y Tracking en Vivo -->
+                <div class="glass-card rounded-2xl p-6 border border-neutral-800 space-y-6">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <h2 class="text-lg font-black text-white font-brand flex items-center gap-2">
+                                <i class="fa-solid fa-truck-ramp-box text-amber-400"></i> Pedidos Transaccionales (Oracle)
+                            </h2>
+                            <p class="text-xs text-neutral-400">Leídos en vivo desde endpoint REST: /ords/estilourbano/pedidos/</p>
+                        </div>
+                        <span id="oracle-cant-pedidos" class="bg-neutral-800 text-neutral-300 text-xs font-mono px-2.5 py-1 rounded-lg font-bold">9 órdenes</span>
+                    </div>
+
+                    <div class="overflow-x-auto max-h-[380px] overflow-y-auto pr-1">
+                        <table class="w-full text-left text-xs">
+                            <thead class="bg-neutral-900/80 text-neutral-400 uppercase font-mono text-[10px] sticky top-0">
+                                <tr>
+                                    <th class="px-3 py-2.5">Folio</th>
+                                    <th class="px-3 py-2.5">Monto Total</th>
+                                    <th class="px-3 py-2.5">Estado Oracle</th>
+                                    <th class="px-3 py-2.5 text-right">Acción Trigger</th>
+                                </tr>
+                            </thead>
+                            <tbody id="oracle-tabla-pedidos-body" class="divide-y divide-neutral-800 font-mono">
+                                <tr>
+                                    <td colspan="4" class="py-6 text-center text-neutral-500">Cargando órdenes desde Oracle Cloud...</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Visualizador de Tracking Histórico generado por el Trigger -->
+                    <div class="border-t border-neutral-800/80 pt-4 space-y-3">
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs font-bold text-amber-400 uppercase font-mono flex items-center gap-1.5">
+                                <i class="fa-solid fa-clock-rotate-left"></i> Historial Generado por Trigger (trg_tracking_cambio_estado_pedido)
+                            </span>
+                            <span class="text-[10px] text-neutral-500 font-mono">HISTORIAL_TRACKING_PEDIDO</span>
+                        </div>
+                        <div id="oracle-tracking-listado" class="space-y-2 max-h-48 overflow-y-auto pr-1 text-xs">
+                            <!-- Items dinámicos -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Columna Derecha: Auditoría de Sueldos y Trigger de Fila -->
+                <div class="glass-card rounded-2xl p-6 border border-neutral-800 space-y-6">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <h2 class="text-lg font-black text-white font-brand flex items-center gap-2">
+                                <i class="fa-solid fa-file-invoice-dollar text-emerald-400"></i> Auditoría de Sueldos (Fila AFTER)
+                            </h2>
+                            <p class="text-xs text-neutral-400">Registros automáticos con :OLD y :NEW en AUDITORIA_SUELDO_EMPLEADO</p>
+                        </div>
+                    </div>
+
+                    <!-- Simulador interactivo de cambio de sueldo -->
+                    <div class="bg-neutral-900/60 p-4 rounded-xl border border-neutral-800 space-y-3">
+                        <span class="text-xs font-bold text-neutral-300 uppercase tracking-wide block">
+                            Simular Modificación de Sueldo (Probar Triggers):
+                        </span>
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                            <select id="sim-id-trabajador" class="bg-[#141418] border border-neutral-700 text-white text-xs rounded-lg px-3 py-2 focus:outline-none focus:border-amber-400 font-mono">
+                                <option value="2">Ignacio López (ID: 2)</option>
+                                <option value="3">Valentina Pérez (ID: 3)</option>
+                                <option value="4">Felipe Morales (ID: 4)</option>
+                                <option value="5">Lucas Ramírez (ID: 5)</option>
+                                <option value="8">Rodrigo Tapia (ID: 8)</option>
+                            </select>
+                            <input type="number" id="sim-nuevo-sueldo" placeholder="Nuevo Sueldo CLP" value="720000" class="bg-[#141418] border border-neutral-700 text-white text-xs rounded-lg px-3 py-2 focus:outline-none focus:border-amber-400 font-mono">
+                            <button onclick="simularCambioSueldoTrigger()" class="bg-amber-500 hover:bg-amber-400 text-black text-xs font-bold px-3 py-2 rounded-lg transition uppercase tracking-wider cursor-pointer flex items-center justify-center gap-1.5">
+                                <i class="fa-solid fa-bolt"></i> Ejecutar
+                            </button>
+                        </div>
+                        <p class="text-[11px] text-neutral-400 italic">
+                            * Si ingresas menos de $500.000 se activará el error ORA-20001 del Trigger BEFORE.
+                        </p>
+                    </div>
+
+                    <!-- Tabla de Auditoría de Sueldos de Oracle -->
+                    <div class="overflow-x-auto max-h-[300px] overflow-y-auto pr-1">
+                        <table class="w-full text-left text-xs">
+                            <thead class="bg-neutral-900/80 text-neutral-400 uppercase font-mono text-[10px] sticky top-0">
+                                <tr>
+                                    <th class="px-3 py-2.5">Empleado</th>
+                                    <th class="px-3 py-2.5">Sueldo Anterior</th>
+                                    <th class="px-3 py-2.5">Sueldo Nuevo</th>
+                                    <th class="px-3 py-2.5">Variación</th>
+                                    <th class="px-3 py-2.5">Tipo</th>
+                                </tr>
+                            </thead>
+                            <tbody id="oracle-tabla-auditoria-sueldos-body" class="divide-y divide-neutral-800 font-mono">
+                                <tr>
+                                    <td colspan="5" class="py-6 text-center text-neutral-500">Sin movimientos de auditoría registrados. Usa el simulador de arriba para probar el Trigger.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Endpoint info box -->
+                    <div class="p-3 bg-neutral-900/40 rounded-xl border border-neutral-800 text-[11px] text-neutral-400 font-mono flex items-center justify-between">
+                        <span>ORDS Base: <strong class="text-neutral-300">/ords/estilourbano/</strong></span>
+                        <span class="text-emerald-400"><i class="fa-solid fa-circle-check"></i> SSL / HTTPS 200 OK</span>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
     </main>
 
     <!-- ==================================================================== -->
@@ -1857,6 +2043,8 @@
                 renderizarTablaAdminProductos();
                 renderizarTablaAdminProveedores();
                 actualizarMetricasAdmin();
+            } else if (panelId === 'oracle') {
+                sincronizarDatosOracleCompletos();
             }
 
             if (autoScrollTop) {
