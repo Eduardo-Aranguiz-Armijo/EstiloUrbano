@@ -7,11 +7,45 @@ SET SERVEROUTPUT ON;
 SET LINESIZE 200;
 SET PAGESIZE 100;
 
+-- ============================================================================
+-- 0. VISTAS PROFESIONALES DE ABSTRACCIÓN (TRABAJADORES Y CLIENTES)
+-- Permite consultar datos usando ID_TRABAJADOR e ID_CLIENTE en vez del genérico ID_USUARIO
+-- ============================================================================
+CREATE OR REPLACE VIEW V_TRABAJADORES AS
+SELECT 
+    id_usuario AS id_trabajador,
+    rut,
+    nombre,
+    apellido,
+    nombre || ' ' || apellido AS trabajador,
+    email,
+    telefono,
+    sueldo_base,
+    estado
+FROM USUARIO
+WHERE id_rol = 2;
+
+CREATE OR REPLACE VIEW V_CLIENTES AS
+SELECT 
+    id_usuario AS id_cliente,
+    rut,
+    nombre,
+    apellido,
+    nombre || ' ' || apellido AS cliente,
+    email,
+    telefono,
+    estado
+FROM USUARIO
+WHERE id_rol = 3;
+
 -- ----------------------------------------------------------------------------
--- CASO 1: MODIFICAR EL SUELDO DE UN EMPLEADO Y COMPROBAR EL TRIGGER AFTER
+-- CASO 1: MODIFICAR EL SUELDO DE UN TRABAJADOR Y COMPROBAR EL TRIGGER AFTER
 -- ----------------------------------------------------------------------------
 PROMPT === 1.1 SUELDO ACTUAL DEL TRABAJADOR IGNACIO LÓPEZ ===;
-SELECT id_usuario, rut, nombre || ' ' || apellido AS trabajador, sueldo_base
+SELECT id_usuario AS id_trabajador, 
+       rut, 
+       nombre || ' ' || apellido AS trabajador, 
+       TO_CHAR(sueldo_base, '$999G999G999') AS sueldo_base
 FROM USUARIO
 WHERE id_usuario = 2;
 
@@ -21,20 +55,22 @@ SET sueldo_base = 750000
 WHERE id_usuario = 2;
 COMMIT;
 
-PROMPT === 1.3 CONSULTA EN TABLA USUARIO CON EL NUEVO SUELDO ===;
-SELECT id_usuario, rut, nombre || ' ' || apellido AS trabajador, sueldo_base AS nuevo_sueldo
+PROMPT === 1.3 CONSULTA EN TABLA CON EL NUEVO SUELDO ===;
+SELECT id_usuario AS id_trabajador, 
+       rut, 
+       nombre || ' ' || apellido AS trabajador, 
+       TO_CHAR(sueldo_base, '$999G999G999') AS nuevo_sueldo
 FROM USUARIO
 WHERE id_usuario = 2;
 
 PROMPT === 1.4 REGISTRO GENERADO AUTOMÁTICAMENTE EN AUDITORIA_SUELDO_EMPLEADO ===;
 SELECT id_auditoria,
-       id_usuario,
-       nombre_empleado,
-       sueldo_antiguo,
-       sueldo_nuevo,
-       diferencia,
-       tipo_movimiento,
-       usuario_bd,
+       id_usuario AS id_trabajador,
+       TO_CHAR(sueldo_antiguo, '$999G999G999') AS sueldo_antiguo,
+       TO_CHAR(sueldo_nuevo, '$999G999G999') AS sueldo_nuevo,
+       TO_CHAR(diferencia, '$999G999G999') AS diferencia,
+       tipo_modificacion,
+       usuario_db,
        TO_CHAR(fecha_modificacion, 'DD/MM/YYYY HH24:MI:SS') AS fecha
 FROM AUDITORIA_SUELDO_EMPLEADO
 WHERE id_usuario = 2
@@ -65,7 +101,12 @@ PROMPT Descomenta la siguiente línea para comprobar el bloqueo ORA-20003:;
 -- CASO 4: CAMBIAR EL ESTADO DE UN PEDIDO Y VER EL TRACKING AUTOMÁTICO
 -- ----------------------------------------------------------------------------
 PROMPT === 4.1 ESTADO ACTUAL DEL PEDIDO 5003 ===;
-SELECT p.id_pedido, p.nro_seguimiento, p.total_pedido, ep.nombre_estado
+SELECT p.id_pedido, 
+       p.nro_seguimiento, 
+       p.id_cliente,
+       p.id_trabajador,
+       TO_CHAR(p.total_pedido, '$999G999G999') AS total, 
+       ep.nombre_estado
 FROM PEDIDO p
 JOIN ESTADO_PEDIDO ep ON p.id_estado = ep.id_estado
 WHERE p.id_pedido = 5003;
@@ -77,15 +118,14 @@ WHERE id_pedido = 5003;
 COMMIT;
 
 PROMPT === 4.3 HISTORIAL DE TRACKING GENERADO AUTOMÁTICAMENTE POR EL TRIGGER ===;
-SELECT id_tracking, id_pedido, id_estado, TO_CHAR(fecha_evento, 'DD/MM/YYYY HH24:MI:SS') AS fecha, comentario
+SELECT id_historial, 
+       id_pedido, 
+       id_estado, 
+       TO_CHAR(fecha_cambio, 'DD/MM/YYYY HH24:MI:SS') AS fecha, 
+       observacion
 FROM HISTORIAL_TRACKING_PEDIDO
 WHERE id_pedido = 5003
-ORDER BY id_tracking DESC;
-
-PROMPT === 4.4 AUDITORÍA A NIVEL DE SENTENCIA EN TABLA PEDIDO ===;
-SELECT audit_id, tabla_afectada, operacion, usuario_bd, TO_CHAR(fecha_evento, 'DD/MM/YYYY HH24:MI:SS') AS fecha
-FROM AUDITORIA_SENTENCIA_PEDIDO
-ORDER BY audit_id DESC;
+ORDER BY id_historial DESC;
 
 
 -- ----------------------------------------------------------------------------
@@ -94,12 +134,11 @@ ORDER BY audit_id DESC;
 PROMPT === 5.1 REAJUSTE INFLACIONARIO MASIVO DEL 4.5% ===;
 EXEC PKG_ESTILO_URBANO.sp_reajuste_masivo_sueldos;
 
-PROMPT === 5.2 CONSULTA DE AUDITORÍA TRAS REAJUSTE MASIVO ===;
-SELECT id_auditoria, nombre_empleado, sueldo_antiguo, sueldo_nuevo, diferencia, tipo_movimiento
-FROM AUDITORIA_SUELDO_EMPLEADO
-ORDER BY id_auditoria DESC;
+PROMPT === 5.2 CONSULTA EN VISTA V_TRABAJADORES TRAS REAJUSTE MASIVO ===;
+SELECT id_trabajador, rut, trabajador, TO_CHAR(sueldo_base, '$999G999G999') AS sueldo_reajustado
+FROM V_TRABAJADORES;
 
 PROMPT === 5.3 CONSULTA DE SUELDO PROMEDIO Y BONO VÍA FUNCIONES DEL PACKAGE ===;
-SELECT PKG_ESTILO_URBANO.fn_promedio_sueldo_trabajadores AS sueldo_promedio_operadores,
-       PKG_ESTILO_URBANO.fn_calcular_bono(2, 115) AS bono_por_cumplimiento_115pct
+SELECT TO_CHAR(PKG_ESTILO_URBANO.fn_promedio_sueldo_trabajadores, '$999G999G999') AS sueldo_promedio_planta,
+       TO_CHAR(PKG_ESTILO_URBANO.fn_calcular_bono(2, 115), '$999G999G999') AS bono_meta_115pct
 FROM DUAL;
