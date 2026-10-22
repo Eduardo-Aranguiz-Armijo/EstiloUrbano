@@ -3187,213 +3187,228 @@
         }
     </script>
 <script>
-        // ====================================================================
-        // CONEXIÓN DIRECTA CON ORACLE CLOUD AUTONOMOUS DATABASE (ORDS / EP2)
-        // ====================================================================
-        const ORACLE_ORDS_API = 'https://gcc0f4763f27380-estilourbano.adb.sa-santiago-1.oraclecloudapps.com/ords/estilourbano/';
+// ====================================================================
+// CONEXION DIRECTA CON ORACLE CLOUD AUTONOMOUS DATABASE (ORDS / EP2)
+// ====================================================================
+const ORACLE_ORDS_API = 'https://gcc0f4763f27380-estilourbano.adb.sa-santiago-1.oraclecloudapps.com/ords/estilourbano/';
 
-        let oracleDatos = {
-            pedidos: [],
-            tracking: [],
-            auditoriaSueldos: []
-        };
+let oracleDatos = {
+    pedidos: [],
+    tracking: [],
+    auditoriaSueldos: []
+};
 
-        async function sincronizarDatosOracleCompletos() {
-            mostrarToast('Consultando Oracle Autonomous Database en Santiago...');
-            try {
-                // 1. Consultar Pedidos
-                const resPed = await fetch(`${ORACLE_ORDS_API}pedidos/`);
-                if (resPed.ok) {
-                    const dataPed = await resPed.json();
-                    oracleDatos.pedidos = dataPed.items || [];
-                    renderizarTablaOraclePedidos();
-                    document.getElementById('badge-oracle-status').innerText = 'CONECTADO';
-                    document.getElementById('badge-oracle-status').className = 'text-emerald-400 font-bold';
-                }
-
-                // 2. Consultar Tracking
-                const resTrack = await fetch(`${ORACLE_ORDS_API}tracking/`);
-                if (resTrack.ok) {
-                    const dataTrack = await resTrack.json();
-                    oracleDatos.tracking = dataTrack.items || [];
-                    renderizarListadoOracleTracking();
-                }
-
-                // 3. Consultar Auditoría de Sueldos
-                const resAud = await fetch(`${ORACLE_ORDS_API}auditoria_sueldos/`);
-                if (resAud.ok) {
-                    const dataAud = await resAud.json();
-                    oracleDatos.auditoriaSueldos = dataAud.items || [];
-                    renderizarTablaOracleAuditoriaSueldos();
-                }
-
-                mostrarToast('Sincronización con Oracle Cloud completada (Código HTTP 200).');
-            } catch (err) {
-                console.error('Error al conectar con ORDS:', err);
-                mostrarToast('Conexión con Oracle Cloud verificada en servidor.');
+async function sincronizarDatosOracleCompletos() {
+    mostrarToast('Consultando Oracle Autonomous Database en Santiago...');
+    try {
+        // 1. Consultar Pedidos
+        const resPed = await fetch(ORACLE_ORDS_API + 'pedidos/');
+        if (resPed.ok) {
+            const dataPed = await resPed.json();
+            oracleDatos.pedidos = dataPed.items || [];
+            renderizarTablaOraclePedidos();
+            const badge = document.getElementById('badge-oracle-status');
+            if (badge) {
+                badge.innerText = 'CONECTADO';
+                badge.className = 'text-emerald-400 font-bold';
             }
         }
 
-        function renderizarTablaOraclePedidos() {
-            const tbody = document.getElementById('oracle-tabla-pedidos-body');
-            const cant = document.getElementById('oracle-cant-pedidos');
-            if (!tbody) return;
-
-            if (cant) cant.innerText = `${oracleDatos.pedidos.length} órdenes`;
-
-            const estadosMap = {
-                1: { nombre: 'CREADO', color: 'bg-neutral-800 text-neutral-300' },
-                2: { nombre: 'PAGADO', color: 'bg-blue-500/20 text-blue-400 border border-blue-500/30' },
-                3: { nombre: 'EMPAQUETANDO', color: 'bg-amber-500/20 text-amber-400 border border-amber-500/30' },
-                4: { nombre: 'EN CAMINO', color: 'bg-purple-500/20 text-purple-400 border border-purple-500/30' },
-                5: { nombre: 'ENTREGADO', color: 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30' }
-            };
-
-            tbody.innerHTML = oracleDatos.pedidos.map(p => {
-                const est = estadosMap[p.id_estado] || { nombre: `ESTADO ${p.id_estado}`, color: 'bg-neutral-800 text-neutral-300' };
-                return `
-                    <tr class="hover:bg-neutral-800/40 transition">
-                        <td class="px-3 py-2.5 font-bold text-amber-400">${p.nro_seguimiento}</td>
-                        <td class="px-3 py-2.5 text-white">${(p.total_pedido || 0).toLocaleString('es-CL')}</td>
-                        <td class="px-3 py-2.5">
-                            <span class="px-2 py-0.5 rounded text-[10px] font-bold ${est.color}">
-                                ${est.nombre}
-                            </span>
-                        </td>
-                        <td class="px-3 py-2.5 text-right">
-                            <button onclick="avanzarEstadoOraclePedido(${p.id_pedido}, ${p.id_estado})" class="bg-neutral-800 hover:bg-neutral-700 text-amber-400 text-[10px] px-2 py-1 rounded border border-neutral-700 cursor-pointer" title="Avanzar estado y disparar Trigger">
-                                Avanzar <i class="fa-solid fa-chevron-right ml-1"></i>
-                            </button>
-                        </td>
-                    </tr>
-                `;
-            }).join('');
+        // 2. Consultar Tracking
+        const resTrack = await fetch(ORACLE_ORDS_API + 'tracking/');
+        if (resTrack.ok) {
+            const dataTrack = await resTrack.json();
+            oracleDatos.tracking = dataTrack.items || [];
+            renderizarListadoOracleTracking();
         }
 
-        function renderizarListadoOracleTracking() {
-            const listado = document.getElementById('oracle-tracking-listado');
-            if (!listado) return;
-
-            if (oracleDatos.tracking.length === 0) {
-                listado.innerHTML = '<p class="text-neutral-500 text-center py-4">No hay eventos de tracking registrados.</p>';
-                return;
-            }
-
-            listado.innerHTML = oracleDatos.tracking.slice(-6).reverse().map(t => `
-                <div class="bg-neutral-900/50 p-2.5 rounded-lg border border-neutral-800/80 flex items-start gap-2.5">
-                    <i class="fa-solid fa-circle-dot text-amber-400 text-xs mt-1"></i>
-                    <div class="flex-grow space-y-0.5">
-                        <div class="flex items-center justify-between text-[10px] text-neutral-400 font-mono">
-                            <span>Pedido #${t.id_pedido}</span>
-                            <span>${t.fecha_cambio ? t.fecha_cambio.substring(0, 10) : 'Hoy'}</span>
-                        </div>
-                        <p class="text-white text-xs font-sans">${t.observacion}</p>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        function renderizarTablaOracleAuditoriaSueldos() {
-            const tbody = document.getElementById('oracle-tabla-auditoria-sueldos-body');
-            if (!tbody) return;
-
-            if (oracleDatos.auditoriaSueldos.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="5" class="py-6 text-center text-neutral-500 font-sans">Sin movimientos de auditoría registrados. Usa el simulador de arriba para probar el Trigger.</td></tr>';
-                return;
-            }
-
-            tbody.innerHTML = oracleDatos.auditoriaSueldos.map(a => `
-                <tr class="hover:bg-neutral-800/40 transition">
-                    <td class="px-3 py-2 font-bold text-white font-sans">${a.nombre_empleado || 'Empleado ID ' + a.id_usuario}</td>
-                    <td class="px-3 py-2 text-neutral-400">${(a.sueldo_antiguo || 0).toLocaleString('es-CL')}</td>
-                    <td class="px-3 py-2 text-amber-400 font-bold">${(a.sueldo_nuevo || 0).toLocaleString('es-CL')}</td>
-                    <td class="px-3 py-2 text-emerald-400">+${(a.diferencia || 0).toLocaleString('es-CL')}</td>
-                    <td class="px-3 py-2">
-                        <span class="bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 px-1.5 py-0.5 rounded text-[9px] font-bold">
-                            ${a.tipo_movimiento || 'AUMENTO'}
-                        </span>
-                    </td>
-                </tr>
-            `).join('');
-        }
-
-        function avanzarEstadoOraclePedido(idPedido, estadoActual) {
-            const nuevoEstado = estadoActual < 5 ? estadoActual + 1 : 5;
-            
-            // Simulación visual inmediata y mensaje del Trigger
-            const p = oracleDatos.pedidos.find(x => x.id_pedido === idPedido);
-            if (p) {
-                p.id_estado = nuevoEstado;
-                renderizarTablaOraclePedidos();
-                
-                // Agregar al tracking simulado
-                oracleDatos.tracking.unshift({
-                    id_historial: Date.now(),
-                    id_pedido: idPedido,
-                    id_estado: nuevoEstado,
-                    fecha_cambio: new Date().toISOString(),
-                    observacion: `Actualización Trigger: Pedido cambió a estado ${nuevoEstado} por usuario ADMIN`
-                });
-                renderizarListadoOracleTracking();
-                mostrarToast(`Trigger TRG_TRACKING disparado: Pedido #${idPedido} avanzó a estado ${nuevoEstado}.`);
-            }
-        }
-
-        function simularCambioSueldoTrigger() {
-            const idTrabajador = parseInt(document.getElementById('sim-id-trabajador').value);
-            const nuevoSueldo = parseInt(document.getElementById('sim-nuevo-sueldo').value);
-
-            if (isNaN(nuevoSueldo)) {
-                alert('Ingresa un monto válido');
-                return;
-            }
-
-            // Validar Trigger BEFORE (Sueldo Mínimo $500.000)
-            if (nuevoSueldo < 500000) {
-                alert('ORA-20001: ERROR DE REGLA DE NEGOCIO (Trigger BEFORE): El sueldo base (
-</html>
- + nuevoSueldo.toLocaleString('es-CL') + ') no puede ser inferior al sueldo mínimo legal de $500.000.');
-                mostrarToast('Trigger BEFORE bloqueó la transacción por sueldo bajo el mínimo legal.');
-                return;
-            }
-
-            // Validar Trigger de Sentencia (Regla Financiera: Nómina vs Ventas)
-            if (nuevoSueldo > 8000000) {
-                alert('ORA-20003: CONTROL FINANCIERO BLOQUEADO (Trigger de Sentencia): La nómina total de sueldos supera las ventas y ganancias del negocio ($8.942.890). Operación revertida.');
-                mostrarToast('Trigger de Sentencia bloqueó el aumento por exceder ganancias del negocio.');
-                return;
-            }
-
-            // Sueldo Válido -> Se dispara Trigger AFTER con :OLD y :NEW
-            const nombres = {
-                2: 'Ignacio López',
-                3: 'Valentina Pérez',
-                4: 'Felipe Morales',
-                5: 'Lucas Ramírez',
-                8: 'Rodrigo Tapia'
-            };
-
-            const sueldoAnterior = 650000;
-            const dif = nuevoSueldo - sueldoAnterior;
-
-            oracleDatos.auditoriaSueldos.unshift({
-                id_auditoria: Date.now(),
-                id_usuario: idTrabajador,
-                nombre_empleado: nombres[idTrabajador] || 'Operador',
-                sueldo_antiguo: sueldoAnterior,
-                sueldo_nuevo: nuevoSueldo,
-                diferencia: dif,
-                tipo_movimiento: dif >= 0 ? 'AUMENTO' : 'DISMINUCIÓN'
-            });
-
+        // 3. Consultar Auditoria de Sueldos
+        const resAud = await fetch(ORACLE_ORDS_API + 'auditoria_sueldos/');
+        if (resAud.ok) {
+            const dataAud = await resAud.json();
+            oracleDatos.auditoriaSueldos = dataAud.items || [];
             renderizarTablaOracleAuditoriaSueldos();
-            mostrarToast(`Trigger AFTER: Sueldo de ${nombres[idTrabajador]} actualizado a ${nuevoSueldo.toLocaleString('es-CL')} y auditado con éxito.`);
         }
 
-        // Cargar datos de Oracle automáticamente al iniciar
-        window.addEventListener('DOMContentLoaded', () => {
-            sincronizarDatosOracleCompletos();
+        mostrarToast('Sincronizacion con Oracle Cloud completada (Codigo HTTP 200).');
+    } catch (err) {
+        console.error('Error al conectar con ORDS:', err);
+        mostrarToast('Conexion con Oracle Cloud verificada en servidor.');
+    }
+}
+
+function renderizarTablaOraclePedidos() {
+    const tbody = document.getElementById('oracle-tabla-pedidos-body');
+    const cant = document.getElementById('oracle-cant-pedidos');
+    if (!tbody) return;
+
+    if (cant) cant.innerText = oracleDatos.pedidos.length + ' ordenes';
+
+    const estadosMap = {
+        1: { nombre: 'CREADO', color: 'bg-neutral-800 text-neutral-300' },
+        2: { nombre: 'PAGADO', color: 'bg-blue-500/20 text-blue-400 border border-blue-500/30' },
+        3: { nombre: 'EMPAQUETANDO', color: 'bg-amber-500/20 text-amber-400 border border-amber-500/30' },
+        4: { nombre: 'EN CAMINO', color: 'bg-purple-500/20 text-purple-400 border border-purple-500/30' },
+        5: { nombre: 'ENTREGADO', color: 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30' }
+    };
+
+    if (oracleDatos.pedidos.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="4" class="py-6 text-center text-neutral-500 font-sans">No hay pedidos registrados en Oracle.</td></tr>';
+        return;
+    }
+
+    tbody.innerHTML = oracleDatos.pedidos.map(p => {
+        const est = estadosMap[p.id_estado] || { nombre: 'ESTADO ' + p.id_estado, color: 'bg-neutral-800 text-neutral-300' };
+        const monto = (p.total_pedido || 0).toLocaleString('es-CL');
+        return `
+            <tr class="hover:bg-neutral-800/40 transition">
+                <td class="px-3 py-2.5 font-bold text-amber-400">${p.nro_seguimiento}</td>
+                <td class="px-3 py-2.5 text-white">$${monto}</td>
+                <td class="px-3 py-2.5">
+                    <span class="px-2 py-0.5 rounded text-[10px] font-bold ${est.color}">
+                        ${est.nombre}
+                    </span>
+                </td>
+                <td class="px-3 py-2.5 text-right">
+                    <button onclick="avanzarEstadoOraclePedido(${p.id_pedido}, ${p.id_estado})" class="bg-neutral-800 hover:bg-neutral-700 text-amber-400 text-[10px] px-2 py-1 rounded border border-neutral-700 cursor-pointer" title="Avanzar estado y disparar Trigger">
+                        Avanzar <i class="fa-solid fa-chevron-right ml-1"></i>
+                    </button>
+                </td>
+            </tr>
+        `;
+    }).join('');
+}
+
+function renderizarListadoOracleTracking() {
+    const listado = document.getElementById('oracle-tracking-listado');
+    if (!listado) return;
+
+    if (oracleDatos.tracking.length === 0) {
+        listado.innerHTML = '<p class="text-neutral-500 text-center py-4">No hay eventos de tracking registrados.</p>';
+        return;
+    }
+
+    listado.innerHTML = oracleDatos.tracking.slice(-6).reverse().map(t => {
+        const fecha = t.fecha_cambio ? t.fecha_cambio.substring(0, 10) : 'Hoy';
+        return `
+            <div class="bg-neutral-900/50 p-2.5 rounded-lg border border-neutral-800/80 flex items-start gap-2.5">
+                <i class="fa-solid fa-circle-dot text-amber-400 text-xs mt-1"></i>
+                <div class="flex-grow space-y-0.5">
+                    <div class="flex items-center justify-between text-[10px] text-neutral-400 font-mono">
+                        <span>Pedido #${t.id_pedido}</span>
+                        <span>${fecha}</span>
+                    </div>
+                    <p class="text-white text-xs font-sans">${t.observacion}</p>
+                </div>
+            </div>
+        `;
+    }).join('');
+}
+
+function renderizarTablaOracleAuditoriaSueldos() {
+    const tbody = document.getElementById('oracle-tabla-auditoria-sueldos-body');
+    if (!tbody) return;
+
+    if (oracleDatos.auditoriaSueldos.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="5" class="py-6 text-center text-neutral-500 font-sans">Sin movimientos de auditoria registrados. Usa el simulador de arriba para probar el Trigger.</td></tr>';
+        return;
+    }
+
+    tbody.innerHTML = oracleDatos.auditoriaSueldos.map(a => {
+        const emp = a.nombre_empleado || ('Empleado ID ' + a.id_usuario);
+        const ant = (a.sueldo_antiguo || 0).toLocaleString('es-CL');
+        const nue = (a.sueldo_nuevo || 0).toLocaleString('es-CL');
+        const dif = (a.diferencia || 0).toLocaleString('es-CL');
+        const mov = a.tipo_movimiento || 'AUMENTO';
+        return `
+            <tr class="hover:bg-neutral-800/40 transition">
+                <td class="px-3 py-2 font-bold text-white font-sans">${emp}</td>
+                <td class="px-3 py-2 text-neutral-400">$${ant}</td>
+                <td class="px-3 py-2 text-amber-400 font-bold">$${nue}</td>
+                <td class="px-3 py-2 text-emerald-400">+$${dif}</td>
+                <td class="px-3 py-2">
+                    <span class="bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 px-1.5 py-0.5 rounded text-[9px] font-bold">
+                        ${mov}
+                    </span>
+                </td>
+            </tr>
+        `;
+    }).join('');
+}
+
+function avanzarEstadoOraclePedido(idPedido, estadoActual) {
+    const nuevoEstado = estadoActual < 5 ? estadoActual + 1 : 5;
+    const p = oracleDatos.pedidos.find(x => x.id_pedido === idPedido);
+    if (p) {
+        p.id_estado = nuevoEstado;
+        renderizarTablaOraclePedidos();
+        
+        oracleDatos.tracking.unshift({
+            id_historial: Date.now(),
+            id_pedido: idPedido,
+            id_estado: nuevoEstado,
+            fecha_cambio: new Date().toISOString(),
+            observacion: 'Actualizacion Trigger: Pedido cambio a estado ' + nuevoEstado + ' por usuario ADMIN'
         });
+        renderizarListadoOracleTracking();
+        mostrarToast('Trigger TRG_TRACKING disparado: Pedido #' + idPedido + ' avanzo a estado ' + nuevoEstado + '.');
+    }
+}
+
+function simularCambioSueldoTrigger() {
+    const select = document.getElementById('sim-id-trabajador');
+    const input = document.getElementById('sim-nuevo-sueldo');
+    if (!select || !input) return;
+
+    const idTrabajador = parseInt(select.value);
+    const nuevoSueldo = parseInt(input.value);
+
+    if (isNaN(nuevoSueldo)) {
+        alert('Ingresa un monto valido');
+        return;
+    }
+
+    if (nuevoSueldo < 500000) {
+        alert('ORA-20001: ERROR DE REGLA DE NEGOCIO (Trigger BEFORE): El sueldo base ($' + nuevoSueldo.toLocaleString('es-CL') + ') no puede ser inferior al sueldo minimo legal de $500.000.');
+        mostrarToast('Trigger BEFORE bloqueo la transaccion por sueldo bajo el minimo legal.');
+        return;
+    }
+
+    if (nuevoSueldo > 8000000) {
+        alert('ORA-20003: CONTROL FINANCIERO BLOQUEADO (Trigger de Sentencia): La nomina total de sueldos supera las ventas y ganancias del negocio ($8.942.890). Operacion revertida.');
+        mostrarToast('Trigger de Sentencia bloqueo el aumento por exceder ganancias del negocio.');
+        return;
+    }
+
+    const nombres = {
+        2: 'Ignacio Lopez',
+        3: 'Valentina Perez',
+        4: 'Felipe Morales',
+        5: 'Lucas Ramirez',
+        8: 'Rodrigo Tapia'
+    };
+
+    const sueldoAnterior = 650000;
+    const dif = nuevoSueldo - sueldoAnterior;
+
+    oracleDatos.auditoriaSueldos.unshift({
+        id_auditoria: Date.now(),
+        id_usuario: idTrabajador,
+        nombre_empleado: nombres[idTrabajador] || 'Operador',
+        sueldo_antiguo: sueldoAnterior,
+        sueldo_nuevo: nuevoSueldo,
+        diferencia: dif,
+        tipo_movimiento: dif >= 0 ? 'AUMENTO' : 'DISMINUCION'
+    });
+
+    renderizarTablaOracleAuditoriaSueldos();
+    mostrarToast('Trigger AFTER: Sueldo de ' + (nombres[idTrabajador] || 'Operador') + ' actualizado a $' + nuevoSueldo.toLocaleString('es-CL') + ' y auditado con exito.');
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+    sincronizarDatosOracleCompletos();
+});
+
 </script>
 </body>
 </html>
