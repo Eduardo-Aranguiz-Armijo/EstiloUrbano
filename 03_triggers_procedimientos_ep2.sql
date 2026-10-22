@@ -57,7 +57,35 @@ BEGIN
 END;
 /
 
--- 4. Especificacion del Package PKG_ESTILO_URBANO
+-- 4. Vistas de Abstracción para evitar términos robóticos
+CREATE OR REPLACE VIEW V_TRABAJADORES AS
+SELECT 
+    id_usuario AS id_trabajador,
+    rut,
+    nombre,
+    apellido,
+    nombre || ' ' || apellido AS trabajador,
+    email,
+    telefono,
+    sueldo_base,
+    estado
+FROM USUARIO
+WHERE id_rol = 2;
+
+CREATE OR REPLACE VIEW V_CLIENTES AS
+SELECT 
+    id_usuario AS id_cliente,
+    rut,
+    nombre,
+    apellido,
+    nombre || ' ' || apellido AS cliente,
+    email,
+    telefono,
+    estado
+FROM USUARIO
+WHERE id_rol = 3;
+
+-- 5. Especificacion del Package PKG_ESTILO_URBANO
 CREATE OR REPLACE PACKAGE PKG_ESTILO_URBANO IS
     c_version CONSTANT VARCHAR2(10) := '2.0-EP2';
 
@@ -65,19 +93,19 @@ CREATE OR REPLACE PACKAGE PKG_ESTILO_URBANO IS
     FUNCTION fn_promedio_sueldo_trabajadores RETURN NUMBER;
     FUNCTION fn_obtener_margen_financiero RETURN VARCHAR2;
 
-    PROCEDURE sp_actualizar_sueldo_empleado(p_id_usuario NUMBER, p_nuevo_sueldo NUMBER);
+    PROCEDURE sp_actualizar_sueldo_empleado(p_id_trabajador NUMBER, p_nuevo_sueldo NUMBER);
     PROCEDURE sp_cambiar_estado_pedido(p_id_pedido NUMBER, p_nuevo_estado NUMBER);
     PROCEDURE sp_reajuste_masivo_sueldos;
 END PKG_ESTILO_URBANO;
 /
 
--- 5. Cuerpo del Package PKG_ESTILO_URBANO
+-- 6. Cuerpo del Package PKG_ESTILO_URBANO
 CREATE OR REPLACE PACKAGE BODY PKG_ESTILO_URBANO IS
 
-    FUNCTION fn_es_trabajador_valido(p_id_usuario NUMBER) RETURN BOOLEAN IS
+    FUNCTION fn_es_trabajador_valido(p_id_trabajador NUMBER) RETURN BOOLEAN IS
         v_existe NUMBER := 0;
     BEGIN
-        SELECT COUNT(*) INTO v_existe FROM USUARIO WHERE id_usuario = p_id_usuario AND id_rol = 2 AND estado = 'A';
+        SELECT COUNT(*) INTO v_existe FROM USUARIO WHERE id_usuario = p_id_trabajador AND id_rol = 2 AND estado = 'A';
         RETURN (v_existe > 0);
     END fn_es_trabajador_valido;
 
@@ -115,15 +143,15 @@ CREATE OR REPLACE PACKAGE BODY PKG_ESTILO_URBANO IS
                ' | Ganancia Libre: $' || TO_CHAR(v_margen, 'FM999,999,999');
     END fn_obtener_margen_financiero;
 
-    PROCEDURE sp_actualizar_sueldo_empleado(p_id_usuario NUMBER, p_nuevo_sueldo NUMBER) IS
+    PROCEDURE sp_actualizar_sueldo_empleado(p_id_trabajador NUMBER, p_nuevo_sueldo NUMBER) IS
     BEGIN
-        IF NOT fn_es_trabajador_valido(p_id_usuario) THEN
-            DBMS_OUTPUT.PUT_LINE('AVISO: El usuario ' || p_id_usuario || ' no es un trabajador activo.');
+        IF NOT fn_es_trabajador_valido(p_id_trabajador) THEN
+            DBMS_OUTPUT.PUT_LINE('AVISO: El ID ' || p_id_trabajador || ' no corresponde a un trabajador activo.');
             RETURN;
         END IF;
-        UPDATE USUARIO SET sueldo_base = p_nuevo_sueldo WHERE id_usuario = p_id_usuario;
+        UPDATE USUARIO SET sueldo_base = p_nuevo_sueldo WHERE id_usuario = p_id_trabajador;
         COMMIT;
-        DBMS_OUTPUT.PUT_LINE('OK: Sueldo actualizado a $' || p_nuevo_sueldo);
+        DBMS_OUTPUT.PUT_LINE('OK: Sueldo del trabajador ' || p_id_trabajador || ' actualizado a $' || p_nuevo_sueldo);
     END sp_actualizar_sueldo_empleado;
 
     PROCEDURE sp_cambiar_estado_pedido(p_id_pedido NUMBER, p_nuevo_estado NUMBER) IS

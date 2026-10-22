@@ -65,15 +65,15 @@ El alcance de la solución desarrollada en esta etapa cubre:
 Permite a la gerencia modificar el sueldo de un trabajador garantizando que sea un operador activo:
 ```sql
 PROCEDURE sp_actualizar_sueldo_empleado(
-    p_id_usuario   NUMBER,
-    p_nuevo_sueldo NUMBER
+    p_id_trabajador NUMBER,
+    p_nuevo_sueldo  NUMBER
 ) IS
 BEGIN
-    IF NOT fn_es_trabajador_valido(p_id_usuario) THEN
-        DBMS_OUTPUT.PUT_LINE('AVISO: El usuario no es un trabajador activo.');
+    IF NOT fn_es_trabajador_valido(p_id_trabajador) THEN
+        DBMS_OUTPUT.PUT_LINE('AVISO: El ID ' || p_id_trabajador || ' no corresponde a un trabajador activo.');
         RETURN;
     END IF;
-    UPDATE USUARIO SET sueldo_base = p_nuevo_sueldo WHERE id_usuario = p_id_usuario;
+    UPDATE USUARIO SET sueldo_base = p_nuevo_sueldo WHERE id_usuario = p_id_trabajador;
     COMMIT;
 END sp_actualizar_sueldo_empleado;
 ```
@@ -150,6 +150,23 @@ classDiagram
 
 * **Constructor Privado (`fn_es_trabajador_valido`):** Oculto dentro del cuerpo del paquete, garantiza que ninguna operación de sueldo se aplique a clientes o usuarios inactivos.
 * **Encapsulamiento:** El usuario o aplicación externa solo interactúa con los métodos autorizados en la especificación pública.
+
+### 3.4 Vistas de Abstracción: Humanización del Modelo (`V_TRABAJADORES` y `V_CLIENTES`)
+Para evitar términos robóticos o genéricos como `id_usuario` al interactuar con empleados o compradores, se implementaron dos Vistas relacionales:
+* **`V_TRABAJADORES`:** Expone los campos con el identificador `id_trabajador`, permitiendo a Recursos Humanos y a la gerencia operar con semántica de negocio limpia.
+* **`V_CLIENTES`:** Expone los campos con el identificador `id_cliente`, desacoplando la capa web y comercial del identificador técnico interno.
+
+```sql
+CREATE OR REPLACE VIEW V_TRABAJADORES AS
+SELECT id_usuario AS id_trabajador, rut, nombre, apellido, 
+       nombre || ' ' || apellido AS trabajador, email, sueldo_base
+FROM USUARIO WHERE id_rol = 2;
+
+CREATE OR REPLACE VIEW V_CLIENTES AS
+SELECT id_usuario AS id_cliente, rut, nombre, apellido, 
+       nombre || ' ' || apellido AS cliente, email
+FROM USUARIO WHERE id_rol = 3;
+```
 
 ---
 
