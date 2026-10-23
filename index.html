@@ -73,10 +73,16 @@
     <!-- ==================================================================== -->
     <!-- BARRA SUPERIOR ANUNCIO COMERCIAL                                     -->
     <!-- ==================================================================== -->
-    <div class="bg-gradient-to-r from-amber-600 via-amber-500 to-amber-600 text-black text-[11px] font-bold uppercase tracking-widest text-center py-1.5 px-4 shadow-sm flex items-center justify-center gap-3">
+    <div class="bg-gradient-to-r from-amber-600 via-amber-500 to-amber-600 text-black text-[11px] font-bold uppercase tracking-widest text-center py-1.5 px-4 shadow-sm flex flex-wrap items-center justify-center gap-3">
         <span><i class="fa-solid fa-truck-fast mr-1"></i> Envíos express a todo Chile por Starken y Chilexpress</span>
         <span class="hidden md:inline text-black/50">•</span>
         <span class="hidden md:inline">🔥 Colección Streetwear Invierno 2026</span>
+    </div>
+        <span><i class="fa-solid fa-truck-fast mr-1"></i> Envíos express a todo Chile por Starken y Chilexpress</span>
+        <span class="hidden md:inline text-black/50">•</span>
+        <button onclick="navegarAPanel('triggers-lab')" class="bg-black hover:bg-neutral-900 text-amber-400 hover:text-white px-3 py-0.5 rounded-full text-[10px] font-extrabold tracking-wider transition cursor-pointer flex items-center gap-1.5 shadow-md border border-black">
+            <i class="fa-solid fa-bolt text-amber-400"></i> PROBAR TRIGGERS PL/SQL (EP2)
+        </button>
     </div>
 
     <!-- ==================================================================== -->
@@ -112,9 +118,16 @@
                 </div>
 
                 <!-- Botones y Acceso de Usuario -->
-                <div class="flex items-center gap-4 text-neutral-300">
+                <div class="flex items-center gap-3 sm:gap-4 text-neutral-300">
                     
                     <!-- Botón Carrito -->
+                    <!-- Botón Acceso Directo Laboratorio Triggers -->
+                    <button onclick="navegarAPanel('triggers-lab')" title="Laboratorio interactivo de Triggers PL/SQL (Oracle EP2)" class="cursor-pointer flex items-center gap-2 bg-[#092318] hover:bg-[#0f3424] border border-emerald-500/50 hover:border-emerald-400 px-3 py-1.5 rounded-xl text-xs font-mono text-emerald-300 transition shadow-[0_0_15px_rgba(16,185,129,0.25)]">
+                        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                        <span class="font-bold hidden sm:inline">Triggers & SQL</span>
+                        <span class="text-[10px] bg-emerald-500/20 text-emerald-300 px-1.5 py-0.5 rounded font-black border border-emerald-500/40">EP2</span>
+                    </button>
+                    
                     <button title="Bolsa de Compras" onclick="abrirModalCarrito()" class="hover:text-white relative p-2 text-base transition flex items-center gap-1.5 cursor-pointer">
                         <i class="fa-solid fa-bag-shopping text-lg"></i>
                         <span id="badge-cart" class="bg-amber-500 text-black font-black text-[10px] w-5 h-5 rounded-full flex items-center justify-center shadow-md">0</span>
@@ -137,6 +150,10 @@
                 <button onclick="filtrarCategoria('PANTALONES')" class="nav-cat-btn hover:text-amber-400 transition whitespace-nowrap" id="cat-btn-PANTALONES">Pantalones</button>
                 <button onclick="filtrarCategoria('ZAPATILLAS')" class="nav-cat-btn hover:text-amber-400 transition whitespace-nowrap" id="cat-btn-ZAPATILLAS">Zapatillas</button>
                 <button onclick="filtrarCategoria('ACCESORIOS')" class="nav-cat-btn hover:text-amber-400 transition whitespace-nowrap" id="cat-btn-ACCESORIOS">Accesorios</button>
+                <span class="text-neutral-700 select-none">|</span>
+                <button onclick="navegarAPanel('triggers-lab')" class="nav-cat-btn text-emerald-400 hover:text-emerald-300 transition whitespace-nowrap flex items-center gap-1.5 font-bold" id="cat-btn-triggers-lab">
+                    <i class="fa-solid fa-bolt text-xs text-amber-400"></i> Probar Triggers & SQL (EP2)
+                </button>
             </nav>
 
         </div>
@@ -553,6 +570,508 @@
                         </div>
                     </div>
                 </div>
+            </div>
+
+        </div>
+
+    
+        <!-- ================================================================ -->
+        <!-- 5. PANEL LABORATORIO DE TRIGGERS & SQL STUDIO (EP2)              -->
+        <!-- ================================================================ -->
+        <div id="panel-triggers-lab" class="hidden max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8">
+
+            <!-- Banner Cabecera Principal -->
+            <div class="glass-card rounded-3xl p-6 sm:p-8 border border-amber-500/30 bg-gradient-to-r from-[#0d1f17]/95 via-[#101014]/95 to-[#0b0b0d] flex flex-col md:flex-row items-start md:items-center justify-between gap-6 relative overflow-hidden shadow-[0_0_35px_rgba(245,158,11,0.15)]">
+                <div class="absolute -right-12 -bottom-12 w-56 h-56 bg-amber-500/10 rounded-full blur-3xl pointer-events-none"></div>
+                <div class="space-y-2 z-10 max-w-3xl">
+                    <div class="flex flex-wrap items-center gap-2.5">
+                        <span class="px-3 py-1 rounded-full text-[10px] font-mono font-bold uppercase tracking-widest bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 flex items-center gap-1.5 shadow-sm">
+                            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> Oracle 23ai / 19c PL/SQL Engine
+                        </span>
+                        <span class="px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold uppercase tracking-widest bg-amber-500/20 text-amber-300 border border-amber-500/40">
+                            Evaluación Parcial N° 2 (EP2)
+                        </span>
+                        <span class="text-xs text-neutral-400 font-mono hidden sm:inline">Región: sa-santiago-1</span>
+                    </div>
+                    <h1 class="text-2xl sm:text-4xl font-black text-white font-brand tracking-tight flex items-center gap-3">
+                        <i class="fa-solid fa-bolt text-amber-400"></i> LABORATORIO DE TRIGGERS & SQL STUDIO
+                    </h1>
+                    <p class="text-xs sm:text-sm text-neutral-300 font-medium leading-relaxed">
+                        Prueba en tiempo real los <strong class="text-amber-400">Triggers de Fila (BEFORE y AFTER con :OLD y :NEW)</strong>, <strong class="text-emerald-400">Triggers de Sentencia (Regla de Solvencia Financiera)</strong> y subprogramas del <strong class="text-white font-mono">PKG_ESTILO_URBANO</strong>. Observa cómo las sentencias DML mutan las tablas relacionales y consulta los logs de Oracle en vivo.
+                    </p>
+                </div>
+
+                <div class="flex flex-wrap items-center gap-3 z-10 w-full md:w-auto">
+                    <button onclick="reiniciarDatosSqlLab()" class="flex-1 md:flex-none bg-neutral-800 hover:bg-neutral-700 text-neutral-200 text-xs px-4 py-3 rounded-xl font-bold uppercase tracking-wider transition flex items-center justify-center gap-2 border border-neutral-700 cursor-pointer shadow-md">
+                        <i class="fa-solid fa-arrow-rotate-left text-amber-400"></i> Reiniciar Datos BD
+                    </button>
+                    <button onclick="navegarAPanel('tienda')" class="flex-1 md:flex-none btn-yellow text-xs px-4 py-3 rounded-xl font-black uppercase tracking-wider transition flex items-center justify-center gap-2 cursor-pointer shadow-lg">
+                        <i class="fa-solid fa-store text-black"></i> Ir a la Tienda
+                    </button>
+                </div>
+            </div>
+
+            <!-- TABLERO DE SOLVENCIA FINANCIERA (CONTROL EN TIEMPO REAL DEL TRIGGER DE SENTENCIA) -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+                <!-- Tarjeta 1: Ventas Totales -->
+                <div class="glass-card rounded-2xl p-5 border border-neutral-800 space-y-2">
+                    <div class="flex items-center justify-between text-neutral-400 text-xs font-mono">
+                        <span>VENTAS TOTALES (PEDIDOS)</span>
+                        <i class="fa-solid fa-cart-shopping text-emerald-400"></i>
+                    </div>
+                    <div class="text-2xl font-black text-white font-mono" id="sql-kpi-ventas">
+                        $8.942.890 CLP
+                    </div>
+                    <p class="text-[11px] text-neutral-400">SUM(total_pedido) de órdenes confirmadas</p>
+                </div>
+
+                <!-- Tarjeta 2: Nómina de Sueldos -->
+                <div class="glass-card rounded-2xl p-5 border border-neutral-800 space-y-2">
+                    <div class="flex items-center justify-between text-neutral-400 text-xs font-mono">
+                        <span>NÓMINA TOTAL DE SUELDOS</span>
+                        <i class="fa-solid fa-users text-amber-400"></i>
+                    </div>
+                    <div class="text-2xl font-black text-amber-400 font-mono" id="sql-kpi-sueldos">
+                        $3.400.000 CLP
+                    </div>
+                    <p class="text-[11px] text-neutral-400">SUM(sueldo_base) de trabajadores activos</p>
+                </div>
+
+                <!-- Tarjeta 3: Margen Financiero -->
+                <div class="glass-card rounded-2xl p-5 border border-neutral-800 space-y-2">
+                    <div class="flex items-center justify-between text-neutral-400 text-xs font-mono">
+                        <span>MARGEN DE GANANCIA LIBRE</span>
+                        <i class="fa-solid fa-scale-balanced text-emerald-400"></i>
+                    </div>
+                    <div class="text-2xl font-black text-emerald-400 font-mono" id="sql-kpi-margen">
+                        +$5.542.890 CLP
+                    </div>
+                    <p class="text-[11px] text-neutral-400">Calculado por fn_obtener_margen_financiero</p>
+                </div>
+
+                <!-- Tarjeta 4: Estado del Trigger de Solvencia -->
+                <div class="glass-card rounded-2xl p-5 border border-emerald-500/40 bg-emerald-950/20 space-y-2" id="sql-kpi-regla-card">
+                    <div class="flex items-center justify-between text-emerald-300 text-xs font-mono">
+                        <span>REGLA FINANCIERA (SENTENCIA)</span>
+                        <i class="fa-solid fa-shield-halved text-emerald-400"></i>
+                    </div>
+                    <div class="pt-1">
+                        <span id="sql-kpi-regla-badge" class="bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 px-3 py-1 rounded-lg text-xs font-black font-mono tracking-wide inline-flex items-center gap-1.5">
+                            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> SOLVENTE
+                        </span>
+                    </div>
+                    <p class="text-[11px] text-emerald-300/80" id="sql-kpi-regla-desc">Trigger trg_valida_solvencia_sueldos previene quiebra (Ventas > Nómina)</p>
+                </div>
+            </div>
+
+            <!-- BANCO DE PRUEBAS INTERACTIVO: 5 MÓDULOS DE TRIGGERS Y PL/SQL -->
+            <div class="space-y-6">
+                <div class="flex items-center justify-between border-b border-neutral-800 pb-3">
+                    <div>
+                        <h2 class="text-xl font-black text-white font-brand uppercase tracking-wide flex items-center gap-2">
+                            <i class="fa-solid fa-flask-vial text-amber-400"></i> Banco de Pruebas de Triggers PL/SQL
+                        </h2>
+                        <p class="text-xs text-neutral-400">Selecciona o configura los valores de prueba y presiona los botones de ejecución para activar los disparadores.</p>
+                    </div>
+                    <span class="text-xs font-mono text-neutral-500 hidden sm:inline">BDY1103 • Caso Estilo Urbano</span>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+
+                    <!-- MÓDULO 1: TRIGGER DE FILA (AFTER) - AUDITORÍA CON :OLD Y :NEW -->
+                    <div class="glass-card rounded-2xl p-6 border border-neutral-800 space-y-5 hover:border-amber-500/30 transition shadow-lg">
+                        <div class="flex items-start justify-between gap-4">
+                            <div>
+                                <div class="flex items-center gap-2">
+                                    <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-amber-500/20 text-amber-300 border border-amber-500/40">FILA: AFTER</span>
+                                    <h3 class="text-base font-black text-white font-mono">trg_audit_sueldo_cambios</h3>
+                                </div>
+                                <p class="text-xs text-neutral-400 mt-1">
+                                    Al actualizar el sueldo de un trabajador, captura <code class="text-amber-400 bg-neutral-900 px-1 py-0.5 rounded">:OLD.sueldo_base</code> y <code class="text-emerald-400 bg-neutral-900 px-1 py-0.5 rounded">:NEW.sueldo_base</code> e inserta una fila de auditoría con la diferencia y usuario.
+                                </p>
+                            </div>
+                            <div class="w-10 h-10 rounded-xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center shrink-0">
+                                <i class="fa-solid fa-file-invoice-dollar text-amber-400 text-lg"></i>
+                            </div>
+                        </div>
+
+                        <!-- Controles Interactivos -->
+                        <div class="bg-neutral-900/70 p-4 rounded-xl border border-neutral-800 space-y-3 font-mono text-xs">
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                <div>
+                                    <label class="block text-neutral-400 text-[11px] mb-1">Trabajador (V_TRABAJADORES):</label>
+                                    <select id="lab-trabajador-select" onchange="actualizarInputSueldoDesdeSelect()" class="w-full bg-[#141418] border border-neutral-700 text-white text-xs rounded-lg px-3 py-2 focus:outline-none focus:border-amber-400">
+                                        <option value="2" data-sueldo="650000">Ignacio López (ID: 2 - $650.000)</option>
+                                        <option value="3" data-sueldo="720000">Valentina Pérez (ID: 3 - $720.000)</option>
+                                        <option value="4" data-sueldo="680000">Felipe Morales (ID: 4 - $680.000)</option>
+                                        <option value="5" data-sueldo="650000">Lucas Ramírez (ID: 5 - $650.000)</option>
+                                        <option value="8" data-sueldo="700000">Rodrigo Tapia (ID: 8 - $700.000)</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-neutral-400 text-[11px] mb-1">Nuevo Sueldo Propuesto (CLP):</label>
+                                    <input type="number" id="lab-nuevo-sueldo" value="750000" step="10000" class="w-full bg-[#141418] border border-neutral-700 text-amber-400 font-bold text-xs rounded-lg px-3 py-2 focus:outline-none focus:border-amber-400">
+                                </div>
+                            </div>
+
+                            <!-- Botones rápidos -->
+                            <div class="flex flex-wrap items-center gap-2 pt-1">
+                                <span class="text-neutral-500 text-[10px]">Ajustes rápidos:</span>
+                                <button onclick="ajustarInputSueldoRapido(100000)" class="bg-neutral-800 hover:bg-neutral-700 text-neutral-300 text-[10px] px-2 py-1 rounded border border-neutral-700 cursor-pointer">+ $100.000</button>
+                                <button onclick="ajustarInputSueldoRapido(50000)" class="bg-neutral-800 hover:bg-neutral-700 text-neutral-300 text-[10px] px-2 py-1 rounded border border-neutral-700 cursor-pointer">+ $50.000</button>
+                                <button onclick="ajustarInputSueldoRapido(-30000)" class="bg-neutral-800 hover:bg-neutral-700 text-neutral-300 text-[10px] px-2 py-1 rounded border border-neutral-700 cursor-pointer">- $30.000</button>
+                            </div>
+                        </div>
+
+                        <button onclick="ejecutarTriggerAfterSueldo()" class="w-full btn-yellow py-2.5 px-4 rounded-xl text-xs font-black uppercase tracking-wider flex items-center justify-center gap-2 cursor-pointer shadow-lg hover:shadow-amber-500/20">
+                            <i class="fa-solid fa-play text-xs"></i> Ejecutar UPDATE y Disparar Trigger AFTER
+                        </button>
+                    </div>
+
+                    <!-- MÓDULO 2: TRIGGER DE FILA (BEFORE) - REGLA SUELDO MÍNIMO $500.000 -->
+                    <div class="glass-card rounded-2xl p-6 border border-neutral-800 space-y-5 hover:border-red-500/30 transition shadow-lg">
+                        <div class="flex items-start justify-between gap-4">
+                            <div>
+                                <div class="flex items-center gap-2">
+                                    <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-red-500/20 text-red-300 border border-red-500/40">FILA: BEFORE</span>
+                                    <h3 class="text-base font-black text-white font-mono">trg_valida_sueldo_empleado</h3>
+                                </div>
+                                <p class="text-xs text-neutral-400 mt-1">
+                                    Validación preventiva antes del cambio. Si <code class="text-red-400 bg-neutral-900 px-1 py-0.5 rounded">:NEW.sueldo_base &lt; 500000</code>, frena la operación arrojando <code class="text-red-300">RAISE_APPLICATION_ERROR(-20001)</code>.
+                                </p>
+                            </div>
+                            <div class="w-10 h-10 rounded-xl bg-red-500/10 border border-red-500/30 flex items-center justify-center shrink-0">
+                                <i class="fa-solid fa-hand text-red-400 text-lg"></i>
+                            </div>
+                        </div>
+
+                        <div class="bg-neutral-900/70 p-4 rounded-xl border border-neutral-800 space-y-3 font-mono text-xs">
+                            <span class="block text-neutral-400 text-[11px]">Casos de prueba predefinidos de la pauta EP2:</span>
+                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                                <button onclick="ejecutarPruebaBeforeDirecta(350000)" class="bg-red-950/40 hover:bg-red-900/60 border border-red-500/40 text-red-300 p-2 rounded-lg text-[11px] font-bold text-center transition cursor-pointer">
+                                    <span class="block text-xs font-black text-white">$350.000</span>
+                                    <span>❌ Ilegal (Bloqueo)</span>
+                                </button>
+                                <button onclick="ejecutarPruebaBeforeDirecta(480000)" class="bg-red-950/40 hover:bg-red-900/60 border border-red-500/40 text-red-300 p-2 rounded-lg text-[11px] font-bold text-center transition cursor-pointer">
+                                    <span class="block text-xs font-black text-white">$480.000</span>
+                                    <span>❌ Ilegal (Bloqueo)</span>
+                                </button>
+                                <button onclick="ejecutarPruebaBeforeDirecta(550000)" class="bg-emerald-950/40 hover:bg-emerald-900/60 border border-emerald-500/40 text-emerald-300 p-2 rounded-lg text-[11px] font-bold text-center transition cursor-pointer">
+                                    <span class="block text-xs font-black text-white">$550.000</span>
+                                    <span>✔️ Legal (Permitido)</span>
+                                </button>
+                            </div>
+                            <p class="text-[10px] text-neutral-500 italic">* Un sueldo ilegal no alcanza a tocar la base de datos (ROLLBACK preventivo).</p>
+                        </div>
+
+                        <div class="flex items-center gap-3">
+                            <input type="number" id="lab-sueldo-before-custom" value="350000" placeholder="Monto manual CLP" class="flex-grow bg-[#141418] border border-neutral-700 text-white font-mono text-xs rounded-xl px-3 py-2.5 focus:outline-none focus:border-red-400">
+                            <button onclick="ejecutarTriggerBeforePersonalizado()" class="bg-red-600 hover:bg-red-500 text-white px-4 py-2.5 rounded-xl text-xs font-black uppercase tracking-wider transition cursor-pointer flex items-center gap-1.5 shadow-md">
+                                <i class="fa-solid fa-triangle-exclamation"></i> Probar BEFORE
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- MÓDULO 3: TRIGGER DE SENTENCIA (AFTER) - REGLA DE SOLVENCIA (QUIEBRA) -->
+                    <div class="glass-card rounded-2xl p-6 border border-neutral-800 space-y-5 hover:border-purple-500/30 transition shadow-lg">
+                        <div class="flex items-start justify-between gap-4">
+                            <div>
+                                <div class="flex items-center gap-2">
+                                    <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-purple-500/20 text-purple-300 border border-purple-500/40">SENTENCIA: AFTER</span>
+                                    <h3 class="text-base font-black text-white font-mono">trg_valida_solvencia_sueldos</h3>
+                                </div>
+                                <p class="text-xs text-neutral-400 mt-1">
+                                    Control financiero agregado. Se ejecuta al finalizar toda la sentencia y evalúa <code class="text-purple-300 font-mono">SUM(sueldo_base) &gt; SUM(total_pedido)</code>. Evita error <strong class="text-amber-400 font-mono">ORA-04091 mutating table</strong> y cancela con <code class="text-red-400 font-mono">ORA-20003</code> si hay riesgo de quiebra.
+                                </p>
+                            </div>
+                            <div class="w-10 h-10 rounded-xl bg-purple-500/10 border border-purple-500/30 flex items-center justify-center shrink-0">
+                                <i class="fa-solid fa-building-columns text-purple-400 text-lg"></i>
+                            </div>
+                        </div>
+
+                        <div class="bg-neutral-900/70 p-4 rounded-xl border border-neutral-800 space-y-3 font-mono text-xs">
+                            <span class="block text-neutral-400 text-[11px]">Casos de prueba de estrés financiero:</span>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                <button onclick="ejecutarPruebaSolvenciaDirecta(900000)" class="bg-emerald-950/40 hover:bg-emerald-900/60 border border-emerald-500/40 text-emerald-300 p-3 rounded-lg text-left transition cursor-pointer">
+                                    <div class="flex items-center justify-between">
+                                        <span class="font-black text-white text-xs">Sueldo $900.000</span>
+                                        <span class="text-[10px] bg-emerald-500/20 px-1.5 py-0.5 rounded text-emerald-400 font-mono">✔️ Solvente</span>
+                                    </div>
+                                    <p class="text-[10px] text-neutral-400 mt-1">La nómina ($3.65M) sigue siendo menor a las ventas ($8.94M).</p>
+                                </button>
+                                <button onclick="ejecutarPruebaSolvenciaDirecta(15000000)" class="bg-red-950/40 hover:bg-red-900/60 border border-red-500/40 text-red-300 p-3 rounded-lg text-left transition cursor-pointer">
+                                    <div class="flex items-center justify-between">
+                                        <span class="font-black text-white text-xs">Sueldo $15.000.000</span>
+                                        <span class="text-[10px] bg-red-500/20 px-1.5 py-0.5 rounded text-red-400 font-mono">❌ Quiebra</span>
+                                    </div>
+                                    <p class="text-[10px] text-neutral-400 mt-1">La nómina ($17.75M) supera las ventas y revierte con ORA-20003.</p>
+                                </button>
+                            </div>
+                        </div>
+
+                        <button onclick="ejecutarPruebaSolvenciaDirecta(15000000)" class="w-full bg-purple-900/60 hover:bg-purple-800 text-purple-200 border border-purple-500/40 py-2.5 px-4 rounded-xl text-xs font-black uppercase tracking-wider flex items-center justify-center gap-2 cursor-pointer transition">
+                            <i class="fa-solid fa-triangle-exclamation text-amber-400"></i> Disparar Prueba de Quiebra Financiera ($15.000.000)
+                        </button>
+                    </div>
+
+                    <!-- MÓDULO 4: TRIGGER DE FILA (AFTER) - TRACKING DE PEDIDOS -->
+                    <div class="glass-card rounded-2xl p-6 border border-neutral-800 space-y-5 hover:border-blue-500/30 transition shadow-lg">
+                        <div class="flex items-start justify-between gap-4">
+                            <div>
+                                <div class="flex items-center gap-2">
+                                    <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-blue-500/20 text-blue-300 border border-blue-500/40">FILA: AFTER</span>
+                                    <h3 class="text-base font-black text-white font-mono">trg_tracking_cambio_estado_pedido</h3>
+                                </div>
+                                <p class="text-xs text-neutral-400 mt-1">
+                                    Al actualizar <code class="text-blue-400 font-mono">id_estado</code> en la tabla <code class="text-white font-mono">PEDIDO</code>, el disparador inserta automáticamente en <code class="text-amber-400 font-mono">HISTORIAL_TRACKING_PEDIDO</code> con secuencia, fecha y usuario.
+                                </p>
+                            </div>
+                            <div class="w-10 h-10 rounded-xl bg-blue-500/10 border border-blue-500/30 flex items-center justify-center shrink-0">
+                                <i class="fa-solid fa-truck-ramp-box text-blue-400 text-lg"></i>
+                            </div>
+                        </div>
+
+                        <div class="bg-neutral-900/70 p-4 rounded-xl border border-neutral-800 space-y-3 font-mono text-xs">
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                <div>
+                                    <label class="block text-neutral-400 text-[11px] mb-1">Pedido a modificar:</label>
+                                    <select id="lab-pedido-select" class="w-full bg-[#141418] border border-neutral-700 text-white text-xs rounded-lg px-3 py-2 focus:outline-none focus:border-blue-400">
+                                        <option value="5001">Pedido #5001 - Sofía Henríquez</option>
+                                        <option value="5002">Pedido #5002 - Matías Silva</option>
+                                        <option value="5003" selected>Pedido #5003 - Sebastián Castro</option>
+                                        <option value="5004">Pedido #5004 - Camila Rojas</option>
+                                        <option value="5010">Pedido #5010 - Venta Mayorista Retail</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-neutral-400 text-[11px] mb-1">Nuevo Estado a Asignar:</label>
+                                    <select id="lab-estado-select" class="w-full bg-[#141418] border border-neutral-700 text-amber-400 font-bold text-xs rounded-lg px-3 py-2 focus:outline-none focus:border-blue-400">
+                                        <option value="2">2 - PAGADO</option>
+                                        <option value="3">3 - EN EMPAQUETAMIENTO</option>
+                                        <option value="4" selected>4 - EN CAMINO (Despachado)</option>
+                                        <option value="5">5 - ENTREGADO</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button onclick="ejecutarTriggerTrackingPedido()" class="w-full bg-blue-600 hover:bg-blue-500 text-white py-2.5 px-4 rounded-xl text-xs font-black uppercase tracking-wider flex items-center justify-center gap-2 cursor-pointer shadow-lg hover:shadow-blue-500/20 transition">
+                            <i class="fa-solid fa-arrow-right-arrow-left text-xs"></i> Actualizar Estado y Generar Historial
+                        </button>
+                    </div>
+
+                    <!-- MÓDULO 5: PACKAGE PL/SQL COMPLETO (ANCHO COMPLETO) -->
+                    <div class="col-span-1 lg:col-span-2 glass-card rounded-2xl p-6 border border-emerald-500/30 space-y-4 shadow-lg">
+                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-neutral-800 pb-3">
+                            <div class="flex items-center gap-2.5">
+                                <span class="px-2.5 py-0.5 rounded text-[10px] font-mono font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40">PACKAGE</span>
+                                <h3 class="text-base font-black text-white font-mono">PKG_ESTILO_URBANO (Spec & Body)</h3>
+                            </div>
+                            <span class="text-xs text-neutral-400 font-mono">Versión: <strong class="text-emerald-400">2.0-EP2</strong> | Constructor Privado: <code class="text-neutral-300">fn_es_trabajador_valido</code></span>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 font-mono text-xs">
+                            <button onclick="ejecutarSpReajusteMasivo()" class="bg-[#141418] hover:bg-neutral-800 border border-neutral-700 hover:border-amber-400 text-white p-3 rounded-xl transition text-left cursor-pointer flex flex-col justify-between gap-2 shadow-md">
+                                <div class="flex items-center justify-between">
+                                    <span class="font-bold text-amber-400 text-xs">sp_reajuste_masivo</span>
+                                    <i class="fa-solid fa-arrows-up-to-line text-amber-400 text-xs"></i>
+                                </div>
+                                <span class="text-[11px] text-neutral-400">Aplica reajuste inflacionario del 4.5% masivo a toda la nómina en una sola sentencia.</span>
+                            </button>
+
+                            <button onclick="ejecutarFnCalcularBono()" class="bg-[#141418] hover:bg-neutral-800 border border-neutral-700 hover:border-emerald-400 text-white p-3 rounded-xl transition text-left cursor-pointer flex flex-col justify-between gap-2 shadow-md">
+                                <div class="flex items-center justify-between">
+                                    <span class="font-bold text-emerald-400 text-xs">fn_calcular_bono</span>
+                                    <i class="fa-solid fa-calculator text-emerald-400 text-xs"></i>
+                                </div>
+                                <span class="text-[11px] text-neutral-400">Calcula bono mensual según tramo de meta (id=2, meta=115% -> Tramo 7%).</span>
+                            </button>
+
+                            <button onclick="ejecutarFnPromedioSueldos()" class="bg-[#141418] hover:bg-neutral-800 border border-neutral-700 hover:border-blue-400 text-white p-3 rounded-xl transition text-left cursor-pointer flex flex-col justify-between gap-2 shadow-md">
+                                <div class="flex items-center justify-between">
+                                    <span class="font-bold text-blue-400 text-xs">fn_promedio_sueldo</span>
+                                    <i class="fa-solid fa-chart-simple text-blue-400 text-xs"></i>
+                                </div>
+                                <span class="text-[11px] text-neutral-400">Función sin parámetros que retorna AVG(sueldo_base) de la plantilla operativa.</span>
+                            </button>
+
+                            <button onclick="ejecutarFnMargenFinanciero()" class="bg-[#141418] hover:bg-neutral-800 border border-neutral-700 hover:border-purple-400 text-white p-3 rounded-xl transition text-left cursor-pointer flex flex-col justify-between gap-2 shadow-md">
+                                <div class="flex items-center justify-between">
+                                    <span class="font-bold text-purple-400 text-xs">fn_obtener_margen</span>
+                                    <i class="fa-solid fa-coins text-purple-400 text-xs"></i>
+                                </div>
+                                <span class="text-[11px] text-neutral-400">Retorna en texto formateado el balance Ventas vs Sueldos y Ganancia Libre.</span>
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- CONSOLA INTERACTIVA SQL / TERMINAL ORACLE LIVESQL -->
+            <div class="glass-card rounded-2xl border border-neutral-800 overflow-hidden shadow-2xl">
+                <!-- Barra superior de la consola -->
+                <div class="bg-[#0f141c] px-4 py-3 border-b border-neutral-800 flex items-center justify-between">
+                    <div class="flex items-center gap-2.5">
+                        <div class="flex items-center gap-1.5">
+                            <span class="w-3 h-3 rounded-full bg-red-500/80 inline-block"></span>
+                            <span class="w-3 h-3 rounded-full bg-amber-500/80 inline-block"></span>
+                            <span class="w-3 h-3 rounded-full bg-emerald-500/80 inline-block"></span>
+                        </div>
+                        <span class="text-xs font-mono text-neutral-300 font-bold ml-2 flex items-center gap-1.5">
+                            <i class="fa-solid fa-terminal text-amber-400"></i> Oracle SQL Developer & PL/SQL Live Output
+                        </span>
+                    </div>
+
+                    <div class="flex items-center gap-2">
+                        <button onclick="limpiarConsolaSql()" class="text-neutral-400 hover:text-white text-[11px] font-mono px-2.5 py-1 rounded bg-neutral-800 hover:bg-neutral-700 border border-neutral-700 transition cursor-pointer flex items-center gap-1">
+                            <i class="fa-solid fa-eraser"></i> Limpiar
+                        </button>
+                        <button onclick="copiarConsolaSql()" class="text-amber-400 hover:text-amber-300 text-[11px] font-mono px-2.5 py-1 rounded bg-neutral-800 hover:bg-neutral-700 border border-neutral-700 transition cursor-pointer flex items-center gap-1">
+                            <i class="fa-solid fa-copy"></i> Copiar
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Caja de salida de la terminal -->
+                <div id="consola-sql-output" class="bg-[#05070a] p-4 font-mono text-xs text-neutral-300 space-y-1.5 max-h-[300px] overflow-y-auto select-text leading-relaxed">
+                    <div class="text-neutral-500 select-none">-- Oracle Database 23ai Enterprise Edition Release 23.0.0.0.0 - Production</div>
+                    <div class="text-neutral-500 select-none">-- Esquema: ESTILOURBANO | Instancia: sa-santiago-1 | Conexión: ORDS / LIVE</div>
+                    <div class="text-emerald-400 font-bold select-none">SET SERVEROUTPUT ON SIZE UNLIMITED;</div>
+                    <div class="text-neutral-400 select-none">-- Listo para ejecutar pruebas de Triggers. Realiza una acción arriba para ver la mutación SQL.</div>
+                </div>
+            </div>
+
+            <!-- VISUALIZADOR DE TABLAS SQL EN VIVO (MUTACIONES DIRECTAS) -->
+            <div class="glass-card rounded-2xl border border-neutral-800 p-6 space-y-5 shadow-2xl">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                    <div>
+                        <h2 class="text-lg font-black text-white font-brand uppercase tracking-wide flex items-center gap-2">
+                            <i class="fa-solid fa-table text-emerald-400"></i> Tablas Relacionales en Vivo (Estado de la Base de Datos)
+                        </h2>
+                        <p class="text-xs text-neutral-400">Haz clic en las pestañas para inspeccionar cómo los triggers alteran físicamente las tablas y registran auditoría.</p>
+                    </div>
+
+                    <!-- Selector de Pestañas de Tablas -->
+                    <div class="flex flex-wrap items-center gap-1.5 bg-[#0f1117] p-1.5 rounded-xl border border-neutral-800 font-mono text-xs">
+                        <button onclick="cambiarTabSqlLab('trabajadores')" id="tab-btn-trabajadores" class="tab-sql-btn px-3 py-1.5 rounded-lg font-bold bg-amber-500 text-black transition cursor-pointer">
+                            V_TRABAJADORES (<span id="count-tab-trabajadores">5</span>)
+                        </button>
+                        <button onclick="cambiarTabSqlLab('auditoria')" id="tab-btn-auditoria" class="tab-sql-btn px-3 py-1.5 rounded-lg text-neutral-400 hover:text-white transition cursor-pointer">
+                            AUDITORIA_SUELDO (<span id="count-tab-auditoria">1</span>)
+                        </button>
+                        <button onclick="cambiarTabSqlLab('pedidos')" id="tab-btn-pedidos" class="tab-sql-btn px-3 py-1.5 rounded-lg text-neutral-400 hover:text-white transition cursor-pointer">
+                            PEDIDO (<span id="count-tab-pedidos">5</span>)
+                        </button>
+                        <button onclick="cambiarTabSqlLab('tracking')" id="tab-btn-tracking" class="tab-sql-btn px-3 py-1.5 rounded-lg text-neutral-400 hover:text-white transition cursor-pointer">
+                            HISTORIAL_TRACKING (<span id="count-tab-tracking">3</span>)
+                        </button>
+                        <button onclick="cambiarTabSqlLab('sentencias')" id="tab-btn-sentencias" class="tab-sql-btn px-3 py-1.5 rounded-lg text-neutral-400 hover:text-white transition cursor-pointer">
+                            AUDITORIA_SENTENCIA (<span id="count-tab-sentencias">2</span>)
+                        </button>
+                    </div>
+                </div>
+
+                <!-- CONTENEDORES DE TABLAS -->
+                
+                <!-- TABLA 1: V_TRABAJADORES / USUARIO -->
+                <div id="tab-content-trabajadores" class="overflow-x-auto max-h-[360px] overflow-y-auto pr-1">
+                    <table class="w-full text-left text-xs font-mono">
+                        <thead class="bg-neutral-900/90 text-neutral-400 uppercase text-[10px] sticky top-0 border-b border-neutral-800">
+                            <tr>
+                                <th class="px-4 py-3">ID_TRABAJADOR</th>
+                                <th class="px-4 py-3">TRABAJADOR</th>
+                                <th class="px-4 py-3">RUT</th>
+                                <th class="px-4 py-3">EMAIL</th>
+                                <th class="px-4 py-3 text-right">SUELDO_BASE</th>
+                                <th class="px-4 py-3 text-center">ESTADO</th>
+                                <th class="px-4 py-3 text-center">ACCIÓN RÁPIDA</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabla-sql-trabajadores-body" class="divide-y divide-neutral-800/80">
+                            <!-- Inyectado por JS -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- TABLA 2: AUDITORIA_SUELDO_EMPLEADO -->
+                <div id="tab-content-auditoria" class="hidden overflow-x-auto max-h-[360px] overflow-y-auto pr-1">
+                    <table class="w-full text-left text-xs font-mono">
+                        <thead class="bg-neutral-900/90 text-neutral-400 uppercase text-[10px] sticky top-0 border-b border-neutral-800">
+                            <tr>
+                                <th class="px-4 py-3">ID_AUDITORIA</th>
+                                <th class="px-4 py-3">ID_TRABAJADOR</th>
+                                <th class="px-4 py-3">SUELDO_ANTIGUO</th>
+                                <th class="px-4 py-3">SUELDO_NUEVO</th>
+                                <th class="px-4 py-3">DIFERENCIA</th>
+                                <th class="px-4 py-3">TIPO</th>
+                                <th class="px-4 py-3">USUARIO_DB</th>
+                                <th class="px-4 py-3">FECHA_MODIFICACION</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabla-sql-auditoria-body" class="divide-y divide-neutral-800/80">
+                            <!-- Inyectado por JS -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- TABLA 3: PEDIDO -->
+                <div id="tab-content-pedidos" class="hidden overflow-x-auto max-h-[360px] overflow-y-auto pr-1">
+                    <table class="w-full text-left text-xs font-mono">
+                        <thead class="bg-neutral-900/90 text-neutral-400 uppercase text-[10px] sticky top-0 border-b border-neutral-800">
+                            <tr>
+                                <th class="px-4 py-3">ID_PEDIDO</th>
+                                <th class="px-4 py-3">NRO_SEGUIMIENTO</th>
+                                <th class="px-4 py-3">CLIENTE</th>
+                                <th class="px-4 py-3 text-right">TOTAL_NETO</th>
+                                <th class="px-4 py-3 text-right">TOTAL_IVA</th>
+                                <th class="px-4 py-3 text-right">TOTAL_PEDIDO</th>
+                                <th class="px-4 py-3 text-center">ID_ESTADO</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabla-sql-pedidos-body" class="divide-y divide-neutral-800/80">
+                            <!-- Inyectado por JS -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- TABLA 4: HISTORIAL_TRACKING_PEDIDO -->
+                <div id="tab-content-tracking" class="hidden overflow-x-auto max-h-[360px] overflow-y-auto pr-1">
+                    <table class="w-full text-left text-xs font-mono">
+                        <thead class="bg-neutral-900/90 text-neutral-400 uppercase text-[10px] sticky top-0 border-b border-neutral-800">
+                            <tr>
+                                <th class="px-4 py-3">ID_HISTORIAL</th>
+                                <th class="px-4 py-3">ID_PEDIDO</th>
+                                <th class="px-4 py-3">ESTADO</th>
+                                <th class="px-4 py-3">FECHA_CAMBIO</th>
+                                <th class="px-4 py-3">OBSERVACIÓN AUTOMÁTICA DEL TRIGGER</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabla-sql-tracking-body" class="divide-y divide-neutral-800/80">
+                            <!-- Inyectado por JS -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- TABLA 5: AUDITORIA_SENTENCIA_PEDIDO -->
+                <div id="tab-content-sentencias" class="hidden overflow-x-auto max-h-[360px] overflow-y-auto pr-1">
+                    <table class="w-full text-left text-xs font-mono">
+                        <thead class="bg-neutral-900/90 text-neutral-400 uppercase text-[10px] sticky top-0 border-b border-neutral-800">
+                            <tr>
+                                <th class="px-4 py-3">ID_AUDITORIA</th>
+                                <th class="px-4 py-3">OPERACION_DML</th>
+                                <th class="px-4 py-3">TABLA</th>
+                                <th class="px-4 py-3">USUARIO_DB</th>
+                                <th class="px-4 py-3">FECHA</th>
+                                <th class="px-4 py-3">OBSERVACIÓN</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabla-sql-sentencias-body" class="divide-y divide-neutral-800/80">
+                            <!-- Inyectado por JS -->
+                        </tbody>
+                    </table>
+                </div>
+
             </div>
 
         </div>
@@ -1828,7 +2347,7 @@
         // NAVEGACIÓN ENTRE PANELES
         // ====================================================================
         function navegarAPanel(panelId, autoScrollTop = true) {
-            ['tienda', 'cliente', 'trabajador', 'admin'].forEach(p => {
+            ['tienda', 'cliente', 'trabajador', 'admin', 'triggers-lab'].forEach(p => {
                 const el = document.getElementById(`panel-${p}`);
                 if (el) el.classList.add('hidden');
             });
@@ -2986,6 +3505,632 @@
                 }, 4000);
             }
         }
+    
+
+        // ====================================================================
+        // LABORATORIO INTERACTIVO DE TRIGGERS & SQL STUDIO (EP2)
+        // ====================================================================
+
+        const ESTADOS_NOMBRES = {
+            1: 'CREADO',
+            2: 'PAGADO',
+            3: 'EMPAQUETANDO',
+            4: 'EN CAMINO',
+            5: 'ENTREGADO'
+        };
+
+        let sqlLabState = {
+            trabajadores: [
+                { id_trabajador: 2, rut: '18.945.123-K', nombre: 'Ignacio', apellido: 'López', trabajador: 'Ignacio López', email: 'ilopez@estilourbano.cl', sueldo_base: 650000, estado: 'A', highlight: false },
+                { id_trabajador: 3, rut: '19.234.567-8', nombre: 'Valentina', apellido: 'Pérez', trabajador: 'Valentina Pérez', email: 'vperez@estilourbano.cl', sueldo_base: 720000, estado: 'A', highlight: false },
+                { id_trabajador: 4, rut: '17.890.123-4', nombre: 'Felipe', apellido: 'Morales', trabajador: 'Felipe Morales', email: 'fmorales@estilourbano.cl', sueldo_base: 680000, estado: 'A', highlight: false },
+                { id_trabajador: 5, rut: '20.123.456-7', nombre: 'Lucas', apellido: 'Ramírez', trabajador: 'Lucas Ramírez', email: 'lramirez@estilourbano.cl', sueldo_base: 650000, estado: 'A', highlight: false },
+                { id_trabajador: 8, rut: '16.543.210-9', nombre: 'Rodrigo', apellido: 'Tapia', trabajador: 'Rodrigo Tapia', email: 'rtapia@estilourbano.cl', sueldo_base: 700000, estado: 'A', highlight: false }
+            ],
+            auditoriaSueldo: [
+                { id_auditoria: 101, id_usuario: 2, sueldo_antiguo: 600000, sueldo_nuevo: 650000, diferencia: 50000, tipo_modificacion: 'AUMENTO', usuario_db: 'ESTILO_ADMIN', fecha: '22/10/2026 18:30:15', highlight: false }
+            ],
+            pedidos: [
+                { id_pedido: 5001, nro_seguimiento: 'TRK-EST-001', cliente: 'Sofía Henríquez', total_neto: 100807, total_iva: 19153, total_pedido: 119960, id_estado: 2, highlight: false },
+                { id_pedido: 5002, nro_seguimiento: 'TRK-EST-002', cliente: 'Matías Silva', total_neto: 63000, total_iva: 11970, total_pedido: 74970, id_estado: 3, highlight: false },
+                { id_pedido: 5003, nro_seguimiento: 'TRK-EST-003', cliente: 'Sebastián Castro', total_neto: 75613, total_iva: 14367, total_pedido: 89980, id_estado: 4, highlight: false },
+                { id_pedido: 5004, nro_seguimiento: 'TRK-EST-004', cliente: 'Camila Rojas', total_neto: 38647, total_iva: 7343, total_pedido: 45990, id_estado: 5, highlight: false },
+                { id_pedido: 5010, nro_seguimiento: 'TRK-EST-MAYOR-01', cliente: 'Venta Mayorista Retail', total_neto: 3781513, total_iva: 718487, total_pedido: 4500000, id_estado: 5, highlight: false }
+            ],
+            tracking: [
+                { id_historial: 101, id_pedido: 5003, id_estado: 2, fecha_cambio: '22/10/2026 17:10:00', observacion: 'Actualización automática: El pedido cambió a PAGADO por usuario ESTILO_ADMIN', highlight: false },
+                { id_historial: 102, id_pedido: 5003, id_estado: 3, fecha_cambio: '22/10/2026 18:05:22', observacion: 'Actualización automática: El pedido cambió a EMPAQUETANDO por usuario ESTILO_ADMIN', highlight: false },
+                { id_historial: 103, id_pedido: 5003, id_estado: 4, fecha_cambio: '22/10/2026 19:40:11', observacion: 'Actualización automática: El pedido cambió a EN CAMINO por usuario ESTILO_ADMIN', highlight: false }
+            ],
+            auditoriaSentencias: [
+                { id_auditoria: 501, operacion_dml: 'INSERT', tabla_afectada: 'PEDIDO', usuario_db: 'ESTILO_ADMIN', fecha: '22/10/2026 16:00:00', observacion: 'Sentencia masiva ejecutada exitosamente a nivel de bloque en PEDIDO', highlight: false },
+                { id_auditoria: 502, operacion_dml: 'UPDATE', tabla_afectada: 'PEDIDO', usuario_db: 'ESTILO_ADMIN', fecha: '22/10/2026 19:40:11', observacion: 'Sentencia masiva ejecutada exitosamente a nivel de bloque en PEDIDO', highlight: false }
+            ],
+            tabActivo: 'trabajadores',
+            seqAuditSueldo: 102,
+            seqTracking: 104,
+            seqAuditSentencia: 503
+        };
+
+        function renderizarTriggersLab() {
+            actualizarKpisFinancierosSql();
+            renderizarTablasSqlLab();
+            actualizarInputSueldoDesdeSelect();
+        }
+
+        function actualizarKpisFinancierosSql() {
+            const totalSueldos = sqlLabState.trabajadores.reduce((acc, t) => acc + (t.estado === 'A' ? t.sueldo_base : 0), 0);
+            const totalVentas = sqlLabState.pedidos.reduce((acc, p) => acc + (p.id_estado >= 2 ? p.total_pedido : 0), 0);
+            const margen = totalVentas - totalSueldos;
+
+            const elSueldos = document.getElementById('sql-kpi-sueldos');
+            const elMargen = document.getElementById('sql-kpi-margen');
+            const elBadge = document.getElementById('sql-kpi-regla-badge');
+            const elDesc = document.getElementById('sql-kpi-regla-desc');
+            const elCard = document.getElementById('sql-kpi-regla-card');
+
+            if (elSueldos) elSueldos.innerText = '$' + totalSueldos.toLocaleString('es-CL') + ' CLP';
+            if (elMargen) {
+                elMargen.innerText = (margen >= 0 ? '+' : '') + '$' + margen.toLocaleString('es-CL') + ' CLP';
+                elMargen.className = 'text-2xl font-black font-mono ' + (margen >= 0 ? 'text-emerald-400' : 'text-red-400');
+            }
+
+            if (elBadge && elDesc && elCard) {
+                if (margen >= 0) {
+                    elBadge.className = 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 px-3 py-1 rounded-lg text-xs font-black font-mono tracking-wide inline-flex items-center gap-1.5';
+                    elBadge.innerHTML = '<span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> SOLVENTE';
+                    elDesc.innerText = 'Trigger trg_valida_solvencia_sueldos previene quiebra (Ventas > Nómina)';
+                    elCard.className = 'glass-card rounded-2xl p-5 border border-emerald-500/40 bg-emerald-950/20 space-y-2';
+                } else {
+                    elBadge.className = 'bg-red-500/20 text-red-300 border border-red-500/40 px-3 py-1 rounded-lg text-xs font-black font-mono tracking-wide inline-flex items-center gap-1.5';
+                    elBadge.innerHTML = '<span class="w-2 h-2 rounded-full bg-red-400 animate-ping"></span> RIESGO DE QUIEBRA';
+                    elDesc.innerText = 'ALERTA: Nómina excede las ventas totales. La transacción sería bloqueada por ORA-20003.';
+                    elCard.className = 'glass-card rounded-2xl p-5 border border-red-500/40 bg-red-950/20 space-y-2';
+                }
+            }
+        }
+
+        function renderizarTablasSqlLab() {
+            // Actualizar contadores en pestañas
+            const ct = document.getElementById('count-tab-trabajadores');
+            const ca = document.getElementById('count-tab-auditoria');
+            const cp = document.getElementById('count-tab-pedidos');
+            const ck = document.getElementById('count-tab-tracking');
+            const cs = document.getElementById('count-tab-sentencias');
+
+            if (ct) ct.innerText = sqlLabState.trabajadores.length;
+            if (ca) ca.innerText = sqlLabState.auditoriaSueldo.length;
+            if (cp) cp.innerText = sqlLabState.pedidos.length;
+            if (ck) ck.innerText = sqlLabState.tracking.length;
+            if (cs) cs.innerText = sqlLabState.auditoriaSentencias.length;
+
+            // 1. Tabla Trabajadores
+            const tbodyTrab = document.getElementById('tabla-sql-trabajadores-body');
+            if (tbodyTrab) {
+                tbodyTrab.innerHTML = sqlLabState.trabajadores.map(t => `
+                    <tr class="transition ${t.highlight ? 'bg-amber-500/25 text-white font-bold' : 'hover:bg-neutral-800/40'}">
+                        <td class="px-4 py-3 text-amber-400 font-bold">#${t.id_trabajador}</td>
+                        <td class="px-4 py-3 text-white font-sans font-bold flex items-center gap-2">
+                            <span>${t.trabajador}</span>
+                            ${t.highlight ? '<span class="bg-amber-400 text-black text-[9px] px-1.5 py-0.2 rounded font-black">MODIFICADO</span>' : ''}
+                        </td>
+                        <td class="px-4 py-3 text-neutral-400">${t.rut}</td>
+                        <td class="px-4 py-3 text-neutral-400">${t.email}</td>
+                        <td class="px-4 py-3 text-right text-emerald-400 font-bold">$${t.sueldo_base.toLocaleString('es-CL')}</td>
+                        <td class="px-4 py-3 text-center">
+                            <span class="bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 px-2 py-0.5 rounded text-[10px] font-bold">ACTIVO</span>
+                        </td>
+                        <td class="px-4 py-3 text-center">
+                            <button onclick="seleccionarTrabajadorEnLab(${t.id_trabajador})" class="bg-neutral-800 hover:bg-neutral-700 text-amber-300 text-[10px] px-2 py-1 rounded border border-neutral-700 cursor-pointer">
+                                Seleccionar <i class="fa-solid fa-arrow-up-right-from-square ml-1"></i>
+                            </button>
+                        </td>
+                    </tr>
+                `).join('');
+            }
+
+            // 2. Tabla Auditoría de Sueldos
+            const tbodyAud = document.getElementById('tabla-sql-auditoria-body');
+            if (tbodyAud) {
+                if (sqlLabState.auditoriaSueldo.length === 0) {
+                    tbodyAud.innerHTML = '<tr><td colspan="8" class="text-center py-6 text-neutral-500">Sin registros de auditoría generados.</td></tr>';
+                } else {
+                    tbodyAud.innerHTML = sqlLabState.auditoriaSueldo.map(a => `
+                        <tr class="transition ${a.highlight ? 'bg-emerald-500/25 text-white font-bold' : 'hover:bg-neutral-800/40'}">
+                            <td class="px-4 py-3 text-amber-400 font-bold">#${a.id_auditoria}</td>
+                            <td class="px-4 py-3 text-white">ID: ${a.id_usuario}</td>
+                            <td class="px-4 py-3 text-neutral-400">$${a.sueldo_antiguo.toLocaleString('es-CL')}</td>
+                            <td class="px-4 py-3 text-amber-400 font-bold">$${a.sueldo_nuevo.toLocaleString('es-CL')}</td>
+                            <td class="px-4 py-3 ${a.diferencia >= 0 ? 'text-emerald-400' : 'text-red-400'} font-bold">
+                                ${a.diferencia >= 0 ? '+' : ''}$${a.diferencia.toLocaleString('es-CL')}
+                            </td>
+                            <td class="px-4 py-3">
+                                <span class="px-1.5 py-0.5 rounded text-[10px] font-bold ${a.tipo_modificacion === 'AUMENTO' ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/40' : 'bg-red-500/20 text-red-300 border border-red-500/40'}">
+                                    ${a.tipo_modificacion}
+                                </span>
+                            </td>
+                            <td class="px-4 py-3 text-neutral-400">${a.usuario_db}</td>
+                            <td class="px-4 py-3 text-neutral-400">${a.fecha}</td>
+                        </tr>
+                    `).join('');
+                }
+            }
+
+            // 3. Tabla Pedidos
+            const tbodyPed = document.getElementById('tabla-sql-pedidos-body');
+            if (tbodyPed) {
+                tbodyPed.innerHTML = sqlLabState.pedidos.map(p => {
+                    const estNombre = ESTADOS_NOMBRES[p.id_estado] || 'ESTADO ' + p.id_estado;
+                    return `
+                        <tr class="transition ${p.highlight ? 'bg-blue-500/20 text-white font-bold' : 'hover:bg-neutral-800/40'}">
+                            <td class="px-4 py-3 text-amber-400 font-bold">#${p.id_pedido}</td>
+                            <td class="px-4 py-3 text-white">${p.nro_seguimiento}</td>
+                            <td class="px-4 py-3 text-neutral-300 font-sans">${p.cliente}</td>
+                            <td class="px-4 py-3 text-right text-neutral-400">$${p.total_neto.toLocaleString('es-CL')}</td>
+                            <td class="px-4 py-3 text-right text-neutral-400">$${p.total_iva.toLocaleString('es-CL')}</td>
+                            <td class="px-4 py-3 text-right text-emerald-400 font-bold">$${p.total_pedido.toLocaleString('es-CL')}</td>
+                            <td class="px-4 py-3 text-center">
+                                <span class="bg-blue-500/20 text-blue-300 border border-blue-500/40 px-2 py-0.5 rounded text-[10px] font-bold">
+                                    ${p.id_estado} - ${estNombre}
+                                </span>
+                            </td>
+                        </tr>
+                    `;
+                }).join('');
+            }
+
+            // 4. Tabla Tracking
+            const tbodyTrack = document.getElementById('tabla-sql-tracking-body');
+            if (tbodyTrack) {
+                tbodyTrack.innerHTML = sqlLabState.tracking.slice(0, 10).map(t => `
+                    <tr class="transition ${t.highlight ? 'bg-blue-500/25 text-white font-bold' : 'hover:bg-neutral-800/40'}">
+                        <td class="px-4 py-3 text-amber-400 font-bold">#${t.id_historial}</td>
+                        <td class="px-4 py-3 text-white">Pedido #${t.id_pedido}</td>
+                        <td class="px-4 py-3">
+                            <span class="bg-neutral-800 text-amber-400 px-2 py-0.5 rounded text-[10px] font-bold border border-neutral-700">
+                                ${t.id_estado} - ${ESTADOS_NOMBRES[t.id_estado] || 'ESTADO'}
+                            </span>
+                        </td>
+                        <td class="px-4 py-3 text-neutral-400">${t.fecha_cambio}</td>
+                        <td class="px-4 py-3 text-neutral-300 font-sans">${t.observacion}</td>
+                    </tr>
+                `).join('');
+            }
+
+            // 5. Tabla Sentencias
+            const tbodySent = document.getElementById('tabla-sql-sentencias-body');
+            if (tbodySent) {
+                tbodySent.innerHTML = sqlLabState.auditoriaSentencias.map(s => `
+                    <tr class="transition ${s.highlight ? 'bg-purple-500/25 text-white font-bold' : 'hover:bg-neutral-800/40'}">
+                        <td class="px-4 py-3 text-amber-400 font-bold">#${s.id_auditoria}</td>
+                        <td class="px-4 py-3">
+                            <span class="bg-purple-500/20 text-purple-300 border border-purple-500/40 px-2 py-0.5 rounded text-[10px] font-bold">
+                                ${s.operacion_dml}
+                            </span>
+                        </td>
+                        <td class="px-4 py-3 text-white">${s.tabla_afectada}</td>
+                        <td class="px-4 py-3 text-neutral-400">${s.usuario_db}</td>
+                        <td class="px-4 py-3 text-neutral-400">${s.fecha}</td>
+                        <td class="px-4 py-3 text-neutral-300 font-sans">${s.observacion}</td>
+                    </tr>
+                `).join('');
+            }
+        }
+
+        function cambiarTabSqlLab(tabId) {
+            sqlLabState.tabActivo = tabId;
+            const tabs = ['trabajadores', 'auditoria', 'pedidos', 'tracking', 'sentencias'];
+            tabs.forEach(t => {
+                const c = document.getElementById(`tab-content-${t}`);
+                const b = document.getElementById(`tab-btn-${t}`);
+                if (c && b) {
+                    if (t === tabId) {
+                        c.classList.remove('hidden');
+                        b.className = 'tab-sql-btn px-3 py-1.5 rounded-lg font-bold bg-amber-500 text-black transition cursor-pointer shadow-md';
+                    } else {
+                        c.classList.add('hidden');
+                        b.className = 'tab-sql-btn px-3 py-1.5 rounded-lg text-neutral-400 hover:text-white transition cursor-pointer';
+                    }
+                }
+            });
+        }
+
+        function actualizarInputSueldoDesdeSelect() {
+            const sel = document.getElementById('lab-trabajador-select');
+            const inp = document.getElementById('lab-nuevo-sueldo');
+            if (sel && inp) {
+                const opt = sel.options[sel.selectedIndex];
+                const actual = parseInt(opt.getAttribute('data-sueldo')) || 650000;
+                inp.value = actual + 100000;
+            }
+        }
+
+        function ajustarInputSueldoRapido(delta) {
+            const inp = document.getElementById('lab-nuevo-sueldo');
+            if (inp) {
+                const val = (parseInt(inp.value) || 650000) + delta;
+                inp.value = Math.max(0, val);
+            }
+        }
+
+        function seleccionarTrabajadorEnLab(id) {
+            const sel = document.getElementById('lab-trabajador-select');
+            if (sel) {
+                sel.value = id;
+                actualizarInputSueldoDesdeSelect();
+                sel.focus();
+                mostrarToast(`Trabajador ID #${id} seleccionado en el Banco de Pruebas.`);
+            }
+        }
+
+        function imprimirConsolaSql(comando, output, tipo = 'info') {
+            const consola = document.getElementById('consola-sql-output');
+            if (!consola) return;
+
+            const hora = new Date().toLocaleTimeString('es-CL');
+            let colorClase = 'text-neutral-300';
+            if (tipo === 'success') colorClase = 'text-emerald-400 font-bold';
+            if (tipo === 'error') colorClase = 'text-red-400 font-bold';
+            if (tipo === 'trigger') colorClase = 'text-amber-400 font-bold';
+            if (tipo === 'dml') colorClase = 'text-blue-300';
+
+            const bloque = document.createElement('div');
+            bloque.className = 'border-l-2 border-amber-500/40 pl-2 py-1 my-1.5 bg-[#0a0e17]/80 rounded-r';
+            bloque.innerHTML = `
+                <div class="text-[11px] text-neutral-500 select-none flex items-center justify-between">
+                    <span>${hora} • SQL*Plus Session</span>
+                    <span class="text-neutral-600">TRANSACTION #${Date.now().toString().slice(-4)}</span>
+                </div>
+                <div class="text-amber-300 font-bold select-all">SQL&gt; ${comando}</div>
+                <div class="${colorClase} whitespace-pre-wrap mt-0.5 select-all">${output}</div>
+            `;
+
+            consola.appendChild(bloque);
+            consola.scrollTop = consola.scrollHeight;
+        }
+
+        function limpiarConsolaSql() {
+            const consola = document.getElementById('consola-sql-output');
+            if (consola) {
+                consola.innerHTML = `
+                    <div class="text-neutral-500 select-none">-- Consola reiniciada. Listo para nuevas pruebas de Triggers.</div>
+                `;
+                mostrarToast('Consola SQL limpiada.');
+            }
+        }
+
+        function copiarConsolaSql() {
+            const consola = document.getElementById('consola-sql-output');
+            if (consola) {
+                navigator.clipboard.writeText(consola.innerText);
+                mostrarToast('Salida de consola copiada al portapapeles.');
+            }
+        }
+
+        function getTimestampOracle() {
+            const d = new Date();
+            const pad = n => String(n).padStart(2, '0');
+            return `${pad(d.getDate())}/${pad(d.getMonth()+1)}/${d.getFullYear()} ${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`;
+        }
+
+        // --------------------------------------------------------------------
+        // EJECUCIÓN 1: TRIGGER AFTER (FILA) - AUDITORÍA CON :OLD Y :NEW
+        // --------------------------------------------------------------------
+        function ejecutarTriggerAfterSueldo() {
+            const idTrabajador = parseInt(document.getElementById('lab-trabajador-select').value);
+            const nuevoSueldo = parseInt(document.getElementById('lab-nuevo-sueldo').value);
+
+            if (isNaN(nuevoSueldo)) {
+                alert('Por favor ingresa un sueldo válido');
+                return;
+            }
+
+            const trab = sqlLabState.trabajadores.find(t => t.id_trabajador === idTrabajador);
+            if (!trab) return;
+
+            const sueldoAnterior = trab.sueldo_base;
+
+            // Validación BEFORE previa
+            if (nuevoSueldo < 500000) {
+                ejecutarPruebaBeforeDirecta(nuevoSueldo);
+                return;
+            }
+
+            // Simular UPDATE
+            trab.sueldo_base = nuevoSueldo;
+            trab.highlight = true;
+            setTimeout(() => { trab.highlight = false; renderizarTablasSqlLab(); }, 3500);
+
+            // Reacción del Trigger AFTER
+            const dif = nuevoSueldo - sueldoAnterior;
+            const tipo = dif >= 0 ? 'AUMENTO' : 'DISMINUCION';
+            const nuevoAuditId = sqlLabState.seqAuditSueldo++;
+
+            const nuevoRegistroAudit = {
+                id_auditoria: nuevoAuditId,
+                id_usuario: idTrabajador,
+                sueldo_antiguo: sueldoAnterior,
+                sueldo_nuevo: nuevoSueldo,
+                diferencia: dif,
+                tipo_modificacion: tipo,
+                usuario_db: 'ESTILO_ADMIN',
+                fecha: getTimestampOracle(),
+                highlight: true
+            };
+
+            sqlLabState.auditoriaSueldo.unshift(nuevoRegistroAudit);
+            setTimeout(() => { nuevoRegistroAudit.highlight = false; renderizarTablasSqlLab(); }, 4000);
+
+            // Salida de consola SQL
+            const sqlComando = `UPDATE USUARIO SET sueldo_base = ${nuevoSueldo} WHERE id_usuario = ${idTrabajador};`;
+            const sqlOutput = `-- [TRIGGER trg_audit_sueldo_cambios DISPARADO]: AFTER UPDATE OF sueldo_base FOR EACH ROW
+-- [PSEUDORREGISTROS]: :OLD.sueldo_base = $${sueldoAnterior.toLocaleString('es-CL')} | :NEW.sueldo_base = $${nuevoSueldo.toLocaleString('es-CL')}
+-- [TRIGGER ACCIÓN]: INSERT INTO AUDITORIA_SUELDO_EMPLEADO (id_auditoria, id_usuario, sueldo_antiguo, sueldo_nuevo, diferencia, tipo_modificacion, usuario_db, fecha_modificacion)
+--                   VALUES (${nuevoAuditId}, ${idTrabajador}, ${sueldoAnterior}, ${nuevoSueldo}, ${dif}, '${tipo}', 'ESTILO_ADMIN', SYSDATE);
+1 fila actualizada.
+Transacción confirmada (COMMIT).`;
+
+            imprimirConsolaSql(sqlComando, sqlOutput, 'success');
+            renderizarTriggersLab();
+            cambiarTabSqlLab('auditoria');
+            mostrarToast(`Trigger AFTER: Sueldo de ${trab.trabajador} modificado a $${nuevoSueldo.toLocaleString('es-CL')} y auditado exitosamente.`);
+        }
+
+        // --------------------------------------------------------------------
+        // EJECUCIÓN 2: TRIGGER BEFORE (FILA) - VALIDACIÓN SUELDO MÍNIMO $500K
+        // --------------------------------------------------------------------
+        function ejecutarPruebaBeforeDirecta(monto) {
+            const idTrabajador = parseInt(document.getElementById('lab-trabajador-select').value);
+            const trab = sqlLabState.trabajadores.find(t => t.id_trabajador === idTrabajador) || sqlLabState.trabajadores[0];
+
+            const sqlComando = `UPDATE USUARIO SET sueldo_base = ${monto} WHERE id_usuario = ${trab.id_trabajador};`;
+
+            if (monto < 500000) {
+                const sqlOutput = `-- [TRIGGER trg_valida_sueldo_empleado INTERCEPTÓ]: BEFORE INSERT OR UPDATE FOR EACH ROW
+-- [VALIDACIÓN]: IF :NEW.sueldo_base < 500000 THEN
+ORA-20001: El sueldo base ($${monto.toLocaleString('es-CL')}) no puede ser inferior al sueldo mínimo legal de $500.000.
+ORA-06512: en "ESTILOURBANO.TRG_VALIDA_SUELDO_EMPLEADO", línea 4
+ORA-04088: error durante la ejecución del disparador 'ESTILOURBANO.TRG_VALIDA_SUELDO_EMPLEADO'
+Transacción cancelada automáticamente (ROLLBACK). La tabla USUARIO no sufrió alteraciones.`;
+
+                imprimirConsolaSql(sqlComando, sqlOutput, 'error');
+                mostrarToast('BLOQUEO ORA-20001: El Trigger BEFORE impidió asignar un sueldo inferior al mínimo legal ($500.000).');
+            } else {
+                // Monto legal -> pasa al Trigger AFTER
+                document.getElementById('lab-nuevo-sueldo').value = monto;
+                ejecutarTriggerAfterSueldo();
+            }
+        }
+
+        function ejecutarTriggerBeforePersonalizado() {
+            const val = parseInt(document.getElementById('lab-sueldo-before-custom').value);
+            if (isNaN(val)) {
+                alert('Ingresa un monto válido para probar');
+                return;
+            }
+            ejecutarPruebaBeforeDirecta(val);
+        }
+
+        // --------------------------------------------------------------------
+        // EJECUCIÓN 3: TRIGGER DE SENTENCIA (AFTER) - REGLA DE SOLVENCIA
+        // --------------------------------------------------------------------
+        function ejecutarPruebaSolvenciaDirecta(monto) {
+            const totalVentas = sqlLabState.pedidos.reduce((acc, p) => acc + (p.id_estado >= 2 ? p.total_pedido : 0), 0);
+            const otrosSueldos = sqlLabState.trabajadores.slice(1).reduce((acc, t) => acc + t.sueldo_base, 0);
+            const nuevaNominaTotal = otrosSueldos + monto;
+
+            const sqlComando = `UPDATE USUARIO SET sueldo_base = ${monto} WHERE id_usuario = 2;`;
+
+            if (nuevaNominaTotal > totalVentas) {
+                const sqlOutput = `-- [TRIGGER trg_valida_solvencia_sueldos DISPARADO]: AFTER INSERT OR UPDATE ON USUARIO (A NIVEL DE SENTENCIA)
+-- [CONTROL FINANCIERO]: SUM(sueldo_base) = $${nuevaNominaTotal.toLocaleString('es-CL')} | SUM(total_pedido) = $${totalVentas.toLocaleString('es-CL')}
+-- [POR QUÉ DE SENTENCIA]: Evita el error ORA-04091 (mutating table) al evaluar agregaciones totales al finalizar la transacción completa.
+ORA-20003: CONTROL FINANCIERO BLOQUEADO: La nómina total de sueldos ($${nuevaNominaTotal.toLocaleString('es-CL')}) supera las ventas totales de la empresa ($${totalVentas.toLocaleString('es-CL')}). Transacción revertida.
+ORA-06512: en "ESTILOURBANO.TRG_VALIDA_SOLVENCIA_SUELDOS", línea 14
+Transacción abortada (ROLLBACK). Se salvaguarda la solvencia económica de Estilo Urbano.`;
+
+                imprimirConsolaSql(sqlComando, sqlOutput, 'error');
+                mostrarToast('BLOQUEO ORA-20003: El Trigger de Sentencia canceló la transacción para evitar quiebra financiera.');
+            } else {
+                document.getElementById('lab-nuevo-sueldo').value = monto;
+                ejecutarTriggerAfterSueldo();
+            }
+        }
+
+        // --------------------------------------------------------------------
+        // EJECUCIÓN 4: TRIGGER AFTER (FILA) - TRACKING DE PEDIDOS
+        // --------------------------------------------------------------------
+        function ejecutarTriggerTrackingPedido() {
+            const idPed = parseInt(document.getElementById('lab-pedido-select').value);
+            const nuevoEstado = parseInt(document.getElementById('lab-estado-select').value);
+
+            const p = sqlLabState.pedidos.find(x => x.id_pedido === idPed);
+            if (!p) return;
+
+            const estadoAnterior = p.id_estado;
+            p.id_estado = nuevoEstado;
+            p.highlight = true;
+            setTimeout(() => { p.highlight = false; renderizarTablasSqlLab(); }, 3500);
+
+            // Reacción del Trigger de Tracking (Fila AFTER)
+            const nuevoHistorialId = sqlLabState.seqTracking++;
+            const descEstado = ESTADOS_NOMBRES[nuevoEstado] || 'ESTADO ' + nuevoEstado;
+
+            const nuevoHito = {
+                id_historial: nuevoHistorialId,
+                id_pedido: idPed,
+                id_estado: nuevoEstado,
+                fecha_cambio: getTimestampOracle(),
+                observacion: `Actualización automática: El pedido cambió a ${descEstado} por usuario ESTILO_ADMIN`,
+                highlight: true
+            };
+
+            sqlLabState.tracking.unshift(nuevoHito);
+            setTimeout(() => { nuevoHito.highlight = false; renderizarTablasSqlLab(); }, 4000);
+
+            // Reacción del Trigger de Sentencia (Auditoría Sentencia en PEDIDO)
+            const nuevoSentId = sqlLabState.seqAuditSentencia++;
+            const nuevoSentRegistro = {
+                id_auditoria: nuevoSentId,
+                operacion_dml: 'UPDATE',
+                tabla_afectada: 'PEDIDO',
+                usuario_db: 'ESTILO_ADMIN',
+                fecha: getTimestampOracle(),
+                observacion: `Trigger de sentencia trg_sentencia_audit_pedido registró modificación en pedido #${idPed}`,
+                highlight: true
+            };
+            sqlLabState.auditoriaSentencias.unshift(nuevoSentRegistro);
+            setTimeout(() => { nuevoSentRegistro.highlight = false; renderizarTablasSqlLab(); }, 4000);
+
+            // Salida consola SQL
+            const sqlComando = `UPDATE PEDIDO SET id_estado = ${nuevoEstado} WHERE id_pedido = ${idPed};`;
+            const sqlOutput = `-- [TRIGGER trg_tracking_cambio_estado_pedido DISPARADO]: AFTER UPDATE OF id_estado ON PEDIDO FOR EACH ROW
+-- [INSERT TRACKING]: INSERT INTO HISTORIAL_TRACKING_PEDIDO (id_historial, id_pedido, id_estado, fecha_cambio, observacion)
+--                    VALUES (${nuevoHistorialId}, ${idPed}, ${nuevoEstado}, SYSDATE, 'Actualización automática: El pedido cambió a ${descEstado} por usuario ESTILO_ADMIN');
+-- [TRIGGER trg_sentencia_audit_pedido DISPARADO]: AFTER UPDATE ON PEDIDO (A NIVEL DE SENTENCIA)
+-- [INSERT SENTENCIA]: INSERT INTO AUDITORIA_SENTENCIA_PEDIDO (${nuevoSentId}, 'UPDATE', 'PEDIDO', 'ESTILO_ADMIN', SYSDATE, ...);
+1 fila actualizada.
+Transacción confirmada (COMMIT).`;
+
+            imprimirConsolaSql(sqlComando, sqlOutput, 'success');
+            renderizarTriggersLab();
+            cambiarTabSqlLab('tracking');
+            mostrarToast(`Trigger TRG_TRACKING: Pedido #${idPed} cambió a ${descEstado} y se registró en la bitácora histórica.`);
+        }
+
+        // --------------------------------------------------------------------
+        // EJECUCIÓN 5: PACKAGE PKG_ESTILO_URBANO
+        // --------------------------------------------------------------------
+        function ejecutarSpReajusteMasivo() {
+            const pct = 0.045; // 4.5%
+            let modificados = 0;
+
+            sqlLabState.trabajadores.forEach(t => {
+                if (t.estado === 'A') {
+                    const antiguo = t.sueldo_base;
+                    t.sueldo_base = Math.round(antiguo * (1 + pct));
+                    t.highlight = true;
+                    modificados++;
+
+                    // Trigger AFTER se dispara por cada fila actualizada
+                    const nuevoAuditId = sqlLabState.seqAuditSueldo++;
+                    sqlLabState.auditoriaSueldo.unshift({
+                        id_auditoria: nuevoAuditId,
+                        id_usuario: t.id_trabajador,
+                        sueldo_antiguo: antiguo,
+                        sueldo_nuevo: t.sueldo_base,
+                        diferencia: t.sueldo_base - antiguo,
+                        tipo_modificacion: 'AUMENTO',
+                        usuario_db: 'ESTILO_ADMIN',
+                        fecha: getTimestampOracle(),
+                        highlight: true
+                    });
+                }
+            });
+
+            setTimeout(() => {
+                sqlLabState.trabajadores.forEach(t => t.highlight = false);
+                sqlLabState.auditoriaSueldo.forEach(a => a.highlight = false);
+                renderizarTablasSqlLab();
+            }, 3500);
+
+            const sqlComando = `EXEC PKG_ESTILO_URBANO.sp_reajuste_masivo_sueldos;`;
+            const sqlOutput = `-- [PROCEDURE]: PKG_ESTILO_URBANO.sp_reajuste_masivo_sueldos
+-- [DML]: UPDATE USUARIO SET sueldo_base = ROUND(sueldo_base * 1.045) WHERE id_rol = 2 AND estado = 'A';
+-- [TRIGGER trg_audit_sueldo_cambios DISPARADO ${modificados} VECES]: Cada fila disparó su respectiva inserción en AUDITORIA_SUELDO_EMPLEADO.
+OK: Reajuste masivo del 4.5% aplicado con éxito a ${modificados} trabajadores de la planta.
+PL/SQL procedure successfully completed.`;
+
+            imprimirConsolaSql(sqlComando, sqlOutput, 'success');
+            renderizarTriggersLab();
+            cambiarTabSqlLab('trabajadores');
+            mostrarToast(`Package: Procedimiento masivo sp_reajuste_masivo_sueldos aplicado a ${modificados} empleados.`);
+        }
+
+        function ejecutarFnCalcularBono() {
+            const idTrabajador = 2; // Ignacio López
+            const pctMeta = 115; // 115% de cumplimiento comercial
+            const trab = sqlLabState.trabajadores.find(t => t.id_trabajador === idTrabajador);
+            const sueldo = trab ? trab.sueldo_base : 650000;
+            const bono = Math.round(sueldo * 0.07); // Tramo 100%-119% -> 7%
+
+            const sqlComando = `SELECT PKG_ESTILO_URBANO.fn_calcular_bono(${idTrabajador}, ${pctMeta}) AS bono_calculado FROM DUAL;`;
+            const sqlOutput = `BONO_CALCULADO
+--------------
+$${bono.toLocaleString('es-CL')} (Bono asignado del 7% sobre sueldo de $${sueldo.toLocaleString('es-CL')} por meta del ${pctMeta}%).`;
+
+            imprimirConsolaSql(sqlComando, sqlOutput, 'trigger');
+            mostrarToast(`Función: fn_calcular_bono(id=2, meta=115%) retornó $${bono.toLocaleString('es-CL')} CLP.`);
+        }
+
+        function ejecutarFnPromedioSueldos() {
+            const promedio = Math.round(sqlLabState.trabajadores.reduce((acc, t) => acc + t.sueldo_base, 0) / sqlLabState.trabajadores.length);
+            const sqlComando = `SELECT PKG_ESTILO_URBANO.fn_promedio_sueldo_trabajadores() AS promedio_planta FROM DUAL;`;
+            const sqlOutput = `PROMEDIO_PLANTA
+---------------
+$${promedio.toLocaleString('es-CL')} CLP (Media aritmética calculada sobre la nómina activa).`;
+
+            imprimirConsolaSql(sqlComando, sqlOutput, 'trigger');
+            mostrarToast(`Función: fn_promedio_sueldo_trabajadores() = $${promedio.toLocaleString('es-CL')} CLP.`);
+        }
+
+        function ejecutarFnMargenFinanciero() {
+            const totalSueldos = sqlLabState.trabajadores.reduce((acc, t) => acc + (t.estado === 'A' ? t.sueldo_base : 0), 0);
+            const totalVentas = sqlLabState.pedidos.reduce((acc, p) => acc + (p.id_estado >= 2 ? p.total_pedido : 0), 0);
+            const margen = totalVentas - totalSueldos;
+
+            const sqlComando = `SELECT PKG_ESTILO_URBANO.fn_obtener_margen_financiero() AS balance_empresa FROM DUAL;`;
+            const sqlOutput = `BALANCE_EMPRESA
+--------------------------------------------------------------------------------
+Ventas: $${totalVentas.toLocaleString('es-CL')} | Sueldos: $${totalSueldos.toLocaleString('es-CL')} | Ganancia Libre: $${margen.toLocaleString('es-CL')}`;
+
+            imprimirConsolaSql(sqlComando, sqlOutput, 'trigger');
+            mostrarToast(`Balance: Ganancia Libre disponible de $${margen.toLocaleString('es-CL')} CLP.`);
+        }
+
+        // --------------------------------------------------------------------
+        // REINICIO DE ESTADO
+        // --------------------------------------------------------------------
+        function reiniciarDatosSqlLab() {
+            sqlLabState.trabajadores = [
+                { id_trabajador: 2, rut: '18.945.123-K', nombre: 'Ignacio', apellido: 'López', trabajador: 'Ignacio López', email: 'ilopez@estilourbano.cl', sueldo_base: 650000, estado: 'A', highlight: false },
+                { id_trabajador: 3, rut: '19.234.567-8', nombre: 'Valentina', apellido: 'Pérez', trabajador: 'Valentina Pérez', email: 'vperez@estilourbano.cl', sueldo_base: 720000, estado: 'A', highlight: false },
+                { id_trabajador: 4, rut: '17.890.123-4', nombre: 'Felipe', apellido: 'Morales', trabajador: 'Felipe Morales', email: 'fmorales@estilourbano.cl', sueldo_base: 680000, estado: 'A', highlight: false },
+                { id_trabajador: 5, rut: '20.123.456-7', nombre: 'Lucas', apellido: 'Ramírez', trabajador: 'Lucas Ramírez', email: 'lramirez@estilourbano.cl', sueldo_base: 650000, estado: 'A', highlight: false },
+                { id_trabajador: 8, rut: '16.543.210-9', nombre: 'Rodrigo', apellido: 'Tapia', trabajador: 'Rodrigo Tapia', email: 'rtapia@estilourbano.cl', sueldo_base: 700000, estado: 'A', highlight: false }
+            ];
+            sqlLabState.auditoriaSueldo = [
+                { id_auditoria: 101, id_usuario: 2, sueldo_antiguo: 600000, sueldo_nuevo: 650000, diferencia: 50000, tipo_modificacion: 'AUMENTO', usuario_db: 'ESTILO_ADMIN', fecha: '22/10/2026 18:30:15', highlight: false }
+            ];
+            sqlLabState.pedidos = [
+                { id_pedido: 5001, nro_seguimiento: 'TRK-EST-001', cliente: 'Sofía Henríquez', total_neto: 100807, total_iva: 19153, total_pedido: 119960, id_estado: 2, highlight: false },
+                { id_pedido: 5002, nro_seguimiento: 'TRK-EST-002', cliente: 'Matías Silva', total_neto: 63000, total_iva: 11970, total_pedido: 74970, id_estado: 3, highlight: false },
+                { id_pedido: 5003, nro_seguimiento: 'TRK-EST-003', cliente: 'Sebastián Castro', total_neto: 75613, total_iva: 14367, total_pedido: 89980, id_estado: 4, highlight: false },
+                { id_pedido: 5004, nro_seguimiento: 'TRK-EST-004', cliente: 'Camila Rojas', total_neto: 38647, total_iva: 7343, total_pedido: 45990, id_estado: 5, highlight: false },
+                { id_pedido: 5010, nro_seguimiento: 'TRK-EST-MAYOR-01', cliente: 'Venta Mayorista Retail', total_neto: 3781513, total_iva: 718487, total_pedido: 4500000, id_estado: 5, highlight: false }
+            ];
+            sqlLabState.tracking = [
+                { id_historial: 101, id_pedido: 5003, id_estado: 2, fecha_cambio: '22/10/2026 17:10:00', observacion: 'Actualización automática: El pedido cambió a PAGADO por usuario ESTILO_ADMIN', highlight: false },
+                { id_historial: 102, id_pedido: 5003, id_estado: 3, fecha_cambio: '22/10/2026 18:05:22', observacion: 'Actualización automática: El pedido cambió a EMPAQUETANDO por usuario ESTILO_ADMIN', highlight: false },
+                { id_historial: 103, id_pedido: 5003, id_estado: 4, fecha_cambio: '22/10/2026 19:40:11', observacion: 'Actualización automática: El pedido cambió a EN CAMINO por usuario ESTILO_ADMIN', highlight: false }
+            ];
+            sqlLabState.auditoriaSentencias = [
+                { id_auditoria: 501, operacion_dml: 'INSERT', tabla_afectada: 'PEDIDO', usuario_db: 'ESTILO_ADMIN', fecha: '22/10/2026 16:00:00', observacion: 'Sentencia masiva ejecutada exitosamente a nivel de bloque en PEDIDO', highlight: false },
+                { id_auditoria: 502, operacion_dml: 'UPDATE', tabla_afectada: 'PEDIDO', usuario_db: 'ESTILO_ADMIN', fecha: '22/10/2026 19:40:11', observacion: 'Sentencia masiva ejecutada exitosamente a nivel de bloque en PEDIDO', highlight: false }
+            ];
+            sqlLabState.seqAuditSueldo = 102;
+            sqlLabState.seqTracking = 104;
+            sqlLabState.seqAuditSentencia = 503;
+
+            renderizarTriggersLab();
+            imprimirConsolaSql('-- RESTORE DATABASE STATE;', 'Estado inicial de la base de datos restablecido (5 trabajadores, sueldos base originales, auditorías base).', 'success');
+            mostrarToast('Base de datos restaurada a sus valores iniciales.');
+        }
+
+        function copiarScriptSqlOficial() {
+            mostrarToast('Archivo oficial 03_triggers_procedimientos_ep2.sql listo en el repositorio.');
+        }
+
     </script>
 </body>
 </html>
