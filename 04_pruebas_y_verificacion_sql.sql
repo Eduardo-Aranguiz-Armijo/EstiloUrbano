@@ -142,3 +142,109 @@ PROMPT === 5.3 CONSULTA DE SUELDO PROMEDIO Y BONO VÍA FUNCIONES DEL PACKAGE ===
 SELECT TO_CHAR(PKG_ESTILO_URBANO.fn_promedio_sueldo_trabajadores, '$999G999G999') AS sueldo_promedio_planta,
        TO_CHAR(PKG_ESTILO_URBANO.fn_calcular_bono(2, 115), '$999G999G999') AS bono_meta_115pct
 FROM DUAL;
+
+
+-- ----------------------------------------------------------------------------
+-- CASO 6: DEMOSTRACIÓN DE CURSORES EXPLÍCITOS ANIDADOS (PADRE E HIJO)
+-- ----------------------------------------------------------------------------
+PROMPT;
+PROMPT === 6.1 EJECUCIÓN DE CURSORES ANIDADOS (TRABAJADORES Y SUS PEDIDOS) ===;
+DECLARE
+    -- CURSOR PADRE: Recorre trabajadores activos
+    CURSOR cur_trabajadores IS
+        SELECT id_usuario, nombre || ' ' || apellido AS nombre_completo
+        FROM USUARIO
+        WHERE id_rol = 2 AND estado = 'A'
+        ORDER BY id_usuario;
+
+    -- CURSOR HIJO: Recibe por parámetro el ID del trabajador actual
+    CURSOR cur_pedidos_trabajador(p_id_trab NUMBER) IS
+        SELECT id_pedido, nro_seguimiento, total_pedido, fecha_pedido
+        FROM PEDIDO
+        WHERE id_trabajador = p_id_trab
+        ORDER BY fecha_pedido;
+
+    v_pedidos_count NUMBER;
+    v_total_ventas  NUMBER;
+BEGIN
+    DBMS_OUTPUT.PUT_LINE('====================================================');
+    DBMS_OUTPUT.PUT_LINE('  DEMOSTRACIÓN DE CURSORES ANIDADOS - ESTILO URBANO ');
+    DBMS_OUTPUT.PUT_LINE('====================================================');
+
+    FOR trab IN cur_trabajadores LOOP
+        DBMS_OUTPUT.PUT_LINE(CHR(10) || '>> OPERADOR: ' || trab.nombre_completo || ' (ID: ' || trab.id_usuario || ')');
+        v_pedidos_count := 0;
+        v_total_ventas  := 0;
+
+        FOR ped IN cur_pedidos_trabajador(trab.id_usuario) LOOP
+            v_pedidos_count := v_pedidos_count + 1;
+            v_total_ventas  := v_total_ventas + ped.total_pedido;
+            DBMS_OUTPUT.PUT_LINE('   - Pedido #' || ped.id_pedido || ' [' || ped.nro_seguimiento || '] $' || ped.total_pedido);
+        END LOOP;
+
+        IF v_pedidos_count = 0 THEN
+            DBMS_OUTPUT.PUT_LINE('   (Sin pedidos asignados)');
+        ELSE
+            DBMS_OUTPUT.PUT_LINE('   TOTAL PROCESADO: ' || v_pedidos_count || ' pedidos | Monto: $' || v_total_ventas);
+        END IF;
+    END LOOP;
+    DBMS_OUTPUT.PUT_LINE(CHR(10) || '====================================================');
+END;
+/
+
+
+-- ----------------------------------------------------------------------------
+-- CASO 7: PRUEBA INTEGRAL COMPLETA DEL PACKAGE PKG_ESTILO_URBANO
+-- Demuestra todas las funciones, procedimientos y constantes del paquete
+-- ----------------------------------------------------------------------------
+PROMPT;
+PROMPT === 7.1 EJECUCIÓN DEL SUITE DE PRUEBAS DEL PACKAGE PKG_ESTILO_URBANO ===;
+DECLARE
+    v_margen_financiero  VARCHAR2(200);
+    v_promedio_sueldos   NUMBER;
+    v_bono_calculado     NUMBER;
+BEGIN
+    DBMS_OUTPUT.PUT_LINE('====================================================');
+    DBMS_OUTPUT.PUT_LINE('  SUITE DE PRUEBAS: PACKAGE PKG_ESTILO_URBANO       ');
+    DBMS_OUTPUT.PUT_LINE('====================================================');
+
+    -- 1. Constante pública del Package
+    DBMS_OUTPUT.PUT_LINE('1. Versión instalada del Package: ' || PKG_ESTILO_URBANO.c_version);
+
+    -- 2. Función: Balance y margen financiero
+    v_margen_financiero := PKG_ESTILO_URBANO.fn_obtener_margen_financiero;
+    DBMS_OUTPUT.PUT_LINE('2. Margen Financiero: ' || v_margen_financiero);
+
+    -- 3. Función: Promedio de sueldos
+    v_promedio_sueldos := PKG_ESTILO_URBANO.fn_promedio_sueldo_trabajadores;
+    DBMS_OUTPUT.PUT_LINE('3. Promedio Sueldo Trabajadores: $' || TO_CHAR(v_promedio_sueldos, 'FM999,999,999'));
+
+    -- 4. Función: Cálculo de bonos según porcentaje de meta cumplida
+    DBMS_OUTPUT.PUT_LINE(CHR(10) || '4. Pruebas de Cálculo de Bono por Desempeño:');
+    v_bono_calculado := PKG_ESTILO_URBANO.fn_calcular_bono(p_id_trabajador => 2, p_pct_meta => 75);
+    DBMS_OUTPUT.PUT_LINE('   - Bono con 75%  cumplimiento (< 80%):    $' || v_bono_calculado);
+    v_bono_calculado := PKG_ESTILO_URBANO.fn_calcular_bono(p_id_trabajador => 2, p_pct_meta => 85);
+    DBMS_OUTPUT.PUT_LINE('   - Bono con 85%  cumplimiento (tramo 3%):  $' || v_bono_calculado);
+    v_bono_calculado := PKG_ESTILO_URBANO.fn_calcular_bono(p_id_trabajador => 2, p_pct_meta => 105);
+    DBMS_OUTPUT.PUT_LINE('   - Bono con 105% cumplimiento (tramo 7%):  $' || v_bono_calculado);
+    v_bono_calculado := PKG_ESTILO_URBANO.fn_calcular_bono(p_id_trabajador => 2, p_pct_meta => 130);
+    DBMS_OUTPUT.PUT_LINE('   - Bono con 130% cumplimiento (tramo 12%): $' || v_bono_calculado);
+
+    -- 5. Procedimiento: Actualización individual de sueldo
+    DBMS_OUTPUT.PUT_LINE(CHR(10) || '5. Procedimiento sp_actualizar_sueldo_empleado:');
+    PKG_ESTILO_URBANO.sp_actualizar_sueldo_empleado(p_id_trabajador => 2, p_nuevo_sueldo => 720000);
+    PKG_ESTILO_URBANO.sp_actualizar_sueldo_empleado(p_id_trabajador => 999, p_nuevo_sueldo => 600000);
+
+    -- 6. Procedimiento: Cambio de estado de pedido (dispara tracking)
+    DBMS_OUTPUT.PUT_LINE(CHR(10) || '6. Procedimiento sp_cambiar_estado_pedido:');
+    PKG_ESTILO_URBANO.sp_cambiar_estado_pedido(p_id_pedido => 5003, p_nuevo_estado => 5);
+
+    -- 7. Procedimiento: Reajuste masivo inflacionario (4.5%)
+    DBMS_OUTPUT.PUT_LINE(CHR(10) || '7. Procedimiento sp_reajuste_masivo_sueldos:');
+    PKG_ESTILO_URBANO.sp_reajuste_masivo_sueldos;
+
+    DBMS_OUTPUT.PUT_LINE(CHR(10) || '====================================================');
+    DBMS_OUTPUT.PUT_LINE('  TODAS LAS PRUEBAS DEL PACKAGE COMPLETADAS CON ÉXITO');
+    DBMS_OUTPUT.PUT_LINE('====================================================');
+END;
+/
