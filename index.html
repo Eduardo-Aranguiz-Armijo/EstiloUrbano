@@ -2245,27 +2245,91 @@
                 const res = await fetch('/api/mongodb-productos');
                 if (!res.ok) return;
                 const mongoProductos = await res.json();
-                if (Array.isArray(mongoProductos) && mongoProductos.length > 0) {
+                if (Array.isArray(mongoProductos)) {
+                    const defaultImgs = {
+                        'HOODIES': 'https://images.unsplash.com/photo-1556905055-8f358a7a47b2?q=80&w=600&auto=format&fit=crop',
+                        'POLERONES': 'https://images.unsplash.com/photo-1556905055-8f358a7a47b2?q=80&w=600&auto=format&fit=crop',
+                        'POLERAS': 'https://images.unsplash.com/photo-1521572267360-ee0c2909d518?q=80&w=600&auto=format&fit=crop',
+                        'SNEAKERS': 'https://images.unsplash.com/photo-1552346154-21d32810aba3?q=80&w=600&auto=format&fit=crop',
+                        'PANTALONES': 'https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?q=80&w=600&auto=format&fit=crop',
+                        'ACCESORIOS': 'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?q=80&w=600&auto=format&fit=crop'
+                    };
+
+                    const mongoSkus = new Set(mongoProductos.map(m => m.sku));
+                    const mongoCodigos = new Set(mongoProductos.map(m => m.codigo_oracle));
+                    const mongoIds = new Set(mongoProductos.map(m => String(m._id)));
+
+                    // 1. ELIMINAR de la web si el producto fue borrado en MongoDB (deleteOne / deleteMany)
+                    catalogo = catalogo.filter(p => {
+                        if (p.mongoManaged) {
+                            return mongoSkus.has(p.sku) || mongoCodigos.has(p.id) || mongoIds.has(String(p.mongoId));
+                        }
+                        if (p.sku && ['HOOD-ACID-01', 'POL-TOKYO-02', 'SNK-CHUNKY-03', 'ACC-BAN-CORD-04', 'TEMP-PRUEBA-99'].includes(p.sku)) {
+                            return mongoSkus.has(p.sku);
+                        }
+                        return true;
+                    });
+
+                    // 2. ACTUALIZAR O AGREGAR productos desde MongoDB
                     mongoProductos.forEach(m => {
-                        const item = catalogo.find(p => p.id === m.codigo_oracle || p.sku === m.sku);
+                        let item = catalogo.find(p => 
+                            (m.codigo_oracle && p.id === m.codigo_oracle) || 
+                            (m.sku && p.sku === m.sku) ||
+                            (p.mongoId && String(p.mongoId) === String(m._id))
+                        );
+
+                        const catKey = (m.categoria || 'POLERONES').toUpperCase();
+                        const tallasArr = m.tallas_disponibles && m.tallas_disponibles.length > 0
+                            ? m.tallas_disponibles.map(t => t.talla)
+                            : ['S', 'M', 'L'];
+                        const totalStock = m.tallas_disponibles
+                            ? m.tallas_disponibles.reduce((acc, t) => acc + (t.stock || 0), 0)
+                            : (m.stock !== undefined ? m.stock : 25);
+
                         if (item) {
-                            if (m.precio !== undefined) item.precio = m.precio;
+                            // Actualizar producto existente (updateOne / updateMany con $set / $inc)
                             if (m.nombre) item.nombre = m.nombre;
+                            if (m.precio !== undefined) item.precio = m.precio;
                             if (m.descripcion) item.descripcion = m.descripcion;
-                            if (m.estado === 'descontinuado') {
-                                item.stock = 0;
-                                item.descontinuado = true;
-                            }
+                            if (m.sku) item.sku = m.sku;
+                            item.cat = catKey;
+                            item.tallas = tallasArr;
+                            item.stock = m.estado === 'descontinuado' ? 0 : totalStock;
+                            item.descontinuado = (m.estado === 'descontinuado');
                             if (m.en_oferta) {
                                 item.en_oferta = true;
                                 item.descuento_pct = m.descuento_pct || 15;
                             }
+                            item.mongoManaged = true;
+                            item.mongoId = m._id;
+                        } else {
+                            // Agregar producto nuevo (insertOne / insertMany)
+                            const nuevo = {
+                                id: m.codigo_oracle || Number(m._id) || (Date.now() % 100000),
+                                mongoId: m._id,
+                                mongoManaged: true,
+                                cat: catKey,
+                                sku: m.sku || `SKU-MNG-${m._id}`,
+                                nombre: m.nombre || 'Nueva Prenda Streetwear',
+                                precio: m.precio || 29990,
+                                tallas: tallasArr,
+                                stock: m.estado === 'descontinuado' ? 0 : totalStock,
+                                descontinuado: (m.estado === 'descontinuado'),
+                                min: 5,
+                                provId: (m.proveedor && m.proveedor.id_proveedor_oracle) ? m.proveedor.id_proveedor_oracle : 1,
+                                provNombre: (m.proveedor && m.proveedor.razon_social) ? m.proveedor.razon_social : 'Confecciones Urban Textiles SpA',
+                                descripcion: m.descripcion || 'Prenda cargada en tiempo real desde MongoDB Atlas en la nube.',
+                                img: m.img || defaultImgs[catKey] || defaultImgs['POLERONES']
+                            };
+                            catalogo.unshift(nuevo); // Poner al inicio del catálogo para que se vea de inmediato
                         }
                     });
+
                     renderizarCatalogo(catalogo);
                     renderizarTablaAdminProductos();
+
                     if (mostrarAlerta) {
-                        mostrarToast("🔥 ¡Catálogo web sincronizado en vivo desde MongoDB Atlas!");
+                        mostrarToast(`⚡ ¡Catálogo sincronizado! ${mongoProductos.length} prendas activas desde MongoDB Atlas.`);
                     }
                 }
             } catch (e) {
