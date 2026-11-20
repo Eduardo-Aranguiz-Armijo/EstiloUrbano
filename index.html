@@ -71,14 +71,14 @@
 <body class="min-h-screen flex flex-col antialiased selection:bg-amber-500 selection:text-black">
 
     <!-- ==================================================================== -->
-    <!-- BARRA SUPERIOR ANUNCIO COMERCIAL                                     -->
+    <!-- BARRA SUPERIOR ANUNCIO COMERCIAL & ESTADO NUBE                        -->
     <!-- ==================================================================== -->
     <div class="bg-gradient-to-r from-amber-600 via-amber-500 to-amber-600 text-black text-[11px] font-bold uppercase tracking-widest text-center py-1.5 px-4 shadow-sm flex flex-wrap items-center justify-center gap-3">
         <span><i class="fa-solid fa-truck-fast mr-1"></i> Envíos express a todo Chile por Starken y Chilexpress</span>
         <span class="hidden md:inline text-black/50">•</span>
-        <span class="hidden md:inline">🔥 Colección Streetwear Invierno 2026</span>
-    </div>
-        <span><i class="fa-solid fa-truck-fast mr-1"></i> Envíos express a todo Chile por Starken y Chilexpress</span>
+        <button onclick="sincronizarConMongoDBAtlas(true)" title="Sincronizar catálogo en vivo desde MongoDB Atlas" class="bg-emerald-950 hover:bg-emerald-900 text-emerald-300 hover:text-white px-3 py-0.5 rounded-full text-[10px] font-extrabold tracking-wider transition cursor-pointer flex items-center gap-1.5 shadow-md border border-emerald-500/50">
+            <i class="fa-solid fa-cloud-arrow-down text-emerald-400"></i> SINCRONIZAR MONGODB ATLAS
+        </button>
         <span class="hidden md:inline text-black/50">•</span>
         <button onclick="navegarAPanel('triggers-lab')" class="bg-black hover:bg-neutral-900 text-amber-400 hover:text-white px-3 py-0.5 rounded-full text-[10px] font-extrabold tracking-wider transition cursor-pointer flex items-center gap-1.5 shadow-md border border-black">
             <i class="fa-solid fa-bolt text-amber-400"></i> PROBAR TRIGGERS PL/SQL (EP2)
@@ -2234,7 +2234,44 @@
             renderizarTablaTrabajadorPedidos();
             renderizarDudasTrabajador();
             renderizarResenasTrabajador();
+            sincronizarConMongoDBAtlas(false);
         });
+
+        // ====================================================================
+        // SINCRONIZACIÓN EN VIVO CON MONGODB ATLAS (NUBE) - EP3
+        // ====================================================================
+        async function sincronizarConMongoDBAtlas(mostrarAlerta = false) {
+            try {
+                const res = await fetch('/api/mongodb-productos');
+                if (!res.ok) return;
+                const mongoProductos = await res.json();
+                if (Array.isArray(mongoProductos) && mongoProductos.length > 0) {
+                    mongoProductos.forEach(m => {
+                        const item = catalogo.find(p => p.id === m.codigo_oracle || p.sku === m.sku);
+                        if (item) {
+                            if (m.precio !== undefined) item.precio = m.precio;
+                            if (m.nombre) item.nombre = m.nombre;
+                            if (m.descripcion) item.descripcion = m.descripcion;
+                            if (m.estado === 'descontinuado') {
+                                item.stock = 0;
+                                item.descontinuado = true;
+                            }
+                            if (m.en_oferta) {
+                                item.en_oferta = true;
+                                item.descuento_pct = m.descuento_pct || 15;
+                            }
+                        }
+                    });
+                    renderizarCatalogo(catalogo);
+                    renderizarTablaAdminProductos();
+                    if (mostrarAlerta) {
+                        mostrarToast("🔥 ¡Catálogo web sincronizado en vivo desde MongoDB Atlas!");
+                    }
+                }
+            } catch (e) {
+                // En GitHub Pages estático mantiene el catálogo por defecto
+            }
+        }
 
         // ====================================================================
         // GESTIÓN DE SESIONES Y HEADER
