@@ -47,7 +47,8 @@
    - 4.3 Estrategia de Enlace e Interoperabilidad entre Ambos Motores
    - 4.4 Justificación Técnica: ¿Por qué MongoDB asume el Catálogo y NO las Finanzas/Nómina?
    - 4.5 Justificación bajo Metodología 3NF: ¿Por qué Oracle hace Finanzas/RRHH y NO el Catálogo?
-   - 4.6 Articulación Arquitectónica bajo el Marco Ágil Scrum
+   - 4.6 Caso Crítico de Negocio: ¿Por qué NUNCA Gestionar Empleados, Sueldos y Nómina en MongoDB?
+   - 4.7 Articulación Arquitectónica bajo el Marco Ágil Scrum
 5. [MODELAMIENTO DOCUMENTAL Y MATRIZ DE LAS 4 PREGUNTAS](#5-modelamiento-documental-y-matriz-de-las-4-preguntas)
    - 5.1 Metodología de las 4 Preguntas
    - 5.2 Análisis de Relaciones de Negocio en "Estilo Urbano"
@@ -236,7 +237,22 @@ El modelo relacional en Oracle Database 21c/23ai fue normalizado estrictamente h
    - **Degeneración del Esquema por Atributos Volátiles:** Forzar la normalización en 3NF para ropa streetwear exige crear múltiples tablas puente (`PRODUCTO_ATRIBUTO`, `VALORES_TALLA`), complejizando las consultas con múltiples `JOINs`.
    - **Saturación del Pool de Conexiones:** En eventos de alto tráfico (como CyberDay), miles de usuarios consultando la vitrina saturarían los procesos dedicados de Oracle, bloqueando las conexiones de los usuarios que intentan procesar su pago en Webpay.
 
-### 4.6 Articulación Arquitectónica bajo el Marco Ágil Scrum
+### 4.6 Caso Crítico de Negocio: ¿Por qué NUNCA Gestionar Empleados, Sueldos y Nómina en MongoDB?
+Una de las decisiones arquitectónicas fundamentales y de mayor impacto en "Estilo Urbano" fue prohibir explícitamente la gestión de recursos humanos, sueldos y contratos en MongoDB, manteniéndolos en Oracle bajo control PL/SQL. Esta decisión se fundamenta en cuatro pilares técnicos y de cumplimiento legal en Chile:
+
+1. **Ausencia de Triggers Transaccionales Síncronos (Gobernanza Preventiva):**  
+   En Oracle SQL, el motor ejecuta disparadores `BEFORE UPDATE` como `trg_valida_sueldo_minimo` y `trg_valida_solvencia_sueldos`. Si un usuario intenta asignar una remuneración inferior al mínimo legal ($500.000) o si un incremento salarial hace que la nómina total supere las ventas de la empresa, Oracle aborta la operación directamente en el motor mediante `RAISE_APPLICATION_ERROR`. En MongoDB no existen triggers nativos síncronos dentro del motor de base de datos; cualquier error de validación en la capa web o una modificación manual descuidada desde la consola mongosh o MongoDB Compass escribiría un sueldo de $1 o cifras ilegales sin ningún bloqueo a nivel de almacenamiento.
+
+2. **Exigencia Legal de Auditoría Inmutable (Inspección del Trabajo):**  
+   La legislación laboral chilena y las normas de auditoría de RRHH exigen trazabilidad absoluta de cada modificación en las remuneraciones de los trabajadores. En Oracle, el trigger de auditoría inserta de manera automática, atómica e ineludible en la tabla `AUDITORIA_SUELDO_EMPLEADO` el sueldo anterior, el sueldo nuevo, el usuario que efectuó el cambio y la marca de tiempo (`TIMESTAMP`). Nadie puede saltarse este registro. En MongoDB, la auditoría dependería de que el desarrollador recuerde escribir código de log en la aplicación; cualquier actualización directa a la base de datos no dejaría rastro, invalidando la posición de la empresa ante fiscalizaciones laborales o juicios contractuales.
+
+3. **Integridad Referencial Estricta (`FOREIGN KEY`) vs. Datos Huérfanos:**  
+   Bajo la Tercera Forma Normal (3NF) de Oracle, la tabla `USUARIO` está formalmente vinculada a `TIPO_USUARIO` (Rol) mediante una clave foránea forzada por el motor. Es físicamente imposible registrar un empleado con un rol inexistente o eliminar un cargo que tenga trabajadores asignados. En MongoDB, al no existir integridad foránea mandatoria, un error tipográfico en un documento (`{"rol": "SuperVendedr"}`) generaría registros corruptos y desajustes en la jerarquía administrativa.
+
+4. **Transaccionalidad ACID Pura frente al Dinero Real:**  
+   El catálogo de ropa admite consistencia eventual sin riesgo alguno para la empresa (que una foto tarde unos milisegundos en refrescarse no perjudica a nadie). En contraste, los salarios de las personas, las leyes sociales (AFP, Fonasa/Isapre) y las retenciones tributarias del SII exigen propiedades ACID inmediatas y absolutas. No se pueden permitir lecturas sucias (*dirty reads*) ni actualizaciones concurrentes ambiguas cuando se procesa la planilla mensual de pago de remuneraciones.
+
+### 4.7 Articulación Arquitectónica bajo el Marco Ágil Scrum
 En el ciclo de desarrollo bajo la metodología **Scrum**, el Product Backlog del proyecto se descompuso estratégicamente separando los requerimientos por dominio de negocio:
 
 * **Sprint 1 & 2 — Núcleo Financiero, Legal y Administrativo (Oracle PL/SQL en 3NF):**
