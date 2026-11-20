@@ -45,6 +45,9 @@
    - 4.1 Qué se Mantiene en Oracle Database
    - 4.2 Qué se Migra a MongoDB
    - 4.3 Estrategia de Enlace e Interoperabilidad entre Ambos Motores
+   - 4.4 Justificación Técnica: ¿Por qué MongoDB asume el Catálogo y NO las Finanzas/Nómina?
+   - 4.5 Justificación bajo Metodología 3NF: ¿Por qué Oracle hace Finanzas/RRHH y NO el Catálogo?
+   - 4.6 Articulación Arquitectónica bajo el Marco Ágil Scrum
 5. [MODELAMIENTO DOCUMENTAL Y MATRIZ DE LAS 4 PREGUNTAS](#5-modelamiento-documental-y-matriz-de-las-4-preguntas)
    - 5.1 Metodología de las 4 Preguntas
    - 5.2 Análisis de Relaciones de Negocio en "Estilo Urbano"
@@ -208,6 +211,40 @@ Para garantizar la comunicación entre ambos mundos sin duplicar información se
    - El cliente navega y añade ítems al carrito desde **MongoDB**.
    - Al pulsar "Pagar con Webpay", el backend toma los `codigo_oracle` y registra la orden en la tabla `PEDIDO` de **Oracle Database** con plena garantía transaccional ACID.
    - Tras confirmarse el pago en Oracle, se ejecuta una instrucción `$inc` en MongoDB para decrementar el stock operativo en la colección `productos`.
+
+### 4.4 Justificación Técnica: ¿Por qué MongoDB asume el Catálogo y NO las Finanzas/Nómina?
+La asignación de responsabilidades a MongoDB responde a dos pilares técnicos irremplazables, así como a la prevención deliberada de riesgos operacionales:
+
+1. **Lo que SÍ hace MongoDB y su Justificación:**
+   - **Polimorfismo Real de Atributos:** En el streetwear juvenil, cada tipología de vestuario posee especificaciones incompatibles (polerones oversize con gramaje de algodón 400 GSM y corte boxy; zapatillas con suela de caucho vulcanizado y amortiguación de aire; bananos tácticos con capacidad en litros). En MongoDB, cada documento almacena únicamente sus propios atributos en el subdocumento embebido `especificaciones`, evitando el anti-patrón relacional EAV (*Entity-Attribute-Value*) o tablas dispersas llenas de valores nulos.
+   - **Desbalance Extremo de Accesos (Patrón 500:1):** En el comercio electrónico masivo, se registran más de 500 consultas de navegación de catálogo por cada transacción finalizada. Al incrustar el arreglo `tallas_disponibles` con stock dentro del documento del producto, una sola lectura en memoria resuelve toda la ficha técnica de la prenda sin ejecutar `JOINs`.
+2. **Lo que NO debe hacer MongoDB (Riesgos Evitados en Finanzas y Nómina):**
+   - **Pérdida de Integridad Referencial Declarativa:** MongoDB no provee restricciones nativas de clave foránea (`FOREIGN KEY`) ni chequeos declarativos a nivel de motor. Si la facturación se alojara en NoSQL, cualquier anomalía o bug en el código de backend podría originar boletas huérfanas o registros contables sin cliente.
+   - **Riesgo de Inconsistencia en Fondos y Remuneraciones:** Las transacciones financieras y el pago de salarios exigen aislamiento estricto y atomicidad pura. La consistencia eventual (*Eventual Consistency*) es inaceptable para contratos laborales o cálculo del IVA (19%) fiscalizable ante el Servicio de Impuestos Internos (SII).
+   - **Inexistencia de Disparadores Multiobjeto para Solvencia:** MongoDB no dispone de triggers transaccionales nativos para abortar una transacción global si la suma de la nómina supera las ventas de la empresa.
+
+### 4.5 Justificación bajo Metodología 3NF: ¿Por qué Oracle hace Finanzas/RRHH y NO el Catálogo?
+El modelo relacional en Oracle Database 21c/23ai fue normalizado estrictamente hasta la **Tercera Forma Normal (3NF)**:
+
+1. **Lo que SÍ hace Oracle Database bajo 3NF:**
+   - **Dependencia Funcional Estricta de la Clave:** En 3NF, todo atributo no clave depende de forma directa, completa y exclusiva de la clave primaria (sin dependencias transitivas).
+     - En `ORDEN_COMPRA` y `DETALLE_ORDEN`, el precio unitario histórico de venta queda congelado e inmutable asociado al folio de compra, sin depender de futuras modificaciones de precio en el catálogo.
+     - En `USUARIO`, `TIPO_USUARIO` y salarios, la remuneración contractual y metas dependen directamente de la cédula/ID del empleado, garantizando que un cambio en la definición de un cargo no altere transitivamente el contrato del trabajador.
+   - **Eliminación Absoluta de Anomalías:** La 3NF erradica anomalías de inserción (imposible registrar un cobro sin cliente y folio legal válido), anomalías de actualización (modificar un valor no corrompe balances contables de meses anteriores) y anomalías de borrado (eliminar transacciones operativas no destruye el registro histórico tributario del IVA).
+   - **Gobernanza mediante Triggers PL/SQL:** El motor valida de forma preventiva el sueldo mínimo legal ($500.000), evalúa la solvencia presupuestaria frente a ventas totales y registra cada modificación salarial en `AUDITORIA_SUELDO_EMPLEADO`.
+2. **Lo que NO debe hacer Oracle Database (Problemas Evitados en el Catálogo):**
+   - **Degeneración del Esquema por Atributos Volátiles:** Forzar la normalización en 3NF para ropa streetwear exige crear múltiples tablas puente (`PRODUCTO_ATRIBUTO`, `VALORES_TALLA`), complejizando las consultas con múltiples `JOINs`.
+   - **Saturación del Pool de Conexiones:** En eventos de alto tráfico (como CyberDay), miles de usuarios consultando la vitrina saturarían los procesos dedicados de Oracle, bloqueando las conexiones de los usuarios que intentan procesar su pago en Webpay.
+
+### 4.6 Articulación Arquitectónica bajo el Marco Ágil Scrum
+En el ciclo de desarrollo bajo la metodología **Scrum**, el Product Backlog del proyecto se descompuso estratégicamente separando los requerimientos por dominio de negocio:
+
+* **Sprint 1 & 2 — Núcleo Financiero, Legal y Administrativo (Oracle PL/SQL en 3NF):**
+  - *User Stories:* Gestión de nómina, control preventivo de sueldo mínimo legal, cálculo de solvencia financiera de la empresa y emisión de órdenes transaccionales.
+  - *Criterio de Aceptación (Definition of Done):* Cumplimiento estricto de 3NF, integridad referencial con claves foráneas activas y disparadores de auditoría validados.
+* **Sprint 3 — Catálogo de Moda Urbana, Experiencia de Usuario y Escalabilidad (MongoDB NoSQL):**
+  - *User Stories:* Fichas dinámicas de vestuario con especificaciones de tejido, tabla de medidas en centímetros, selección de tallas en tiempo real y módulo de reseñas de compradores.
+  - *Criterio de Aceptación (Definition of Done):* Tiempos de respuesta inferiores a 100 ms en navegación, esquema BSON flexible que admite nuevas colecciones sin migraciones DDL de base de datos y enlace bidireccional por `codigo_oracle`.
 
 ---
 
