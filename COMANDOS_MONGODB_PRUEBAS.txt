@@ -1,0 +1,221 @@
+// ============================================================================
+// COMANDOS RÁPIDOS DE MONGODB PARA PRUEBAS EN VIVO (MONGOSH / COMPASS)
+// PROYECTO: ESTILO URBANO - EVALUACIÓN PARCIAL N° 3 (EP3)
+// ============================================================================
+// NOTA: Antes de ejecutar cualquier comando, asegúrate de estar en la BD:
+use estilo_urbano_nosql;
+
+// ============================================================================
+// 1. MIRAR TODOS LOS PRODUCTOS DE UNA VEZ
+// ============================================================================
+
+// Ver todos los documentos completos con formato legible:
+db.productos.find().pretty();
+
+// Ver lista resumida (solo ID, Nombre, Precio, Categoría y Estado):
+db.productos.find({}, { _id: 1, nombre: 1, precio: 1, categoria: 1, estado: 1 });
+
+// Contar cuántos productos hay en total:
+db.productos.countDocuments();
+
+
+// ============================================================================
+// 2. ACTUALIZAR EL PRECIO DE UN PRODUCTO
+// ============================================================================
+
+// A. Subir el precio del Hoodie (ID 101) a $42.990:
+db.productos.updateOne(
+    { _id: 101 },
+    { $set: { precio: 42990 } }
+);
+
+// B. Bajar el precio de la Polera (ID 102) a $19.990 y marcarla en oferta:
+db.productos.updateOne(
+    { _id: 102 },
+    { $set: { precio: 19990, en_oferta: true, descuento_pct: 15 } }
+);
+
+// C. Cambiar el precio de las Zapatillas (ID 104) a $69.990:
+db.productos.updateOne(
+    { _id: 104 },
+    { $set: { precio: 69990 } }
+);
+
+
+// ============================================================================
+// 3. AGREGAR UN PRODUCTO NUEVO (ID 105)
+// ============================================================================
+
+// Insertar una nueva prenda streetwear (Gorro Beanie Urbano):
+db.productos.insertOne({
+    _id: 105,
+    codigo_oracle: 205,
+    sku: "ACC-BEANIE-01",
+    nombre: "Gorro Beanie Ribbed Knit Black",
+    categoria: "Accesorios",
+    marca: "Estilo Urbano Signature",
+    descripcion: "Gorro tejido acanalado estilo pescador streetwear con parche bordado.",
+    precio: 14990,
+    en_oferta: false,
+    descuento_pct: 0,
+    estado: "activo",
+    fecha_creacion: new Date(),
+    proveedor: {
+        id_proveedor_oracle: 101,
+        razon_social: "Confecciones Urban Textiles SpA",
+        pais_origen: "Chile"
+    },
+    especificaciones: {
+        material: "100% Acrílico Térmico",
+        estilo: "Short Fisherman Beanie",
+        color: "Negro Mate"
+    },
+    tallas_disponibles: [
+        { talla: "ÚNICA", stock: 30 }
+    ],
+    total_visitas: 120,
+    unidades_vendidas: 15
+});
+
+
+// ============================================================================
+// 4. ELIMINAR CADA UNO DE LOS PRODUCTOS (BORRADO FÍSICO)
+// ============================================================================
+
+// Eliminar el Producto 101 (Hoodie Acid Wash):
+db.productos.deleteOne({ _id: 101 });
+
+// Eliminar el Producto 102 (Polera Gothic Graphic):
+db.productos.deleteOne({ _id: 102 });
+
+// Eliminar el Producto 103 (Pantalón Cargo Tactical):
+db.productos.deleteOne({ _id: 103 });
+
+// Eliminar el Producto 104 (Sneakers Chunky 90s):
+db.productos.deleteOne({ _id: 104 });
+
+// Eliminar el Producto 105 (Gorro Beanie nuevo):
+db.productos.deleteOne({ _id: 105 });
+
+
+// ============================================================================
+// 5. BORRADO LÓGICO (POLÍTICA DE NEGOCIO RECOMENDADA EN EP3)
+// ============================================================================
+// Marca el producto como "descontinuado" sin borrar su historial contable de Oracle:
+
+// Descontinuar el producto 101:
+db.productos.updateOne(
+    { _id: 101 },
+    { $set: { estado: "descontinuado", fecha_baja: new Date(), motivo: "Fin de temporada" } }
+);
+
+// Volver a activar el producto 101:
+db.productos.updateOne(
+    { _id: 101 },
+    { $set: { estado: "activo" } }
+);
+
+
+// ============================================================================
+// 6. RESTAURAR LOS 4 PRODUCTOS ORIGINALES (SI LOS BORRASTE TODOS)
+// ============================================================================
+// Si borraste productos y quieres volver a tener el catálogo inicial completo:
+db.productos.insertMany([
+    {
+        _id: 101,
+        codigo_oracle: 201,
+        sku: "HOOD-ACID-01",
+        nombre: "Hoodie Oversize Acid Wash Black",
+        categoria: "Hoodies",
+        marca: "Estilo Urbano Signature",
+        descripcion: "Polerón urbano corte oversize con lavado ácido artesanal y tela gruesa de 400 GSM.",
+        precio: 39990,
+        en_oferta: false,
+        descuento_pct: 0,
+        estado: "activo",
+        fecha_creacion: new Date("2026-09-01T10:00:00Z"),
+        proveedor: { id_proveedor_oracle: 101, razon_social: "Confecciones Urban Textiles SpA", pais_origen: "Chile" },
+        especificaciones: { material: "100% Algodón Rústico Heavyweight", corte: "Boxy / Drop Shoulder Oversize", gramaje: "400 GSM" },
+        tallas_disponibles: [
+            { talla: "S", stock: 15, medidas_cm: { pecho: 118, largo: 70 } },
+            { talla: "M", stock: 25, medidas_cm: { pecho: 124, largo: 73 } },
+            { talla: "L", stock: 20, medidas_cm: { pecho: 130, largo: 76 } },
+            { talla: "XL", stock: 10, medidas_cm: { pecho: 136, largo: 79 } }
+        ],
+        total_visitas: 1450,
+        unidades_vendidas: 84
+    },
+    {
+        _id: 102,
+        codigo_oracle: 202,
+        sku: "TEE-GOTH-02",
+        nombre: "Polera Streetwear Gothic Graphic",
+        categoria: "Poleras",
+        marca: "Estilo Urbano Signature",
+        descripcion: "Polera cuello redondo pesada con estampados góticos en pecho y espalda.",
+        precio: 22990,
+        en_oferta: false,
+        descuento_pct: 0,
+        estado: "activo",
+        fecha_creacion: new Date("2026-09-05T14:30:00Z"),
+        proveedor: { id_proveedor_oracle: 101, razon_social: "Confecciones Urban Textiles SpA", pais_origen: "Chile" },
+        especificaciones: { material: "100% Algodón Peinado 240 GSM", corte: "Relaxed Fit", gramaje: "240 GSM" },
+        tallas_disponibles: [
+            { talla: "S", stock: 30, medidas_cm: { pecho: 108, largo: 72 } },
+            { talla: "M", stock: 45, medidas_cm: { pecho: 114, largo: 75 } },
+            { talla: "L", stock: 35, medidas_cm: { pecho: 120, largo: 78 } },
+            { talla: "XL", stock: 20, medidas_cm: { pecho: 126, largo: 81 } }
+        ],
+        total_visitas: 920,
+        unidades_vendidas: 112
+    },
+    {
+        _id: 103,
+        codigo_oracle: 203,
+        sku: "PANT-CARGO-03",
+        nombre: "Cargo Pants Cyberpunk Tactical Black",
+        categoria: "Pantalones",
+        marca: "TechWear Division",
+        descripcion: "Pantalón táctico multi-bolsillo con cintas ajustables reflectantes y tela ripstop impermeable.",
+        precio: 45990,
+        en_oferta: false,
+        descuento_pct: 0,
+        estado: "activo",
+        fecha_creacion: new Date("2026-09-10T11:15:00Z"),
+        proveedor: { id_proveedor_oracle: 102, razon_social: "Distribuidora Moda Global Ltda.", pais_origen: "Chile" },
+        especificaciones: { material: "Ripstop Antidesgarro (65% Poliéster / 35% Algodón)", corte: "Tapered Cargo", impermeabilidad: "5000 mm columna de agua" },
+        tallas_disponibles: [
+            { talla: "38", stock: 12, medidas_cm: { cintura: 76, largo: 100 } },
+            { talla: "40", stock: 22, medidas_cm: { cintura: 80, largo: 102 } },
+            { talla: "42", stock: 18, medidas_cm: { cintura: 84, largo: 104 } },
+            { talla: "44", stock: 8, medidas_cm: { cintura: 88, largo: 106 } }
+        ],
+        total_visitas: 2100,
+        unidades_vendidas: 63
+    },
+    {
+        _id: 104,
+        codigo_oracle: 204,
+        sku: "SNK-RETRO-04",
+        nombre: "Sneaker Chunky Retro Urban 90s",
+        categoria: "Zapatillas",
+        marca: "Street Footwear Co.",
+        descripcion: "Zapatillas urbanas de suela gruesa con inserciones reflectantes y amortiguación EVA.",
+        precio: 59990,
+        en_oferta: false,
+        descuento_pct: 0,
+        estado: "activo",
+        fecha_creacion: new Date("2026-09-12T16:45:00Z"),
+        proveedor: { id_proveedor_oracle: 103, razon_social: "Importadora Calzados del Sur SpA", pais_origen: "China / Chile" },
+        especificaciones: { capellada: "Cuero sintético de alta resistencia y malla respirable", suela: "Goma vulcanizada con cámara de aire oculta", peso_par_gramos: 820 },
+        tallas_disponibles: [
+            { talla: "39", stock: 8, longitud_pie_cm: 25.5 },
+            { talla: "40", stock: 14, longitud_pie_cm: 26.0 },
+            { talla: "41", stock: 20, longitud_pie_cm: 26.5 },
+            { talla: "42", stock: 18, longitud_pie_cm: 27.5 },
+            { talla: "43", stock: 10, longitud_pie_cm: 28.0 }
+        ],
+        total_visitas: 3400,
+        unidades_vendidas: 147
+    }
+]);
