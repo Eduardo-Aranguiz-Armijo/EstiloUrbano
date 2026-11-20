@@ -3,7 +3,7 @@
 ### CASO: "ESTILO URBANO" (ARQUITECTURA HÍBRIDA ORACLE + MONGODB)
 **Ponderación:** 60% de la Evaluación Parcial N° 3  
 **Expositores:** Eduardo Aránguiz Armijo — Luciano Zaninovic — Kevin Urbina  
-**Docente:** Cristian Medina  
+**Docente:** Carlos Enrique Quintanilla Galleguillos  
 
 ---
 
@@ -25,7 +25,7 @@ flowchart LR
 * **Título:** Arquitectura Híbrida de Base de Datos: Incorporación de MongoDB en "Estilo Urbano".
 * **Subtítulo:** Evaluación Parcial N° 3 — Taller de Base de Datos (BDY1103).
 * **Integrantes:** Eduardo Aránguiz, Luciano Zaninovic, Kevin Urbina.
-* **Profesor:** Cristian Medina.
+* **Profesor:** Carlos Enrique Quintanilla Galleguillos.
 
 > **🎙️ Lo que debes decir (Discurso):**  
 > *"Buenos días profesor y compañeros. Hoy presentamos la tercera y última etapa de nuestro proyecto semestral para la tienda de ropa urbana 'Estilo Urbano'. En esta evaluación hemos evolucionado nuestra base de datos relacional de Oracle hacia una arquitectura híbrida de Persistencia Políglota, incorporando una base de datos NoSQL documental como MongoDB para resolver de forma óptima el catálogo dinámico de prendas, mientras mantenemos la rigurosidad financiera y legal en Oracle Database."*  
@@ -124,7 +124,7 @@ flowchart LR
 
 ---
 
-## ❓ BANCO DE PREGUNTAS DEL PROFESOR CRISTIAN MEDINA (CON RESPUESTAS EXACTAS)
+## ❓ BANCO DE PREGUNTAS DEL PROFESOR Carlos Enrique Quintanilla Galleguillos (CON RESPUESTAS EXACTAS)
 
 1. **¿Cómo se comunican Oracle y MongoDB si están en motores distintos?**
    > *"Profesor, se enlazan mediante identificadores estables de negocio: en MongoDB cada producto tiene el atributo `codigo_oracle: 201`. Cuando el cliente pulsa pagar en la web, el backend toma ese ID y crea la transacción en Oracle en las tablas `PEDIDO` y `DETALLE_PEDIDO`. Una vez que el pago Webpay se confirma con éxito en Oracle, el backend envía un comando `$inc: { unidades_vendidas: 1, stock: -1 }` a MongoDB para mantener el catálogo sincronizado."*

@@ -18,7 +18,7 @@
            Alumnos: Eduardo Aránguiz Armijo
                     Luciano Zaninovic
                     Kevin Urbina
-           Profesor: Cristian Medina
+           Profesor: Carlos Enrique Quintanilla Galleguillos
            Asignatura: BDY1103 - Taller de Base de Datos
            Semestre: Cuarto Semestre (2026)
            Fecha: Noviembre de 2026

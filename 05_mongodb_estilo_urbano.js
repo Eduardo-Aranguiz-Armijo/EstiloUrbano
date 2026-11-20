@@ -3,7 +3,7 @@
 // EVALUACIÓN : EVALUACIÓN PARCIAL N° 3 (EP3) - ARQUITECTURA HÍBRIDA
 // PROYECTO    : TIENDA ONLINE "ESTILO URBANO" (E-COMMERCE STREETWEAR)
 // INTEGRANTES: Eduardo Aránguiz - Luciano Zaninovic - Kevin Urbina
-// DOCENTE    : Cristian Medina
+// DOCENTE    : Carlos Enrique Quintanilla Galleguillos
 // MOTOR      : MONGODB 6.x / 7.x (MONGOSH / MONGODB COMPASS)
 // ALCANCE    : CRUD COMPLETO SIN AGREGACIONES NI ÍNDICES (SEGÚN PAUTA DOCENTE)
 // ============================================================================
