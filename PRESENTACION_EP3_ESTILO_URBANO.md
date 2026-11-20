@@ -72,7 +72,7 @@ flowchart LR
   - Sin triggers transaccionales multiobjeto automáticos.
 
 > **🎙️ Lo que debes decir (Discurso):**  
-> *"Profesor, de acuerdo con lo visto en clase, justificar MongoDB diciendo simplemente que 'es flexible' no es suficiente. Nosotros aplicamos dos criterios de la matriz de decisión con datos reales de nuestro caso: primero, el polimorfismo de atributos para nuestras prendas streetwear; y segundo, el patrón de lectura intensiva de 500 visitas por cada venta. Ahora bien, como ingenieros reconocemos explícitamente lo que perdemos frente a Oracle: perdemos la integridad referencial automática, las restricciones CHECK en el motor y los triggers transaccionales multi-tabla. Por esa razón no migramos todo a MongoDB; construimos una arquitectura híbrida donde cada motor hace lo que mejor sabe hacer."*  
+> *"De acuerdo con los fundamentos de arquitectura de datos, justificar MongoDB diciendo simplemente que 'es flexible' no es suficiente. Nosotros aplicamos dos criterios de la matriz de decisión con datos reales de nuestro caso: primero, el polimorfismo de atributos para nuestras prendas streetwear; y segundo, el patrón de lectura intensiva de 500 visitas por cada venta. Ahora bien, como ingenieros reconocemos explícitamente lo que perdemos frente a Oracle: perdemos la integridad referencial automática, las restricciones CHECK en el motor y los triggers transaccionales multi-tabla. Por esa razón no migramos todo a MongoDB; construimos una arquitectura híbrida donde cada motor hace lo que mejor sabe hacer."*  
 > **⏱️ Tiempo:** 1 minuto 45 segundos.
 
 ---
@@ -124,16 +124,22 @@ flowchart LR
 
 ---
 
-## ❓ BANCO DE PREGUNTAS DEL PROFESOR Carlos Enrique Quintanilla Galleguillos (CON RESPUESTAS EXACTAS)
+## 📌 FUNDAMENTACIÓN TÉCNICA: POR QUÉ NO SE USA MONGODB EN OTROS MÓDULOS
 
-1. **¿Cómo se comunican Oracle y MongoDB si están en motores distintos?**
-   > *"Profesor, se enlazan mediante identificadores estables de negocio: en MongoDB cada producto tiene el atributo `codigo_oracle: 201`. Cuando el cliente pulsa pagar en la web, el backend toma ese ID y crea la transacción en Oracle en las tablas `PEDIDO` y `DETALLE_PEDIDO`. Una vez que el pago Webpay se confirma con éxito en Oracle, el backend envía un comando `$inc: { unidades_vendidas: 1, stock: -1 }` a MongoDB para mantener el catálogo sincronizado."*
+1. **¿Por qué NO se usa MongoDB para Empleados, Sueldos y Recursos Humanos?**
+   > *No se utiliza MongoDB para nómina y empleados porque la legislación laboral y tributaria en Chile exige **auditoría inmutable, integridad referencial estricta y disparadores preventivos (Triggers PL/SQL)**. En Oracle, el motor bloquea automáticamente cualquier intento de asignar un sueldo bajo el mínimo legal ($500.000) o que comprometa la solvencia financiera de la empresa, y registra de manera obligatoria cada modificación en `AUDITORIA_SUELDO_EMPLEADO`. MongoDB carece de triggers transaccionales síncronos y restricciones declarativas de clave foránea a nivel de motor, lo que abriría el riesgo de generar datos huérfanos o sueldos erróneos sin validez jurídica ante la Inspección del Trabajo.*
 
-2. **¿Por qué no guardaron las reseñas embebidas dentro del producto si se leen juntas?**
-   > *"Por el riesgo de crecimiento desmedido o 'Unbounded Growth'. Aunque se leen juntas en la interfaz, un producto exitoso puede acumular 50.000 comentarios con fotos. Si las embebiéramos, el documento superaría el límite de 16 MB que impone el formato BSON en MongoDB y la base de datos rechazaría las escrituras."*
+2. **¿Por qué NO se usa MongoDB para Facturación y Boletas Legales?**
+   > *La facturación formal y el cálculo de impuestos (IVA 19%) fiscalizables ante el SII requieren consistencia ACID pura y números de folio inmutables. El catálogo de ropa admite consistencia eventual, pero las finanzas no admiten anomalías de redondeo ni lecturas sucias.*
 
-3. **¿Cuál es la diferencia entre usar $set y asignar el documento completo en un update?**
-   > *"Si hacemos un reemplazo sin `$set`, MongoDB sobreescribe todo el documento eliminando los campos que no incluyamos. El operador `$set` modifica exclusivamente los campos especificados (por ejemplo el precio o el estado) dejando intactas las especificaciones técnicas y las tallas embebidas."*
+3. **¿Cómo se comunican Oracle y MongoDB si están en motores distintos?**
+   > *Se enlazan mediante identificadores estables de negocio: en MongoDB cada producto tiene el atributo `codigo_oracle: 201`. Cuando el cliente pulsa pagar en la web, el backend toma ese ID y crea la transacción en Oracle en las tablas `PEDIDO` y `DETALLE_PEDIDO`. Una vez que el pago Webpay se confirma con éxito en Oracle, el backend envía un comando `$inc: { unidades_vendidas: 1, "tallas_disponibles.$.stock": -1 }` a MongoDB para mantener el catálogo sincronizado.*
 
-4. **¿Por qué usaron $inc en vez de hacer un find, restarle 1 al stock en JavaScript y luego hacer un $set?**
-   > *"Porque hacerlo en dos pasos desde JavaScript genera una condición de carrera (Race Condition) si dos clientes compran la última prenda al mismo segundo. El operador `$inc` es una operación atómica que ejecuta el motor directamente en memoria en el servidor, garantizando que el contador se actualice de forma segura sin lecturas previas."*
+4. **¿Por qué NO se guardan las reseñas embebidas dentro del documento del producto si se leen juntas?**
+   > *Por el riesgo de crecimiento desmedido (*Unbounded Growth*). Aunque se leen juntas en la interfaz web, una prenda streetwear viral puede acumular decenas de miles de opiniones con fotografías. Si se embebieran, el documento superaría el límite estricto de 16 MB que impone el formato BSON en MongoDB y el motor rechazaría las escrituras.*
+
+5. **¿Cuál es la diferencia entre usar $set y asignar el documento completo en un update?**
+   > *Si se realiza un reemplazo sin `$set`, MongoDB sobreescribe el documento completo eliminando los campos que no se hayan incluido en la sentencia. El operador `$set` modifica exclusivamente los campos especificados (por ejemplo el precio o el estado) dejando intactas las especificaciones técnicas y las tallas embebidas.*
+
+6. **¿Por qué se usa $inc en vez de restar 1 al stock desde JavaScript y luego hacer un $set?**
+   > *Porque hacerlo en dos pasos desde la aplicación genera una condición de carrera (*Race Condition*) si dos clientes intentan comprar la última prenda en el mismo milisegundo. El operador `$inc` es una operación atómica que ejecuta el motor directamente en memoria en el servidor, garantizando que el decremento de stock sea seguro y consistente sin lecturas previas.*
