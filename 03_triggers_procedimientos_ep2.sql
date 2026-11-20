@@ -31,6 +31,26 @@ WHEN NOT MATCHED THEN
 COMMIT;
 
 -- ============================================================================
+-- 1.1 ACTUALIZACIÓN DDL: INCORPORACIÓN DE SUELDO BASE PARA TRABAJADORES (EP2)
+-- ============================================================================
+BEGIN
+    EXECUTE IMMEDIATE 'ALTER TABLE USUARIO ADD sueldo_base NUMBER(10) DEFAULT 550000';
+EXCEPTION
+    WHEN OTHERS THEN NULL; -- Si la columna ya existe, continúa
+END;
+/
+
+-- Sueldos base iniciales para trabajadores activos
+UPDATE USUARIO SET sueldo_base = 650000 WHERE id_usuario = 2; -- Ignacio López
+UPDATE USUARIO SET sueldo_base = 700000 WHERE id_usuario = 3; -- Valentina Pérez
+UPDATE USUARIO SET sueldo_base = 580000 WHERE id_usuario = 4; -- Felipe Morales
+UPDATE USUARIO SET sueldo_base = 520000 WHERE id_usuario = 5; -- Lucas Ramírez
+UPDATE USUARIO SET sueldo_base = 510000 WHERE id_usuario = 6; -- Camila Silva
+UPDATE USUARIO SET sueldo_base = 500000 WHERE id_usuario = 7; -- Matías Delgado
+UPDATE USUARIO SET sueldo_base = 500000 WHERE id_usuario = 8; -- Rodrigo Tapia
+COMMIT;
+
+-- ============================================================================
 -- 2. TABLAS Y SECUENCIAS DE AUDITORÍA HISTÓRICA
 -- ============================================================================
 

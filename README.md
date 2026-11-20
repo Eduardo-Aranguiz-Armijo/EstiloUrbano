@@ -26,12 +26,24 @@ Plataforma oficial de comercio electrónico y gestión de base de datos para la 
 
 ---
 
-## 🗄️ Arquitectura de Base de Datos (Oracle 23ai)
+## 🗄️ Arquitectura Híbrida de Base de Datos (Oracle 23ai + MongoDB)
 
-1. **[`01_esquema_estilo_urbano.sql`](01_esquema_estilo_urbano.sql):** Definición DDL y DML de tablas relacionales.
-2. **[`02_bloque_anonimo_plsql.sql`](02_bloque_anonimo_plsql.sql):** Bloque anónimo PL/SQL con `RECORD`, `VARRAY`, cursores explícitos parametrizados en bucles anidados y excepciones.
-3. **[`INFORME_EP1_ESTILO_URBANO.md`](INFORME_EP1_ESTILO_URBANO.md):** Informe académico formal completo según pauta oficial Duoc UC.
-4. **[`PRESENTACION_EJECUTIVA_EP1.md`](PRESENTACION_EJECUTIVA_EP1.md):** Estructura de 10 diapositivas, guion verbal y banco de preguntas para defensa oral.
+### Evaluación Parcial N° 1 (PL/SQL Básico y Modelo Relacional)
+1. **[`01_esquema_estilo_urbano.sql`](01_esquema_estilo_urbano.sql):** Definición DDL y DML de tablas relacionales en Oracle.
+2. **[`02_bloque_anonimo_plsql.sql`](02_bloque_anonimo_plsql.sql):** Bloque anónimo con `RECORD`, `VARRAY`, cursores explícitos y excepciones.
+3. **[`INFORME_EP1_ESTILO_URBANO.md`](INFORME_EP1_ESTILO_URBANO.md):** Informe académico formal según formato Duoc UC.
+
+### Evaluación Parcial N° 2 (PL/SQL Avanzado, Triggers y Packages)
+1. **[`03_triggers_procedimientos_ep2.sql`](03_triggers_procedimientos_ep2.sql):** Package `PKG_ESTILO_URBANO`, triggers de fila (`BEFORE`/`AFTER`) y sentencia (`AFTER`).
+2. **[`04_pruebas_y_verificacion_sql.sql`](04_pruebas_y_verificacion_sql.sql):** Batería de comprobación interactiva en Oracle SQL Developer.
+3. **[`INFORME_EP2_ESTILO_URBANO.docx`](INFORME_EP2_ESTILO_URBANO.docx):** Informe técnico formal en formato Word.
+4. **[`PRESENTACION_EP2_ESTILO_URBANO.pptx`](PRESENTACION_EP2_ESTILO_URBANO.pptx):** Diapositivas ejecutivas para defensa oral.
+
+### Evaluación Parcial N° 3 (Arquitectura Híbrida NoSQL con MongoDB)
+1. **[`05_mongodb_estilo_urbano.js`](05_mongodb_estilo_urbano.js):** Script maestro con CRUD completo (`insertOne`, `insertMany`, `find`, `$set`, `$inc`, `deleteOne`, `deleteMany` y borrado lógico con `$set`).
+2. **[`INFORME_EP3_ESTILO_URBANO.docx`](INFORME_EP3_ESTILO_URBANO.docx):** Informe técnico formal en Word (Portada oficial Duoc UC, comparativa relacional vs NoSQL, matriz de decisión, tabla de 4 preguntas y referencias APA).
+3. **[`PRESENTACION_EP3_ESTILO_URBANO.pptx`](PRESENTACION_EP3_ESTILO_URBANO.pptx):** Diapositivas ejecutivas (16:9) para presentación oral de la EP3.
+4. **[`PRESENTACION_EP3_ESTILO_URBANO.md`](PRESENTACION_EP3_ESTILO_URBANO.md):** Guion verbal con discurso palabra por palabra, control de tiempos y banco de preguntas del docente.
 
 ---
 
