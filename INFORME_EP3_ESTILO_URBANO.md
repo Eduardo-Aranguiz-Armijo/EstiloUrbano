@@ -69,38 +69,38 @@
 ## 1. INTRODUCCIÓN
 
 ### 1.1 Contexto y Evolución del Proyecto
-La plataforma de comercio electrónico **"Estilo Urbano"** nació con el propósito de comercializar vestuario y calzado streetwear orientado a un público juvenil en Chile. En las fases anteriores (EP1 y EP2), el sistema fue soportado íntegramente por un motor relacional **Oracle Database 21c/23ai**, resolviendo con éxito la consistencia financiera, el cálculo de comisiones, el control de nómina y los disparadores de solvencia mediante programación PL/SQL.
+La plataforma de comercio electrónico **"Estilo Urbano"** nació con el propósito de comercializar vestuario y calzado streetwear orientado a un público juvenil en Chile. En las fases anteriores (EP1 y EP2), el sistema fue soportado íntegramente por un motor relacional **Oracle Database 21c/23ai** (Oracle Corporation, 2024a), resolviendo con éxito la consistencia financiera, el cálculo de comisiones, el control de nómina y los disparadores de solvencia mediante programación procedural avanzada en PL/SQL (Oracle Corporation, 2024b).
 
 No obstante, al expandir la tienda hacia la venta masiva multicanal, surgieron importantes desafíos técnicos:
 1. **Heterogeneidad de atributos en el catálogo:** Las prendas streetwear poseen especificaciones incompatibles entre sí (tablas de medidas en centímetros para polerones oversize, tallas numéricas 39-44 y material de suela para zapatillas, y capacidad en litros para accesorios tácticos). En Oracle, esto exigía decenas de columnas con valores nulos o un modelo *Entity-Attribute-Value (EAV)* ineficiente.
 2. **Desbalance extremo entre lectura y escritura:** En el retail digital, por cada compra finalizada (escritura en Oracle), existen más de 500 consultas de navegación de catálogo (lecturas concurrentes). Ejecutar consultas con múltiples `JOIN` relacionales para renderizar cada ficha de producto degrada el rendimiento de la base de datos principal.
 
-Por estos motivos, se determinó transformar la solución en una **Arquitectura Híbrida Polyglot Persistence**, delegando el catálogo dinámico de prendas a **MongoDB** y conservando el núcleo financiero, fiscal y de remuneraciones en **Oracle Database**.
+Por estos motivos, se determinó transformar la solución en una **Arquitectura Híbrida de Persistencia Políglota** (Fowler & Sadalage, 2012), delegando el catálogo dinámico de prendas a **MongoDB Server y MongoDB Compass** (MongoDB Inc., 2026a, 2026b) y conservando el núcleo financiero, fiscal y de remuneraciones en **Oracle Database** (Oracle Corporation, 2024a).
 
 ### 1.2 Objetivo General
 Diseñar e implementar una arquitectura de datos híbrida para el e-commerce "Estilo Urbano", integrando una base de datos NoSQL documental (MongoDB) para la gestión ágil del catálogo de productos y desacoplando dicha carga del motor relacional transaccional (Oracle Database).
 
 ### 1.3 Objetivos Específicos
-1. Comparar técnicamente los paradigmas relacional y no relacional, identificando fortalezas, debilidades y compensaciones (*trade-offs*).
-2. Justificar la adopción de MongoDB mediante criterios formales de la matriz de decisión aplicados al caso real de streetwear.
-3. Modelar la colección `productos` utilizando la matriz de las 4 preguntas para decidir fundamentadamente entre embeber, referenciar o usar referencia extendida.
-4. Desarrollar las operaciones fundamentales de manipulación de datos (CRUD) en MongoDB cumpliendo con las políticas de negocio y diferenciando el borrado físico del borrado lógico.
+1. Comparar técnicamente los paradigmas relacional y no relacional, identificando fortalezas, debilidades y compensaciones (*trade-offs*) (Codd, 1970; Fowler & Sadalage, 2012).
+2. Justificar la adopción de MongoDB mediante criterios formales de la matriz de decisión aplicados al caso real de streetwear (MongoDB Inc., 2026c).
+3. Modelar la colección `productos` utilizando la matriz de las 4 preguntas para decidir fundamentadamente entre embeber, referenciar o usar referencia extendida (MongoDB Inc., 2026c).
+4. Desarrollar las operaciones fundamentales de manipulación de datos (CRUD) en MongoDB cumpliendo con las políticas de negocio y diferenciando el borrado físico del borrado lógico (MongoDB Inc., 2026a, 2026c).
 
 ---
 
 ## 2. MARCO CONCEPTUAL: MODELO RELACIONAL VS. MODELO NO RELACIONAL
 
 ### 2.1 Modelo Relacional (SQL / Oracle Database)
-El modelo relacional, propuesto formalmente por Edgar F. Codd en 1970, organiza la información en tablas bidimensionales compuestas por filas (tuplas) y columnas (atributos). Su pilar fundamental es la normalización (1FN a BCNF), diseñada para eliminar redundancias y garantizar la consistencia absoluta de los datos.
+El modelo relacional, propuesto formalmente por Edgar F. Codd en 1970, organiza la información en tablas bidimensionales compuestas por filas (tuplas) y columnas (atributos) (Codd, 1970). Su pilar fundamental es la normalización (1FN a BCNF), diseñada para eliminar redundancias y garantizar la consistencia absoluta de los datos.
 
-* **Propiedades ACID:** Atomicidad, Consistencia, Aislamiento (*Isolation*) y Durabilidad.
+* **Propiedades ACID:** Atomicidad, Consistencia, Aislamiento (*Isolation*) y Durabilidad (Oracle Corporation, 2024a).
 * **Esquema Estricto (*Schema-on-Write*):** La estructura de las tablas, tipos de datos, restricciones `CHECK`, `NOT NULL` y claves foráneas deben definirse rigurosamente antes de insertar el primer registro.
 
 ### 2.2 Modelo No Relacional Basado en Documentos (NoSQL / MongoDB)
-El paradigma NoSQL documental almacena la información en unidades autocontenidas denominadas **documentos BSON** (Binary JSON), agrupados dentro de **colecciones**. En este modelo, los datos que se consultan juntos se almacenan juntos.
+El paradigma NoSQL documental almacena la información en unidades autocontenidas denominadas **documentos BSON** (Binary JSON), agrupados dentro de **colecciones** (MongoDB Inc., 2026c). En este modelo, los datos que se consultan juntos se almacenan juntos (Fowler & Sadalage, 2012).
 
 * **Esquema Dinámico (*Schema-on-Read* / Polimórfico):** Diferentes documentos dentro de una misma colección pueden poseer atributos y estructuras anidadas distintas según su naturaleza.
-* **Teorema CAP:** MongoDB prioriza típicamente la Consistencia y la Tolerancia al Particionamiento (CP), ofreciendo alta disponibilidad y particionamiento horizontal nativo (*sharding*).
+* **Teorema CAP:** MongoDB prioriza típicamente la Consistencia y la Tolerancia al Particionamiento (CP), ofreciendo alta disponibilidad y particionamiento horizontal nativo (*sharding*) (Fowler & Sadalage, 2012).
 
 ### 2.3 Cuadro Comparativo de Diferencias Fundamentales
 
@@ -113,6 +113,8 @@ El paradigma NoSQL documental almacena la información en unidades autocontenida
 | **Transaccionalidad** | Garantía ACID implacable a nivel multi-tabla por defecto. | ACID a nivel de documento único; transacciones multi-documento con mayor sobrecarga. |
 | **Mecanismo de Escalabilidad** | Predominantemente vertical (*Scale-Up*: más CPU y RAM). | Horizontal nativo (*Scale-Out*: distribución mediante *Sharding*). |
 | **Reglas de Integridad** | Disparadores (`TRIGGERS`), restricciones `CHECK` y `UNIQUE` en el motor. | Validación delegada a la capa de aplicación o mediante validadores JSON Schema. |
+
+*Fuente: Elaboración propia basado en Codd (1970), Fowler y Sadalage (2012), MongoDB Inc. (2026c) y Duoc UC (2026).*
 
 ---
 
@@ -217,40 +219,40 @@ Para garantizar la comunicación entre ambos mundos sin duplicar información se
 La asignación de responsabilidades a MongoDB responde a dos pilares técnicos irremplazables, así como a la prevención deliberada de riesgos operacionales:
 
 1. **Lo que SÍ hace MongoDB y su Justificación:**
-   - **Polimorfismo Real de Atributos:** En el streetwear juvenil, cada tipología de vestuario posee especificaciones incompatibles (polerones oversize con gramaje de algodón 400 GSM y corte boxy; zapatillas con suela de caucho vulcanizado y amortiguación de aire; bananos tácticos con capacidad en litros). En MongoDB, cada documento almacena únicamente sus propios atributos en el subdocumento embebido `especificaciones`, evitando el anti-patrón relacional EAV (*Entity-Attribute-Value*) o tablas dispersas llenas de valores nulos.
-   - **Desbalance Extremo de Accesos (Patrón 500:1):** En el comercio electrónico masivo, se registran más de 500 consultas de navegación de catálogo por cada transacción finalizada. Al incrustar el arreglo `tallas_disponibles` con stock dentro del documento del producto, una sola lectura en memoria resuelve toda la ficha técnica de la prenda sin ejecutar `JOINs`.
+   - **Polimorfismo Real de Atributos:** En el streetwear juvenil, cada tipología de vestuario posee especificaciones incompatibles (polerones oversize con gramaje de algodón 400 GSM y corte boxy; zapatillas con suela de caucho vulcanizado y amortiguación de aire; bananos tácticos con capacidad en litros). En MongoDB, cada documento almacena únicamente sus propios atributos en el subdocumento embebido `especificaciones`, evitando el anti-patrón relacional EAV (*Entity-Attribute-Value*) o tablas dispersas llenas de valores nulos (MongoDB Inc., 2026c).
+   - **Desbalance Extremo de Accesos (Patrón 500:1):** En el comercio electrónico masivo, se registran más de 500 consultas de navegación de catálogo por cada transacción finalizada. Al incrustar el arreglo `tallas_disponibles` con stock dentro del documento del producto, una sola lectura en memoria resuelve toda la ficha técnica de la prenda sin ejecutar `JOINs` (Fowler & Sadalage, 2012).
 2. **Lo que NO debe hacer MongoDB (Riesgos Evitados en Finanzas y Nómina):**
    - **Pérdida de Integridad Referencial Declarativa:** MongoDB no provee restricciones nativas de clave foránea (`FOREIGN KEY`) ni chequeos declarativos a nivel de motor. Si la facturación se alojara en NoSQL, cualquier anomalía o bug en el código de backend podría originar boletas huérfanas o registros contables sin cliente.
-   - **Riesgo de Inconsistencia en Fondos y Remuneraciones:** Las transacciones financieras y el pago de salarios exigen aislamiento estricto y atomicidad pura. La consistencia eventual (*Eventual Consistency*) es inaceptable para contratos laborales o cálculo del IVA (19%) fiscalizable ante el Servicio de Impuestos Internos (SII).
-   - **Inexistencia de Disparadores Multiobjeto para Solvencia:** MongoDB no dispone de triggers transaccionales nativos para abortar una transacción global si la suma de la nómina supera las ventas de la empresa.
+   - **Riesgo de Inconsistencia en Fondos y Remuneraciones:** Las transacciones financieras y el pago de salarios exigen aislamiento estricto y atomicidad pura. La consistencia eventual (*Eventual Consistency*) es inaceptable para contratos laborales o cálculo del IVA (19%) fiscalizable ante el Servicio de Impuestos Internos (SII) (Codd, 1970; Fowler & Sadalage, 2012).
+   - **Inexistencia de Disparadores Multiobjeto para Solvencia:** MongoDB no dispone de triggers transaccionales nativos para abortar una transacción global si la suma de la nómina supera las ventas de la empresa (Oracle Corporation, 2024b).
 
 ### 4.5 Justificación bajo Metodología 3NF: ¿Por qué Oracle hace Finanzas/RRHH y NO el Catálogo?
-El modelo relacional en Oracle Database 21c/23ai fue normalizado estrictamente hasta la **Tercera Forma Normal (3NF)**:
+El modelo relacional en Oracle Database 21c/23ai (Oracle Corporation, 2024a) fue normalizado estrictamente hasta la **Tercera Forma Normal (3NF)** (Codd, 1970):
 
 1. **Lo que SÍ hace Oracle Database bajo 3NF:**
-   - **Dependencia Funcional Estricta de la Clave:** En 3NF, todo atributo no clave depende de forma directa, completa y exclusiva de la clave primaria (sin dependencias transitivas).
+   - **Dependencia Funcional Estricta de la Clave:** En 3NF, todo atributo no clave depende de forma directa, completa y exclusiva de la clave primaria (sin dependencias transitivas) (Codd, 1970).
      - En `ORDEN_COMPRA` y `DETALLE_ORDEN`, el precio unitario histórico de venta queda congelado e inmutable asociado al folio de compra, sin depender de futuras modificaciones de precio en el catálogo.
      - En `USUARIO`, `TIPO_USUARIO` y salarios, la remuneración contractual y metas dependen directamente de la cédula/ID del empleado, garantizando que un cambio en la definición de un cargo no altere transitivamente el contrato del trabajador.
-   - **Eliminación Absoluta de Anomalías:** La 3NF erradica anomalías de inserción (imposible registrar un cobro sin cliente y folio legal válido), anomalías de actualización (modificar un valor no corrompe balances contables de meses anteriores) y anomalías de borrado (eliminar transacciones operativas no destruye el registro histórico tributario del IVA).
-   - **Gobernanza mediante Triggers PL/SQL:** El motor valida de forma preventiva el sueldo mínimo legal ($500.000), evalúa la solvencia presupuestaria frente a ventas totales y registra cada modificación salarial en `AUDITORIA_SUELDO_EMPLEADO`.
+   - **Eliminación Absoluta de Anomalías:** La 3NF erradica anomalías de inserción (imposible registrar un cobro sin cliente y folio legal válido), anomalías de actualización (modificar un valor no corrompe balances contables de meses anteriores) y anomalías de borrado (eliminar transacciones operativas no destruye el registro histórico tributario del IVA) (Codd, 1970).
+   - **Gobernanza mediante Triggers PL/SQL:** El motor valida de forma preventiva el sueldo mínimo legal ($500.000), evalúa la solvencia presupuestaria frente a ventas totales y registra cada modificación salarial en `AUDITORIA_SUELDO_EMPLEADO` (Oracle Corporation, 2024b).
 2. **Lo que NO debe hacer Oracle Database (Problemas Evitados en el Catálogo):**
    - **Degeneración del Esquema por Atributos Volátiles:** Forzar la normalización en 3NF para ropa streetwear exige crear múltiples tablas puente (`PRODUCTO_ATRIBUTO`, `VALORES_TALLA`), complejizando las consultas con múltiples `JOINs`.
-   - **Saturación del Pool de Conexiones:** En eventos de alto tráfico (como CyberDay), miles de usuarios consultando la vitrina saturarían los procesos dedicados de Oracle, bloqueando las conexiones de los usuarios que intentan procesar su pago en Webpay.
+   - **Saturación del Pool de Conexiones:** En eventos de alto tráfico (como CyberDay), miles de usuarios consultando la vitrina saturarían los procesos dedicados de Oracle, bloqueando las conexiones de los usuarios que intentan procesar su pago en Webpay (Fowler & Sadalage, 2012).
 
 ### 4.6 Caso Crítico de Negocio: ¿Por qué NUNCA Gestionar Empleados, Sueldos y Nómina en MongoDB?
-Una de las decisiones arquitectónicas fundamentales y de mayor impacto en "Estilo Urbano" fue prohibir explícitamente la gestión de recursos humanos, sueldos y contratos en MongoDB, manteniéndolos en Oracle bajo control PL/SQL. Esta decisión se fundamenta en cuatro pilares técnicos y de cumplimiento legal en Chile:
+Una de las decisiones arquitectónicas fundamentales y de mayor impacto en "Estilo Urbano" fue prohibir explícitamente la gestión de recursos humanos, sueldos y contratos en MongoDB, manteniéndolos en Oracle bajo control PL/SQL (Oracle Corporation, 2024b). Esta decisión se fundamenta en cuatro pilares técnicos y de cumplimiento legal en Chile:
 
 1. **Ausencia de Triggers Transaccionales Síncronos (Gobernanza Preventiva):**  
-   En Oracle SQL, el motor ejecuta disparadores `BEFORE UPDATE` como `trg_valida_sueldo_minimo` y `trg_valida_solvencia_sueldos`. Si un usuario intenta asignar una remuneración inferior al mínimo legal ($500.000) o si un incremento salarial hace que la nómina total supere las ventas de la empresa, Oracle aborta la operación directamente en el motor mediante `RAISE_APPLICATION_ERROR`. En MongoDB no existen triggers nativos síncronos dentro del motor de base de datos; cualquier error de validación en la capa web o una modificación manual descuidada desde la consola mongosh o MongoDB Compass escribiría un sueldo de $1 o cifras ilegales sin ningún bloqueo a nivel de almacenamiento.
+   En Oracle SQL, el motor ejecuta disparadores `BEFORE UPDATE` como `trg_valida_sueldo_minimo` y `trg_valida_solvencia_sueldos` (Oracle Corporation, 2024b). Si un usuario intenta asignar una remuneración inferior al mínimo legal ($500.000) o si un incremento salarial hace que la nómina total supere las ventas de la empresa, Oracle aborta la operación directamente en el motor mediante `RAISE_APPLICATION_ERROR`. En MongoDB no existen triggers nativos síncronos dentro del motor de base de datos (MongoDB Inc., 2026c); cualquier error de validación en la capa web o una modificación manual descuidada desde la consola mongosh o MongoDB Compass (MongoDB Inc., 2026a, 2026b) escribiría un sueldo de $1 o cifras ilegales sin ningún bloqueo a nivel de almacenamiento.
 
 2. **Exigencia Legal de Auditoría Inmutable (Inspección del Trabajo):**  
-   La legislación laboral chilena y las normas de auditoría de RRHH exigen trazabilidad absoluta de cada modificación en las remuneraciones de los trabajadores. En Oracle, el trigger de auditoría inserta de manera automática, atómica e ineludible en la tabla `AUDITORIA_SUELDO_EMPLEADO` el sueldo anterior, el sueldo nuevo, el usuario que efectuó el cambio y la marca de tiempo (`TIMESTAMP`). Nadie puede saltarse este registro. En MongoDB, la auditoría dependería de que el desarrollador recuerde escribir código de log en la aplicación; cualquier actualización directa a la base de datos no dejaría rastro, invalidando la posición de la empresa ante fiscalizaciones laborales o juicios contractuales.
+   La legislación laboral chilena y las normas de auditoría de RRHH exigen trazabilidad absoluta de cada modificación en las remuneraciones de los trabajadores. En Oracle, el trigger de auditoría inserta de manera automática, atómica e ineludible en la tabla `AUDITORIA_SUELDO_EMPLEADO` el sueldo anterior, el sueldo nuevo, el usuario que efectuó el cambio y la marca de tiempo (`TIMESTAMP`) (Oracle Corporation, 2024b). Nadie puede saltarse este registro. En MongoDB, la auditoría dependería de que el desarrollador recuerde escribir código de log en la aplicación; cualquier actualización directa a la base de datos no dejaría rastro, invalidando la posición de la empresa ante fiscalizaciones laborales o juicios contractuales.
 
 3. **Integridad Referencial Estricta (`FOREIGN KEY`) vs. Datos Huérfanos:**  
-   Bajo la Tercera Forma Normal (3NF) de Oracle, la tabla `USUARIO` está formalmente vinculada a `TIPO_USUARIO` (Rol) mediante una clave foránea forzada por el motor. Es físicamente imposible registrar un empleado con un rol inexistente o eliminar un cargo que tenga trabajadores asignados. En MongoDB, al no existir integridad foránea mandatoria, un error tipográfico en un documento (`{"rol": "SuperVendedr"}`) generaría registros corruptos y desajustes en la jerarquía administrativa.
+   Bajo la Tercera Forma Normal (3NF) de Oracle (Codd, 1970), la tabla `USUARIO` está formalmente vinculada a `TIPO_USUARIO` (Rol) mediante una clave foránea forzada por el motor. Es físicamente imposible registrar un empleado con un rol inexistente o eliminar un cargo que tenga trabajadores asignados. En MongoDB, al no existir integridad foránea mandatoria, un error tipográfico en un documento (`{"rol": "SuperVendedr"}`) generaría registros corruptos y desajustes en la jerarquía administrativa.
 
 4. **Transaccionalidad ACID Pura frente al Dinero Real:**  
-   El catálogo de ropa admite consistencia eventual sin riesgo alguno para la empresa (que una foto tarde unos milisegundos en refrescarse no perjudica a nadie). En contraste, los salarios de las personas, las leyes sociales (AFP, Fonasa/Isapre) y las retenciones tributarias del SII exigen propiedades ACID inmediatas y absolutas. No se pueden permitir lecturas sucias (*dirty reads*) ni actualizaciones concurrentes ambiguas cuando se procesa la planilla mensual de pago de remuneraciones.
+   El catálogo de ropa admite consistencia eventual sin riesgo alguno para la empresa (que una foto tarde unos milisegundos en refrescarse no perjudica a nadie) (Fowler & Sadalage, 2012). En contraste, los salarios de las personas, las leyes sociales (AFP, Fonasa/Isapre) y las retenciones tributarias del SII exigen propiedades ACID inmediatas y absolutas. No se pueden permitir lecturas sucias (*dirty reads*) ni actualizaciones concurrentes ambiguas cuando se procesa la planilla mensual de pago de remuneraciones.
 
 ### 4.7 Articulación Arquitectónica bajo el Marco Ágil Scrum
 En el ciclo de desarrollo bajo la metodología **Scrum**, el Product Backlog del proyecto se descompuso estratégicamente separando los requerimientos por dominio de negocio:
@@ -267,7 +269,7 @@ En el ciclo de desarrollo bajo la metodología **Scrum**, el Product Backlog del
 ## 5. MODELAMIENTO DOCUMENTAL Y MATRIZ DE LAS 4 PREGUNTAS
 
 ### 5.1 Metodología de las 4 Preguntas
-Para decidir con rigurosidad académica si los datos relacionados deben **Embeberse (*Embedding*)**, **Referenciarse (*Referencing*)** o utilizar el **Patrón de Referencia Extendida (*Extended Reference*)**, se aplican las 4 preguntas oficiales del modelado en MongoDB:
+Para decidir con rigurosidad académica si los datos relacionados deben **Embeberse (*Embedding*)**, **Referenciarse (*Referencing*)** o utilizar el **Patrón de Referencia Extendida (*Extended Reference*)**, se aplican las 4 preguntas oficiales del modelado en MongoDB (MongoDB Inc., 2026c):
 
 1. **¿Se leen juntos la gran mayoría de las veces?**
 2. **¿Se comparten con otros documentos de la base de datos?**
@@ -282,6 +284,8 @@ Para decidir con rigurosidad académica si los datos relacionados deben **Embebe
 | **Producto ➔ Especificaciones Técnicas (Material, Corte, GSM)** | **SÍ** (Se exhiben en la ficha técnica para el comprador). | **NO** (Son exclusivas de cada tipo de prenda). | **NO** (Nacen y mueren con el producto). | **NO** (Son entre 3 y 6 atributos fijos por ítem). | **EMBEBER (Embedding)** | Subdocumento `especificaciones` directo. Permite polimorfismo puro sin tablas puente. |
 | **Producto ➔ Proveedor Fabricante** | **NO** (El cliente final en la web no necesita ver el RUT ni contacto del taller textil). | **SÍ** (Un mismo taller de confección provee decenas de prendas). | **SÍ** (El proveedor puede cambiar su razón social, teléfono o dirección de forma autónoma). | **NO** (Es un solo proveedor por prenda). | **REFERENCIA EXTENDIDA (Extended Reference)** | Se almacena el `id_proveedor_oracle` y únicamente el campo que más se consulta (`razon_social`). Evita hacer búsquedas adicionales pero no duplica todo el contacto. |
 | **Producto ➔ Reseñas de Clientes (Reviews)** | **SÍ** (Se leen al pie de la página del producto). | **NO** (La opinión va dirigida a ese modelo). | **RARA VEZ** (El cliente opina una vez). | **SÍ (Riesgo)** (Un producto muy viral puede recibir decenas de miles de opiniones y vulnerar el límite de 16MB de BSON). | **REFERENCIAR (Referencing)** | Se mantienen en una colección separada `resenas` con el campo `producto_id`, manteniendo la colección `productos` liviana y veloz. |
+
+*Fuente: Elaboración propia según metodología oficial de modelado de datos de MongoDB Inc. (2026c).*
 
 ### 5.3 Estructura del Documento Final JSON/BSON
 ```json
@@ -324,7 +328,7 @@ Para decidir con rigurosidad académica si los datos relacionados deben **Embebe
 ## 6. IMPLEMENTACIÓN TÉCNICA DEL CRUD EN MONGODB (CONTEXTO REAL)
 
 > [!IMPORTANT]
-> **Alcance de la Asignatura:** Conforme a las directrices docentes impartidas en clase, todos los scripts se implementan en JavaScript de `mongosh` **manteniéndose dentro del alcance del curso: sin índices personalizados ni agregaciones avanzadas**. Todas las fechas se registran obligatoriamente con el constructor formal `ISODate`.
+> **Alcance de la Asignatura:** Conforme a las directrices docentes impartidas en clase y la documentación técnica oficial (MongoDB Inc., 2026a, 2026c), todos los scripts se implementan en JavaScript de `mongosh` y la herramienta gráfica MongoDB Compass (MongoDB Inc., 2026b) **manteniéndose dentro del alcance del curso: sin índices personalizados ni agregaciones avanzadas**. Todas las fechas se registran obligatoriamente con el constructor formal `ISODate`.
 
 ### 6.1 Operación CREATE (Inserción de Documentos)
 
@@ -547,11 +551,17 @@ db.productos.updateOne(
 
 ---
 
-## 9. REFERENCIAS BIBLIOGRÁFICAS (FORMATO APA)
+## 9. REFERENCIAS BIBLIOGRÁFICAS (FORMATO APA 7MA EDICIÓN)
 
-* Codd, E. F. (1970). *A Relational Model of Data for Large Shared Data Banks*. Communications of the ACM, 13(6), 377–387.
+* Codd, E. F. (1970). *A Relational Model of Data for Large Shared Data Banks*. Communications of the ACM, 13(6), 377–387. https://doi.org/10.1145/362384.362685
 * Duoc UC. (2026). *Guía Didáctica de la Asignatura BDY1103: Taller de Base de Datos*. Escuela de Informática y Telecomunicaciones, Duoc UC.
-* Duoc UC Bibliotecas. (2024). *Manual de Formato de Informes y Presentaciones Académicas*. Sistema de Bibliotecas Duoc UC. Recuperado de [https://bibliotecas.duoc.cl/documentos-academicos-y-presentaciones/formato-informes](https://bibliotecas.duoc.cl/documentos-academicos-y-presentaciones/formato-informes)
+* Duoc UC Bibliotecas. (2024). *Manual de Formato de Informes y Presentaciones Académicas*. Sistema de Bibliotecas Duoc UC. https://bibliotecas.duoc.cl/documentos-academicos-y-presentaciones/formato-informes
 * Fowler, M., & Sadalage, P. J. (2012). *NoSQL Distilled: A Brief Guide to the Emerging World of Polyglot Persistence*. Addison-Wesley Professional.
-* MongoDB Inc. (2026). *MongoDB Documentation: Data Modeling Introduction and CRUD Operations*. MongoDB Manual v7.0. Recuperado de https://www.mongodb.com/docs/manual/core/data-modeling-introduction/
-* Oracle Corporation. (2024). *Oracle Database PL/SQL Language Reference 21c*. Oracle Help Center.
+* MongoDB Inc. (2026a). *MongoDB Database Server y mongosh shell* (Versión 7.0) [Software de base de datos no relacional]. MongoDB Corporation. https://www.mongodb.com
+* MongoDB Inc. (2026b). *MongoDB Compass* (Versión 1.43) [Software de interfaz gráfica para gestión de documentos]. MongoDB Corporation. https://www.mongodb.com/products/compass
+* MongoDB Inc. (2026c). *MongoDB Documentation: Data Modeling Introduction and CRUD Operations* (v7.0). MongoDB Manual. https://www.mongodb.com/docs/manual/core/data-modeling-introduction/
+* OpenJS Foundation. (2024). *Node.js JavaScript Runtime Environment* (Versión 20.x) [Software de entorno de ejecución]. https://nodejs.org
+* Oracle Corporation. (2024a). *Oracle Database 21c Enterprise Edition y Autonomous Database* [Software de base de datos relacional]. Oracle Corporation. https://www.oracle.com/database/
+* Oracle Corporation. (2024b). *Oracle Database PL/SQL Language Reference 21c*. Oracle Help Center. https://docs.oracle.com/en/database/oracle/oracle-database/21/lnpls/
+* Python Software Foundation. (2024). *Python Language Reference y PyMongo Driver* (Versión 3.12) [Software de programación y conector de base de datos]. https://www.python.org
+* Tailwind Labs. (2024). *Tailwind CSS Framework* (Versión 3.4) [Software de diseño y estilos web]. https://tailwindcss.com
